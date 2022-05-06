@@ -42,38 +42,64 @@
 //}
 
 //Ejemplo del Switch
-Console.WriteLine("Ingrese el primer numero: ");
-double numero1 = double.Parse(Console.ReadLine());
-Console.WriteLine("Ingrese el segundo numero: ");
-double numero2 = double.Parse(Console.ReadLine());
+//Console.WriteLine("Ingrese el primer numero: ");
+//double numero1 = double.Parse(Console.ReadLine());
+//Console.WriteLine("Ingrese el segundo numero: ");
+////double numero2 = double.Parse(Console.ReadLine());
 
-Console.WriteLine("1- suma");
-Console.WriteLine("2- resta");
-Console.WriteLine("3- multiplicacion");
-Console.WriteLine("4- division");
-Console.WriteLine("Ingrese la operacion a realizar");
-string operacion = Console.ReadLine();
-double resultado =0;
-switch (operacion)
+//Console.WriteLine("1- suma");
+//Console.WriteLine("2- resta");
+//Console.WriteLine("3- multiplicacion");
+//Console.WriteLine("4- division");
+//Console.WriteLine("Ingrese la operacion a realizar");
+//string operacion = Console.ReadLine();
+//double resultado =0;
+//switch (operacion)
+//{
+//    case "1":
+//        Console.WriteLine("Sumando...");
+//        resultado = numero1 + numero2;     
+//        break;
+//    case "2":
+//        Console.WriteLine("Restando...");
+//        resultado = numero1 - numero2;
+//        break;
+//    case "3":
+//        Console.WriteLine("multiplicando...");
+//        resultado = numero1 * numero2;
+//        break;
+//    case "4" when numero2 != 0:
+//        Console.WriteLine("dividiendo...");
+//        resultado = numero1 / numero2;
+//        break;
+//    default:
+//        Console.WriteLine("opcion no valida");
+//        break;
+//}
+//Console.WriteLine("El resultado es: "+resultado);
+
+// ejercicio de if anidados
+
+Console.WriteLine("Ingrese el primer numero a evaluar: ");
+int numero1 = Convert.ToInt32(Console.ReadLine());   
+Console.WriteLine("Ingrese el segundo numero a evaluar: ");
+int numero2 = Convert.ToInt32(Console.ReadLine());
+Console.WriteLine("Ingrese el tercer numero a evaluar: ");
+int numero3 = Convert.ToInt32(Console.ReadLine());
+
+if(numero1 > numero2)
 {
-    case "1":
-        Console.WriteLine("Sumando...");
-        resultado = numero1 + numero2;     
-        break;
-    case "2":
-        Console.WriteLine("Restando...");
-        resultado = numero1 - numero2;
-        break;
-    case "3":
-        Console.WriteLine("multiplicando...");
-        resultado = numero1 * numero2;
-        break;
-    case "4" when numero2 != 0:
-        Console.WriteLine("dividiendo...");
-        resultado = numero1 / numero2;
-        break;
-    default:
-        Console.WriteLine("opcion no valida");
-        break;
+    if(numero1 > numero3)
+    {
+        Console.WriteLine("El numero Mayor es: {0}", numero1);
+    }else
+    {
+        Console.WriteLine("El numero Mayor es: {0}", numero2);
+    }
+}else if (numero2  > numero3)
+{
+    Console.WriteLine("El numero Mayor es: {0}", numero2);
+}else
+{
+    Console.WriteLine("El numero Mayor es: {0}", numero3);
 }
-Console.WriteLine("El resultado es: "+resultado);
