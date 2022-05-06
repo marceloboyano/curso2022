@@ -33,6 +33,13 @@ public class Serie
     public string Genero { get; set; }
     public string Creador { get; set; }
 
+
+    // Existe el atajo init desde C# 9 que te genera los constructores automaticamente
+    //public string Titulo { get; init; }
+    //public int NumeroTemporadas { get; init; } = 3; // Default
+    //public string Genero { get; init; }
+    //public string Creador { get; init; }
+
     // El estandar de microsoft establece que tienen que ser PascalCase
     // No se suele utilizar 'this' para las propiedades de clase en C#, eso es más cosa de Java. En C# se suele diferenciar atributos de clase agregandoles un guion bajo. Ejemplo: _atributo=atributo
     // https://docs.microsoft.com/es-es/dotnet/csharp/fundamentals/coding-style/coding-conventions
