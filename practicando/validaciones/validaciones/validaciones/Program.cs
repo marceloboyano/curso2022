@@ -34,7 +34,7 @@ if (superior < inferior)
 
 
 
-for (int i = inferior; inferior <= 100; i++)
+for (int i = inferior; i <= superior; i++)
 {
     if (i % 3 == 0)
     {
