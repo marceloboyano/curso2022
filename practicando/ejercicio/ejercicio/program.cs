@@ -28,21 +28,14 @@
 using ejercicio;
 using ejercicio1;
 
-//Serie walkingDead = new Serie("peterpan",4,"accion","travolta");
-//Console.WriteLine(walkingDead.ToString());
-//Console.WriteLine("titulo: " + walkingDead.Titulo + " numero de temporadas: " + walkingDead.NumeroTemporadas+ " genero: "+ walkingDead.Genero+" creador: "+ walkingDead.Creador);
-//VideoJuego UnrealGoty99 = new VideoJuego("Unreal Tournament", 20, "shooter", "Engine Games");
-//walkingDead.Entregar();
-//walkingDead.Devolver();
-//UnrealGoty99.Entregar();
 
- object [] arr1 = new object [5];
- object[] arr2 = new object[5];
-arr1[0] = new Serie("peterpan", 4, "accion", "travolta");
+Serie [] arr1 = new Serie  [5];
+VideoJuego[] arr2 = new VideoJuego[5];
+arr1[0] = new Serie("peterpan",20, "accion", "travolta");
 arr1[1] = new Serie();
-arr1[2] = new Serie("Walking Dead", 10, "Zombies", "Spielber");
+arr1[2] = new Serie("Walking Dead", 2, "Zombies", "Spielber");
 arr1[3] = new Serie("Los simpson","nose");
-arr1[4] = new Serie("los simuladores", 5, "suspenso", "mucari");
+arr1[4] = new Serie("los simuladores",19, "suspenso", "mucari");
 
 arr2[0] = new VideoJuego("Resident evil", 2, "accion", "alguien");
 arr2[1] = new VideoJuego();
@@ -50,13 +43,70 @@ arr2[2] = new VideoJuego("Unreal Tournament", 20, "shooter", "Engine Games");
 arr2[3] = new VideoJuego("Minecraft", 40);
 arr2[4] = new VideoJuego();
 
+arr1[0].Entregar();
+arr1[2].Entregar();
+arr1[4].Entregar();
+arr1[4].Entregar();
+arr1[4].Entregar();
+
+arr2[0].Entregar();
+arr2[2].Entregar();
+arr2[4].Entregar();
+
+int cantidadDeSeries = 0;
+int cantidadDeVideoJuegos = 0;
+
+// cuento la cantidad de veces que se entrego cada serie las devuelvo y pongo el contador de cada serie en 0. 
+foreach (var item in arr1)
+{
+    cantidadDeSeries += item.contador;
+    item.Devolver();
+    item.contador = 0;
+}
+foreach (var item in arr2)
+{
+    cantidadDeVideoJuegos += item.contador;
+    item.Devolver();
+    item.contador = 0;
+}
+
+//calculo los maximos de temporadas y horas 
+var SerieConMasTemporadas = arr1.Max(x => x.NumeroTemporadas);
+var VideoJuegoConMasHoras = arr2.Max(x =>x.HorasEstimadas);
+
+Console.WriteLine("La cantidad de Series entregadas fue: "+cantidadDeSeries);
+Console.WriteLine(" La Cantidad de video Juegos entregados fue: "+ cantidadDeVideoJuegos);
+
+//pruebo el metodo compareTo
+Console.WriteLine(arr2[2].CompareTo(arr1[0]));
+
+Console.WriteLine("La serie con mas Temporadas tiene: "+SerieConMasTemporadas);
+Console.WriteLine("El video juego con mas horas estimadas tiene: "+VideoJuegoConMasHoras);
+
+
+Console.WriteLine("***********************************Mostrando las Series**********************************************");
+
+foreach (var item in arr1)
+{
+    Console.WriteLine(item.ToString());
+
+}
+
+Console.WriteLine("***********************************Mostrando los Video Juegos***************************************");
+
+foreach (var item in arr2)
+{
+    Console.WriteLine(item.ToString());
+
+}
+
 
 interface IEntregable
 {
     bool IsEntregado ();
     void Entregar();
     void Devolver();
-   // double CompareTo(Serie obj1,VideoJuego obj2);
+  
     
 }
  

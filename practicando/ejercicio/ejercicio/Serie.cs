@@ -51,13 +51,15 @@ namespace ejercicio
 
     public override string ToString() => $"titulo: {Titulo} numero de temporadas: {NumeroTemporadas}  genero: {Genero} creador: {Creador}";
 
-       
+
+       public int contador;
            public bool IsEntregado() {
                 return entregado; }
 
            public  void Entregar()
             {
                 entregado = true;
+                contador++;
             }
            public  void Devolver()
             {

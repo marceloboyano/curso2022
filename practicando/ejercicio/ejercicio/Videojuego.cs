@@ -3,6 +3,8 @@
 
 
 
+using ejercicio;
+
 namespace ejercicio1
 {
     public class VideoJuego : IEntregable
@@ -30,7 +32,7 @@ namespace ejercicio1
 
         public override string ToString() => $"Títlo: {Titulo}, Genero: {Genero}, Compañía: {Compañia}, Horas Estimadas: {HorasEstimadas} ";
 
-      
+      public  int contador;
           public  bool IsEntregado()
             {
                 return entregado;
@@ -38,6 +40,7 @@ namespace ejercicio1
 
            public void Entregar()
             {
+                contador++;
                 entregado = true;
             }
             public void Devolver()
@@ -45,6 +48,10 @@ namespace ejercicio1
                 entregado = false;
             }
      
-
+           public bool CompareTo(object a)
+        {
+           
+            return ((Serie)a).NumeroTemporadas == this.HorasEstimadas;
+        }
     }
 }
