@@ -11,25 +11,26 @@ validI = int.TryParse(Console.ReadLine(), out inferior);
 
 Console.Write("Ingrese el limite Superior de tipo entero: ");
 validS = int.TryParse(Console.ReadLine(), out superior);
-Validaciones(inferior, superior, validI, validS);
+if (!validI)
+{
+    Console.WriteLine("No ha ingresado un numero entero");
+    return;
+}
+
+if (!validS)
+{
+    Console.WriteLine("No ha ingresado un numero entero:");
+    return;
+
+}
+
 Fizzbuzz(inferior,superior);
 
 
- void Validaciones(int inferior, int superior, bool validI, bool validS)
+ void Validaciones(int inferior, int superior)
 {
 
-    if (!validI)
-    {
-        Console.WriteLine("No ha ingresado un numero entero");
-        return;
-    }
-
-    if (!validS)
-    {
-        Console.WriteLine("No ha ingresado un numero entero:");
-        return;
-
-    }
+    
     if (inferior < 0 && superior < 0)
     {
         Console.Write("Los limites ingresados son incorrectos, no pueden ser ni 0 ni un numeros negativo:" + inferior + "," + superior);
@@ -44,6 +45,7 @@ Fizzbuzz(inferior,superior);
 }
 void Fizzbuzz(int inferior, int superior)
 {
+    Validaciones(inferior, superior);
     for (int i = inferior; i <= superior; i++)
     {
         if (i % 3 == 0 && i % 5 == 0)
