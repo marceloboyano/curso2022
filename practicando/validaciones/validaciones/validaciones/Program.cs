@@ -59,7 +59,7 @@ Fizzbuzz(inferior,superior);
 void Fizzbuzz(int inferior, int superior)
 {
 
-    if ((Validaciones(inferior, superior))) 
+    if ((ValidacionesConExtensionMethods(inferior, superior))) 
     {
 
 
@@ -91,5 +91,17 @@ void Fizzbuzz(int inferior, int superior)
             " \n* El limite superior no puede ser menor que el limite inferior" +
             " \n* los limites no pueden ser mayores que 10mil");
     }
+    
+}
+
+bool ValidacionesConExtensionMethods(int inferior, int superior) =>
+    inferior.EsMenorA(superior) &&
+    inferior.EsPositivo() &&
+    superior.EsMenorA(10000); 
+
+public static class IntegerExtensions
+{
+    public static bool EsMenorA(this int source, int value) => source < value;
+    public static bool EsPositivo(this int source) => source >= 0;
     
 }
