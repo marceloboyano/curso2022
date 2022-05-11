@@ -1,4 +1,4 @@
-﻿
+
 
 
 int inferior;
@@ -31,47 +31,65 @@ Fizzbuzz(inferior,superior);
  bool Validaciones(int inferior, int superior)
 {
 
-    
+
     if (inferior < 0)
-    {
-       // Console.Write("Los limites ingresados son incorrectos, no pueden ser ni 0 ni un numeros negativo:" + inferior + "," + superior);
-        return false;
-    }else if (superior < 0)
-     {
-      return false;
-     }
-    if (superior < inferior)
-    {
-        //Console.Write("El limite superior no puede ser menor que el limite inferior:" + inferior + "," + superior);
+    {      
         return false;
     }
+    else if (superior < 0)
+    {
+        return false;
+    }
+
+    if (superior < inferior)
+    {
+      return false;
+    }
+    if(inferior > 10000)
+    {
+        return false;
+    }else if (superior > 10000)
+    {
+        return false;
+    }
+    return true;
 
 
 }
 void Fizzbuzz(int inferior, int superior)
 {
-    Validaciones(inferior, superior);
-    if (!Validaciones){
-    for (int i = inferior; i <= superior; i++)
+
+    if ((Validaciones(inferior, superior))) 
     {
-        if (i % 3 == 0 && i % 5 == 0)
+
+
+        for (int i = inferior; i <= superior; i++)
         {
-            Console.WriteLine("FIZZBUZZ");
+            if (i % 3 == 0 && i % 5 == 0)
+            {
+                Console.WriteLine("FIZZBUZZ");
+
+            }
+            else if (i % 5 != 0 && i % 3 != 0)
+            {
+                Console.WriteLine("numero: " + i);
+            }
+            else if (i % 5 == 0)
+            {
+                Console.WriteLine("BUZZ");
+            }
+            else if (i % 3 == 0)
+            {
+                Console.WriteLine("FIZZ");
+            }
 
         }
-        else if (i % 5 != 0 && i % 3 != 0)
-        {
-            Console.WriteLine("numero: " + i);
-        } else if (i % 5 == 0)
-        {
-            Console.WriteLine("BUZZ");
-        }else  if (i % 3 == 0)
-        {
-            Console.WriteLine("FIZZ");
-        }
-      }
-         Console.Write("Los datos ingresados son incorrectos");
-
-
+    }else
+    {
+        Console.WriteLine("Los Datos ingresados son incorrectos." +
+            "\n* No se puede ingresar numeros negativos" +
+            " \n* El limite superior no puede ser menor que el limite inferior" +
+            " \n* los limites no pueden ser mayores que 10mil");
     }
+    
 }
