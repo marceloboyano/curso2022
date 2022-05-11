@@ -28,19 +28,22 @@ if (!validS)
 Fizzbuzz(inferior,superior);
 
 
- void Validaciones(int inferior, int superior)
+ bool Validaciones(int inferior, int superior)
 {
 
     
-    if (inferior < 0 || superior < 0)
+    if (inferior < 0)
     {
-        Console.Write("Los limites ingresados son incorrectos, no pueden ser ni 0 ni un numeros negativo:" + inferior + "," + superior);
-        return;
-    }
+       // Console.Write("Los limites ingresados son incorrectos, no pueden ser ni 0 ni un numeros negativo:" + inferior + "," + superior);
+        return false;
+    }else if (superior < 0)
+     {
+      return false;
+     }
     if (superior < inferior)
     {
-        Console.Write("El limite superior no puede ser menor que el limite inferior:" + inferior + "," + superior);
-        return;
+        //Console.Write("El limite superior no puede ser menor que el limite inferior:" + inferior + "," + superior);
+        return false;
     }
 
 
@@ -48,6 +51,7 @@ Fizzbuzz(inferior,superior);
 void Fizzbuzz(int inferior, int superior)
 {
     Validaciones(inferior, superior);
+    if (!Validaciones){
     for (int i = inferior; i <= superior; i++)
     {
         if (i % 3 == 0 && i % 5 == 0)
@@ -65,6 +69,9 @@ void Fizzbuzz(int inferior, int superior)
         {
             Console.WriteLine("FIZZ");
         }
+      }
+         Console.Write("Los datos ingresados son incorrectos");
+
 
     }
 }
