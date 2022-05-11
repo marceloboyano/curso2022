@@ -3,6 +3,7 @@ string condicion = "S";
 
 while (condicion == "S")
 {
+    Console.Clear();
     Console.Write("Ingrese su nombre:");
     string nombre = Console.ReadLine();
     Console.WriteLine($"Hola {nombre}");
