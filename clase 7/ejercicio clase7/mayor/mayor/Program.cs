@@ -16,7 +16,7 @@ for (int i = 0; i < numeros.Length; i++)
         return;       
     }
 }
-//le asigno el primer valor del array a menor y mayor xq si le asigno 0 puede traeme problemas al calcular el menor al tomar 0 como menor en la comparación
+//le asigno el primer valor del array a menor y mayor
 int mayor = numeros[0];
 int menor = numeros[0];
 //pongo suma como double porque al sacar el promedio debe haber un numero double
