@@ -1,6 +1,16 @@
 ﻿
 
+using System.Text;
+
 bool valid;
+
+int mayor = 0;
+int menor = 0;
+double promedio;
+double suma = 0;
+StringBuilder mensajeNumerosIngresados = new StringBuilder();
+mensajeNumerosIngresados.AppendLine("");
+
 Console.WriteLine("Ingrese los 10 numeros que formaran el array");
 int[] numeros = new int[10];
 for (int i = 0; i < numeros.Length; i++)
@@ -15,30 +25,38 @@ for (int i = 0; i < numeros.Length; i++)
         Console.ReadKey();
         return;
     }
-}
-//le asigno el primer valor del array a menor y mayor
-int mayor = numeros[0];
-int menor = numeros[0];
-//pongo suma como double porque al sacar el promedio debe haber un numero double
-//porque sino las operaciones entre enteros devuelven enteros
-double suma = 0;
 
-Console.Write("Mostrando los numeros del array ingresados: ");
-for (int i = 0; i < numeros.Length; i++)
-{
+    mensajeNumerosIngresados.AppendLine($"{numeros[i]}, ");
+
+    // Sobreescribo los ceros la primera vez por si es negativo
+    if (i == 0)
+    {
+        mayor = numeros[i];
+        menor = numeros[i];
+    }
+
     suma += numeros[i];
-    if (numeros[i] > mayor) mayor = numeros[i];
-    if (numeros[i] < menor) menor = numeros[i];
-    Console.Write($"{numeros[i]}, ");
+    
+    promedio = Math.Round(suma / numeros.Length);
 
+    if (i > 0)
+    {
+        if (numeros[i] > mayor) mayor = numeros[i];
+        if (numeros[i] < menor) menor = numeros[i];
+    }
+
+    if(i >= numeros.Length - 1)
+    {
+        Console.Write("Mostrando los numeros del array ingresados: ");
+        Console.WriteLine(mensajeNumerosIngresados.ToString());
+
+        Console.WriteLine($"\n La suma de todos los números ingresados es : {suma} " +
+            $"\n El numero mayor del array es: {mayor} " +
+            $"\n el numero menor del array es: {menor} " +
+            $"\n El promedio de todos los numeros del array es: {promedio} ");
+    }
 }
-//ahora si lo redondeo al promedio
-double promedio = Math.Round(suma / numeros.Length);
 
 // lo pongo asi para que se entienda 
-Console.WriteLine($"\n La suma de todos los números ingresados es : {suma} " +
-    $"\n El numero mayor del array es: {mayor} " +
-    $"\n el numero menor del array es: {menor} " +
-    $"\n El promedio de todos los numeros del array es: {promedio} ");
 
 
