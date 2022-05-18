@@ -11,11 +11,12 @@ for (int i = 0; i < numeros.Length; i++)
     //Hago unas validaciones para que no ingrese cualquier cosa
     if (valid == false || numeros[i] < 0)
     {
-        Console.WriteLine("Los numeros del arreglo deben ser enteros positivos. \nPresione cualquier tecla para Salir");
+        Console.WriteLine("Los numeros del array deben ser enteros positivos. \nPresione cualquier tecla para Salir");
         Console.ReadKey();
         return;       
     }
 }
+//le asigno el primer valor del array a menor y mayor xq si le asigno 0 puede traeme problemas al calcular el menor al tomar 0 como menor en la comparación
 int mayor = numeros[0];
 int menor = numeros[0];
 //pongo suma como double porque al sacar el promedio debe haber un numero double
