@@ -8,10 +8,17 @@ namespace validaciones
         public int Inferior { get; set; }
         public int Superior { get; set; }
         public FizzBuzz() { }
-       public FizzBuzz(int _inferior, int _superior)
+
+        public FizzBuzz(int _inferior, int _superior)
+        {
+            Inferior = _inferior;
+            Superior = _superior;
+        }
+
+        public void Execute()
         {
 
-            if (!Validaciones(_inferior, _superior))
+            if (!Validaciones(Inferior, Superior))
             {
                 Console.WriteLine("Los Datos ingresados son incorrectos." +
                     "\n* No se puede ingresar numeros negativos" +
@@ -20,7 +27,7 @@ namespace validaciones
             }
             else
             {
-                for (int i = _inferior; i <= _superior; i++)
+                for (int i = Inferior; i <= Superior; i++)
                 {
                     if (i % 3 != 0 || i % 5 != 0)
                     {
@@ -53,7 +60,8 @@ namespace validaciones
 
         }
 
-       public bool Validaciones(int inferior, int superior)
+      
+        public bool Validaciones(int inferior, int superior)
         {
 
 

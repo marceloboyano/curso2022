@@ -16,11 +16,13 @@ validS = int.TryParse(Console.ReadLine(), out superior);
 if (!(!validI || !validS || !validS && validI))
 {
     FizzBuzz Fito = new FizzBuzz(inferior, superior);
-   
-    
+    Fito.Execute();
+
+
 }
-
-Console.WriteLine("No ha ingresado valores enteros en los limites");
-
+else
+{
+  Console.WriteLine("No ha ingresado valores enteros en los limites");
+}
 
 
