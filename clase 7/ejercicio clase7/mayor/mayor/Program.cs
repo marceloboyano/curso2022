@@ -11,9 +11,9 @@ for (int i = 0; i < numeros.Length; i++)
     //Hago unas validaciones para que no ingrese cualquier cosa
     if (valid == false || numeros[i] < 0)
     {
-        Console.WriteLine("Los numeros del array deben ser enteros positivos. \nPresione cualquier tecla para Salir");
-        Console.ReadKey();
-        return;
+       Console.WriteLine("Los numeros del array deben ser enteros positivos. Deberá volver a ingresar. \nPresione cualquier tecla para Continuar");
+       Console.ReadKey();
+        i--;
     }
 }
 //le asigno el primer valor del array a menor y mayor
