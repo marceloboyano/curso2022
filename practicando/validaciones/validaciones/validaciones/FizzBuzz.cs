@@ -20,13 +20,13 @@ namespace validaciones
 
             if (!Validaciones(Inferior, Superior))
             {
-                Console.WriteLine("Los Datos ingresados son incorrectos." +
+                 Console.WriteLine("Los Datos ingresados son incorrectos." +
                     "\n* No se puede ingresar numeros negativos" +
                     " \n* El limite superior no puede ser menor que el limite inferior" +
                     " \n* los limites no pueden ser mayores que 10mil");
+                 return;
             }
-            else
-            {
+           
                 for (int i = Inferior; i <= Superior; i++)
                 {
                     if (i % 3 != 0 || i % 5 != 0)
@@ -35,28 +35,28 @@ namespace validaciones
                         {
                             if (i % 5 != 0)
                             {
-                                                             
+
                                 Console.WriteLine("FIZZ");
                                 
                             }
                             else
                             {
-                                Console.WriteLine("BUZZ");
+                                 Console.WriteLine("BUZZ");
                             }
                         }
                         else
                         {
-                            Console.WriteLine("numero: " + i);
+                             Console.WriteLine("numero: " + i);
                         }
                     }
                     else
                     {
-                        Console.WriteLine("FIZZBUZZ");
+                         Console.WriteLine("FIZZBUZZ");
 
                     }
 
                 }
-            }
+            
 
         }
 

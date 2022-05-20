@@ -25,4 +25,4 @@ else
   Console.WriteLine("No ha ingresado valores enteros en los limites");
 }
 
-
+public delegate void FizzBuzz(int inferior, int superior);
