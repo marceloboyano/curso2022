@@ -22,14 +22,14 @@ do
     Console.Write("Ingrese el número de filas: ");
     validFilas = int.TryParse(Console.ReadLine(), out filas);
 
-    if (!validColumnas || !validFilas || columnas < 0 || filas < 0)
+    if (!validColumnas || !validFilas || columnas <= 0 || filas <= 0)
     {
         Console.Write("El número de filas o columnas es incorrecto. Deben ser un números enteros positivos. \nPresione una tecla para continuar: ");
         Console.ReadKey();
         Console.Clear();
     }
 
-}while (!validColumnas || !validFilas || columnas < 0 || filas < 0);
+}while (!validColumnas || !validFilas || columnas <= 0 || filas <= 0);
 
 double suma;
 double promedio = 0;
