@@ -7,12 +7,14 @@ namespace validaciones
 
         public int Inferior { get; set; }
         public int Superior { get; set; }
-        public FizzBuzz() { }
+        public EnviarMensaje Output { get; set; }
+    public FizzBuzz() { }
 
-        public FizzBuzz(int _inferior, int _superior)
+        public FizzBuzz(int _inferior, int _superior, EnviarMensaje _output)
         {
             Inferior = _inferior;
             Superior = _superior;
+            Output = _output;
         }
 
         public void Execute()
@@ -36,22 +38,22 @@ namespace validaciones
                             if (i % 5 != 0)
                             {
 
-                                Console.WriteLine("FIZZ");
+                               Output("FIZZ");
                                 
                             }
                             else
                             {
-                                 Console.WriteLine("BUZZ");
+                                Output("BUZZ");
                             }
                         }
                         else
                         {
-                             Console.WriteLine("numero: " + i);
+                                Output("numero: " + i);
                         }
                     }
                     else
                     {
-                         Console.WriteLine("FIZZBUZZ");
+                                Output("FIZZBUZZ");
 
                     }
 
@@ -60,19 +62,9 @@ namespace validaciones
 
         }
 
-      
-        public bool Validaciones(int inferior, int superior)
-        {
 
-
-            if (inferior < 0 || superior < 0 || superior < inferior || superior > 10000 || inferior > 10000)
-            {
-                return false;
-            }
-            return true;
-
-
-        }
+        static bool Validaciones(int inferior, int superior) => !(inferior < 0 || superior < 0 || superior < inferior || superior > 10000 || inferior > 10000);
+       
 
     }
 }

@@ -13,16 +13,30 @@ validI = int.TryParse(Console.ReadLine(), out inferior);
 Console.Write("Ingrese el limite Superior de tipo entero: ");
 validS = int.TryParse(Console.ReadLine(), out superior);
 
-if (!(!validI || !validS || !validS && validI))
+
+//if (!(!validI || !validS || !validS && validI))
+//{
+
+//    FizzBuzz Fito = new FizzBuzz(inferior, superior);
+//    Fito.Execute();
+
+
+//}
+//else
+//{
+//  Console.WriteLine("No ha ingresado valores enteros en los limites");
+//}
+
+
+ static void Show(string v)
 {
-    FizzBuzz Fito = new FizzBuzz(inferior, superior);
-    Fito.Execute();
-
-
-}
-else
-{
-  Console.WriteLine("No ha ingresado valores enteros en los limites");
+    Console.WriteLine(v);
 }
 
-public delegate void FizzBuzz(int inferior, int superior);
+EnviarMensaje Output = new EnviarMensaje(Show);
+
+
+FizzBuzz Fito = new FizzBuzz(inferior, superior, Output);
+
+public delegate void EnviarMensaje(string valor);
+
