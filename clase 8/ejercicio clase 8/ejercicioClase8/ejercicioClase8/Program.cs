@@ -32,13 +32,15 @@ do
 }while (!validColumnas || !validFilas || columnas <= 0 || filas <= 0);
 
 double suma;
-double promedio = 0;
+double promedio;
 double[] promedios = new double[columnas];
 int[,] numeros = new int[filas, columnas];
 
-
+// Esto no es necesario para este ejercicio ya que contamos con este dato en filas y columnas ingresadas por el usuario pero en caso de no tenerlo se hace así
+// Incluso hay otra forma de obtener filas y columnas con numeros.GGetLength(0) para las filas y numeros.GGetLength(1) para las columnas que es mas corto que el que nos enseñaron
 ////Cantidad de filas
 int lengthFilas = numeros.GetUpperBound(0) + 1;
+
 
 ////Cantidad de Columnas
 int lengthColumnas = numeros.GetUpperBound(1) + 1;
@@ -53,6 +55,7 @@ for (int i = 0; i < lengthColumnas; i++)
     for (int j = 0; j < lengthFilas; j++)
     {
         Console.WriteLine($"Ingrese el elemento de Fila N°{j+1} ");
+        // hago las validaciones usando la misma variable de la entrada para no crear nuevas
         validFilas = int.TryParse(Console.ReadLine(), out numeros[j, i]);
         if (!validFilas || numeros[j, i] < 0)
         {
@@ -65,24 +68,25 @@ for (int i = 0; i < lengthColumnas; i++)
         }
     }
     promedio = suma / filas;
+    // lo redondeo porque usualmente los promedios se redondean hacia arriba
     promedios[i] = Math.Round(promedio);
     
 }
 
 //Muestro la Matriz
 for (int i = 0; i < lengthColumnas; i++)
-{
+    {
     Console.WriteLine("=====================================================");
     Console.WriteLine();
     Console.WriteLine($"Columna N° {i + 1} ");
 
-   
-    for (int j = 0; j < lengthFilas; j++)
+
+   for (int j = 0; j < lengthFilas; j++)
     {
         Console.Write($"Fila N°{j + 1} = ");
         Console.WriteLine(numeros[j, i]);
     }
-    Console.Write($"Promedio de la Columna N°{i + 1} = ");
+    Console.Write($"Promedio de la Columna Redondeado N°{i + 1} = ");
     Console.WriteLine(promedios[i]);
 }
 
