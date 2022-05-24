@@ -7,16 +7,15 @@ namespace validaciones
 
         public int Inferior { get; set; }
         public int Superior { get; set; }
-        public Action <string, StreamWriter> Output { get; set; }  
-        public StreamWriter Sw { get; set; }
+        public Action <string> Output { get; set; }          
     public FizzBuzz() { }
 
-        public FizzBuzz(int _inferior, int _superior, Action<string, StreamWriter> _output, StreamWriter _sw)
+        public FizzBuzz(int _inferior, int _superior, Action<string> _output)
         {
             Inferior = _inferior;
             Superior = _superior;
             Output = _output;
-            Sw = _sw;
+            
         }
        
 
@@ -28,7 +27,7 @@ namespace validaciones
                  Output("Los Datos ingresados son incorrectos." +
                     "\n* No se puede ingresar numeros negativos" +
                     " \n* El limite superior no puede ser menor que el limite inferior" +
-                    " \n* los limites no pueden ser mayores que 10mil", Sw);
+                    " \n* los limites no pueden ser mayores que 10mil");
                  return;
             }
            
@@ -41,22 +40,22 @@ namespace validaciones
                             if (i % 5 != 0)
                             {
 
-                               Output("FIZZ", Sw);
+                               Output("FIZZ");
                                 
                             }
                             else
                             {
-                                Output("BUZZ", Sw);
+                                Output("BUZZ");
                             }
                         }
                         else
                         {
-                                Output("numero: " + i, Sw);
+                                Output("numero: " + i);
                         }
                     }
                     else
                     {
-                                Output("FIZZBUZZ", Sw);
+                                Output("FIZZBUZZ");
 
                     }
 

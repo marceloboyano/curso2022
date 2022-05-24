@@ -28,30 +28,38 @@ validS = int.TryParse(Console.ReadLine(), out superior);
 //}
 
 
- static void Show(string v,StreamWriter sw)
+ static void Show(string v)
 {
     Console.WriteLine(v);
 }
 
 
-static void Imprime(string v, StreamWriter sw)
+static void Imprime(string v)
 {
-  
-    sw.WriteLine(v);
-   
-}
-Action<string, StreamWriter> Output = Show;
-StreamWriter sw = new StreamWriter("Test.txt");
+    using (Stream fs = new FileStream("./test.txt", FileMode.Append, FileAccess.Write))
+    {
 
-FizzBuzz Fito = new FizzBuzz(inferior, superior, Output, sw);
+        using (StreamWriter sw = new StreamWriter(fs))
+        {
+
+            sw.WriteLine(v);
+        }
+    }
+    
+
+}
+Action<string> Output = Show;
+
+
+FizzBuzz Fito = new FizzBuzz(inferior, superior, Output);
 Fito.Execute();
 
 
 Output = Imprime;
-FizzBuzz Fito1 = new FizzBuzz(inferior, superior, Output, sw);
+FizzBuzz Fito1 = new FizzBuzz(inferior, superior, Output);
 Fito1.Execute();
-sw.Close();
 
 
 
+ 
 
