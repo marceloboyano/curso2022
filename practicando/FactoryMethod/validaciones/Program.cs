@@ -14,52 +14,20 @@ Console.Write("Ingrese el limite Superior de tipo entero: ");
 validS = int.TryParse(Console.ReadLine(), out superior);
 
 
-//if (!(!validI || !validS || !validS && validI))
-//{
-
-//    FizzBuzz Fito = new FizzBuzz(inferior, superior);
-//    Fito.Execute();
-
-
-//}
-//else
-//{
-//  Console.WriteLine("No ha ingresado valores enteros en los limites");
-//}
-
-
 static void Show(string v)
 {
     Console.WriteLine(v);
 }
 
-
-//static void Imprime(string v)
-//{
-//    using (Stream fs = new FileStream("./test.txt", FileMode.Append, FileAccess.Write))
-//    {
-
-//        using (StreamWriter sw = new StreamWriter(fs))
-//        {
-
-//            sw.WriteLine(v);
-//        }
-//    }
-
-
-//}
 Action<string> Output = Show;
 
 
-FizzBuzzFabrica Fito = new FizzBuzzFabrica(inferior, superior, Output);
+// No necesitamos instancia, porque el método que utilizamos es ESTÁTICO --> buscar qué significa
+//FizzBuzzFabrica Fito = new FizzBuzzFabrica(inferior, superior);
 
 
-
-//Output = Imprime;
-//FizzBuzzFabrica Fito1 = new FizzBuzzFabrica(inferior, superior, Output);
-
-
-
-
-var fizzbuzz = FizzBuzzFabrica.ObtenerInstancia("FiZZBuzzConsola");
+var fizzbuzz = FizzBuzzFabrica.ObtenerInstancia("FiZZBuzzConsola", inferior, superior);
 fizzbuzz.execute();
+
+var fizzbuzzArchivo = FizzBuzzFabrica.ObtenerInstancia("FizzBuzzArchivo", inferior, superior);
+fizzbuzzArchivo.execute();

@@ -1,54 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FizzBuzz
+﻿namespace FizzBuzz
 {
-    public class FIzzBuzzArchivo:IFizzBuzz
+    public class FizzBuzzArchivo : FizzBuzzBase
     {
-        public void execute()
+        public FizzBuzzArchivo(int inferior, int superior)
+            : base(EscribirArchivo)
         {
+            this.Inferior = inferior;
+            this.Superior = superior;   
+        }
 
-            //if (!Validaciones(Inferior, Superior))
-            //{
-            //    Output("Los Datos ingresados son incorrectos." +
-            //       "\n* No se puede ingresar numeros negativos" +
-            //       " \n* El limite superior no puede ser menor que el limite inferior" +
-            //       " \n* los limites no pueden ser mayores que 10mil");
-            //    return;
-            //}
+        private static void EscribirArchivo(string text) 
+        {
+            using (Stream fs = new FileStream("./test.txt", FileMode.Append, FileAccess.Write))
+            {
 
-            //for (int i = Inferior; i <= Superior; i++)
-            //{
-            //    if (i % 3 != 0 || i % 5 != 0)
-            //    {
-            //        if (i % 5 == 0 || i % 3 == 0)
-            //        {
-            //            if (i % 5 != 0)
-            //            {
+                using (StreamWriter sw = new StreamWriter(fs))
+                {
 
-            //                Output("FIZZ");
-
-            //            }
-            //            else
-            //            {
-            //                Output("BUZZ");
-            //            }
-            //        }
-            //        else
-            //        {
-            //            Output("numero: " + i);
-            //        }
-            //    }
-            //    else
-            //    {
-            //        Output("FIZZBUZZ");
-
-            //    }
-
-            //}
+                    sw.WriteLine(text);
+                }
+            }
         }
     }
 }
