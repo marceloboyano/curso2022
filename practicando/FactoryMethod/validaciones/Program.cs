@@ -23,6 +23,7 @@ Action<string> Output = Show;
 
 
 // No necesitamos instancia, porque el método que utilizamos es ESTÁTICO --> buscar qué significa
+// El mismo caso sucede con Console.WriteLine (nunca instanciamos --> new Console()... sólo usamos el método)
 //FizzBuzzFabrica Fito = new FizzBuzzFabrica(inferior, superior);
 
 
