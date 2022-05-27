@@ -6,46 +6,26 @@ using System.Threading.Tasks;
 
 namespace FizzBuzz
 {
+    // La unica responsabilidad de esta clase es crear nuevas instancias de FizzBuzz. 
+    // No debe llevar ninguna lógica más que esa.
     public class FizzBuzzFabrica
     {
-       
-            public int Inferior { get; set; }
-            public int Superior { get; set; }
-            public Action<string> Output { get; set; }
-            public FizzBuzzFabrica() { }
 
-            public FizzBuzzFabrica(int _inferior, int _superior, Action<string> _output)
-            {
-                Inferior = _inferior;
-                Superior = _superior;
-                Output = _output;
-
-            }
-
-
-           public static bool Validaciones(int inferior, int superior) => !(inferior < 0 || superior < 0 || superior < inferior || superior > 10000 || inferior > 10000);
-
-
-        
-
-
-
-        public static IFizzBuzz ObtenerInstancia(string tipo)
+        public static IFizzBuzz ObtenerInstancia(string tipo, int inferior, int superior)
         {
             if (tipo == "FiZZBuzzConsola")
             {
-              return new FizzBuzzConsola();
+              return new FizzBuzzConsola(inferior, superior);
                 
             }
-            using (Stream fs = new FileStream("./test.txt", FileMode.Append, FileAccess.Write))
+
+            if (tipo == "FizzBuzzArchivo")
             {
+                return new FizzBuzzArchivo(inferior, superior);
 
-                using (StreamWriter sw = new StreamWriter(fs))
-                {
-
-                    sw.WriteLine(tipo);
-                }
             }
+
+            // Retorna el valor por defecto... En este caso null
             return default;
         }
     }
