@@ -4,11 +4,9 @@
     // Para eso usamos el constructor
     public class FizzBuzzConsola : FizzBuzzBase
     {
-        public FizzBuzzConsola(int inferior, int superior) :
+        public FizzBuzzConsola() :
             base(Console.WriteLine)
         {
-            this.Inferior = inferior;
-            this.Superior = superior;
         }
     }
 }

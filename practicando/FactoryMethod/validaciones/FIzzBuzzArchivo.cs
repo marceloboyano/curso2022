@@ -2,11 +2,9 @@
 {
     public class FizzBuzzArchivo : FizzBuzzBase
     {
-        public FizzBuzzArchivo(int inferior, int superior)
+        public FizzBuzzArchivo()
             : base(EscribirArchivo)
-        {
-            this.Inferior = inferior;
-            this.Superior = superior;   
+        {   
         }
 
         private static void EscribirArchivo(string text) 
