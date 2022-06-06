@@ -8,7 +8,8 @@ namespace FizzBuzz
 {
     public interface IFizzBuzz
     {
-     void execute();
+         void execute();
+         void setParameters(int inferior, int superior);
     }
 
 }

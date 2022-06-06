@@ -27,8 +27,10 @@ Action<string> Output = Show;
 //FizzBuzzFabrica Fito = new FizzBuzzFabrica(inferior, superior);
 
 
-var fizzbuzz = FizzBuzzFabrica.ObtenerInstancia("FiZZBuzzConsola", inferior, superior);
+var fizzbuzz = FizzBuzzFabrica<FizzBuzzHttp>.ObtenerInstancia(inferior, superior);
 fizzbuzz.execute();
+//var fizzbuzz = FizzBuzzFabrica<FizzBuzzConsola>.ObtenerInstancia(inferior, superior);
+//fizzbuzz.execute();
 
-var fizzbuzzArchivo = FizzBuzzFabrica.ObtenerInstancia("FizzBuzzArchivo", inferior, superior);
-fizzbuzzArchivo.execute();
+//var fizzbuzzArchivo = FizzBuzzFabrica<FizzBuzzArchivo>.ObtenerInstancia(inferior, superior);
+//fizzbuzzArchivo.execute();

@@ -75,5 +75,10 @@ namespace FizzBuzz
             || superior < inferior 
             || superior > 10000 || inferior > 10000;
 
+        public void setParameters(int inferior, int superior)
+        {
+            this.Inferior = inferior;
+            this.Superior = superior;
+        }
     }
 }
