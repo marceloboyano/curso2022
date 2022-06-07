@@ -8,6 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fizzbuzz.API\Fizzbuzz.API.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="validaciones">
       <HintPath>obj\Debug\net6.0\ref\validaciones.dll</HintPath>
     </Reference>

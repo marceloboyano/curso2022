@@ -5,8 +5,14 @@
     public class FizzBuzzConsola : FizzBuzzBase
     {
         public FizzBuzzConsola() :
-            base(Console.WriteLine)
+            base(Show)
         {
         }
+        static void Show(string text)
+        {
+            Console.WriteLine(text);
+        }
+
+      //  Action<string> Output = Show; ya no se usa
     }
 }
