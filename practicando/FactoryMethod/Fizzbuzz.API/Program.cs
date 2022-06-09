@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Registramos la clase concreta Repository para la interfaz IRepository --> InyecciÛn de dependencia
+// Registramos la clase concreta Repository para la interfaz IRepository --> Inyecci√≥n de dependencia
 builder.Services.AddScoped<IRepository, Repository>();
 
 
@@ -29,13 +29,12 @@ app.MapPost("/api/fizzbuzz", ([FromBody] FizzBuzzValue f) =>
 
 
 });
-app.Run();
 
 app.MapGet("/api/fizzbuzz", ([FromServices] Repository fizzBuzzRepository) => {
 
     // Devolver todos los values almacenados en la base de datos
 
-    return Results.Ok(); // agregar los datos devueltos dentro del Ok... eso te genera un json en la respuesta autom·ticamente
+    return Results.Ok(); // agregar los datos devueltos dentro del Ok... eso te genera un json en la respuesta autom√°ticamente
 });
 
 
@@ -57,7 +56,7 @@ public class Repository : IRepository
     public async Task StoreValue(FizzBuzzValue value)
     {
         // Conectarse a Entity Framework y guardar el valor que recibimos;
-        // Le agreguÈ Task a la firma porque el mÈtodo que vas a usar para salvar los datos es asÌncrono
+        // Le agregu√© Task a la firma porque el m√©todo que vas a usar para salvar los datos es as√≠ncrono
     }
 }
 
