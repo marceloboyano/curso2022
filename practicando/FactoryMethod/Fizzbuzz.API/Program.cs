@@ -6,9 +6,13 @@ var app = builder.Build();
 
 app.MapPost("/api/fizzbuzz", ([FromBody] FizzBuzzValue f) =>
 {
-    
+
     Console.WriteLine(f.fizzBuzzValue);
+
 });
+app.Run();
+
+app.MapGet("/api/fizzbuzz", () => Console.WriteLine("Hello, World!"));
 
 
 app.Run();
