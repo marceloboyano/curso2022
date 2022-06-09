@@ -72,6 +72,8 @@ public class FizzbuzzDbContext : DbContext
     public FizzbuzzDbContext(DbContextOptions options)
         : base(options)
     {
-
+        
     }
+    
+    DbSet<FizzBuzzValue> FizzBuzzValues { get; set; }
 }
