@@ -24,21 +24,28 @@ namespace FizzBuzz
 
         public static async void EnviarPorHttp(string text)
         {
-
-
+            
+            
             using (var httpClient = new HttpClient())
             {
-
+               
                 var f = new FizzBuzzValue { fizzBuzzValue = text };
+                //httpClient.BaseAddress = new Uri("http://localhost:5199/");
                 var url = "http://localhost:5199/api/fizzbuzz";
 
                 var jsonFormat = JsonConvert.SerializeObject(f);
            
                 var content = new StringContent(jsonFormat, Encoding.UTF8, "application/json");
 
+                try
+                {
+                    var response =  httpClient.PostAsync(url, content).GetAwaiter().GetResult();
+                }
+                catch
+                {
+                    Console.WriteLine("Error");
+                }
                 
-            var response = await httpClient.PostAsync(url,content);
-
             
 
             // La implementación va aca... El servidor se ejecuta en localhost:5199
