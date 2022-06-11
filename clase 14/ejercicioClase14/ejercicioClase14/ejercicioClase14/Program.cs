@@ -40,7 +40,7 @@ Escribir un programa que dentro de un bucle vaya mostrando las opciones que quer
 using ejercicioClase14;
 
 Baraja baraja = new Baraja();
-
+// Relleno la baraja con 40 naipes de 4 palos que son las "i" y el numero de las cartas la "j" 
 for (int i = 0; i < 4; i++)
 {
     for (int j = 1; j <= 12; j++)
@@ -71,28 +71,37 @@ for (int i = 0; i < 4; i++)
     }
 }
 
+
+
+
+
+
 baraja.Barajar();
 var opcion =0;
-Console.WriteLine("Bienvenido al Juego de las Cartas");
-Console.WriteLine("Las Cartas ya han sido Barajadas aleatoriamente");
-Console.WriteLine("Ingrese alguna de las siguientes opciones para empezar a jugar");
+Console.ForegroundColor = ConsoleColor.Yellow;
+Console.WriteLine("\t╔════════════════════════════════════════════════════════════════════════╗ ");
+Console.WriteLine("\t║                  Bienvenido al Juego de las Cartas                     ║ ");
+Console.WriteLine("\t║            Las Cartas ya han sido Barajadas aleatoriamente             ║ ");
+Console.WriteLine("\t║     Ingrese alguna de las siguientes opciones para empezar a jugar     ║ ");
+Console.WriteLine("\t╚════════════════════════════════════════════════════════════════════════╝ ");
 do
 {
-   
-    Console.WriteLine("1 - Barajar");
-    Console.WriteLine("2 - Mostrar siguiente carta");
-    Console.WriteLine("3 - Mostrar cartas disponibles");
-    Console.WriteLine("4 - Dar cartas");
-    Console.WriteLine("5 - Mostrar cartas del monton");
-    Console.WriteLine("6 - Mostrar baraja");
-    Console.WriteLine("7 - Salir");
+    Console.ForegroundColor = ConsoleColor.Green;
+    Console.WriteLine("           1 - Barajar");
+    Console.WriteLine("           2 - Mostrar siguiente carta");
+    Console.WriteLine("           3 - Mostrar cartas disponibles");
+    Console.WriteLine("           4 - Dar cartas");
+    Console.WriteLine("           5 - Mostrar cartas del monton");
+    Console.WriteLine("           6 - Mostrar baraja");
+    Console.WriteLine("           7 - Salir");
+    Console.Write("\n   La opción ingresada es: ");
     opcion = int.Parse(Console.ReadLine());
     Console.WriteLine();
     switch (opcion)
     {
         case 1:
-            baraja.Barajar();
-            Console.WriteLine("Las cartas han sido barajadas");
+            baraja.Barajar();                     
+            Console.WriteLine("   Las cartas han sido barajadas\n");
             break;
         case 2:
            baraja.SiguienteCarta();           
@@ -101,22 +110,23 @@ do
            baraja.CartasDisponibles();          
             break;
         case 4:
-            Console.WriteLine("Ingrese la cantidad de cartas que desea dar");
+            Console.Write("   Ingrese la cantidad de cartas que desea dar: ");
             int cantidad = int.Parse(Console.ReadLine());
-            baraja.DarCartas(cantidad);
+            Console.WriteLine();
+            baraja.DarCartas(cantidad);            
             break;
         case 5:
-            Console.WriteLine("Las cartas que ya han salido son: ");
+            Console.WriteLine("   Las cartas que ya han salido son: ");
             baraja.CartasMonton();
             Console.WriteLine();
             break;
         case 6:
-            Console.WriteLine("Las cartas que hay en la baraja son: ");
+            Console.WriteLine("   Las cartas que hay en la baraja son: ");
             baraja.MostrarBaraja();
             Console.WriteLine();
             break;
         default:
-            Console.WriteLine("Gracias por jugar");
+            Console.WriteLine("   Gracias por jugar");
             break;
     }
 

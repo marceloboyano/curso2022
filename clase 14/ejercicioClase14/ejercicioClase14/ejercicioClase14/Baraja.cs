@@ -30,19 +30,20 @@ namespace ejercicioClase14
         {
             if (Naipes.Count == 0)
             {
-                Console.WriteLine("No quedan mas cartas en la baraja");
+                Console.WriteLine("   No quedan mas cartas en la baraja\n");
                 return null;
             }
             var cartaDevuelta = Naipes[Naipes.Count - 1];
+            Monton.Add(cartaDevuelta);
             Naipes.Remove(Naipes[Naipes.Count - 1]);
-            Console.WriteLine("Se ha tomado la siguiente carta de la Baraja: " + cartaDevuelta.Numero + " de " + cartaDevuelta.Palo);
+            Console.WriteLine("   Se ha tomado la siguiente carta de la Baraja: " + cartaDevuelta.Numero.ToString("00") + " de " + cartaDevuelta.Palo);
             return cartaDevuelta;
         }
 
         public void CartasDisponibles()
         {
           
-          Console.WriteLine($"Quedan {Naipes.Count} en la baraja");
+          Console.WriteLine($"   Quedan {Naipes.Count} en la baraja\n");
 
         }
         
@@ -50,14 +51,14 @@ namespace ejercicioClase14
         {
             if(Naipes.Count < cantidad )
             {
-                Console.WriteLine("Estas pidiendo mas cartas de las que hay en la baraja");
+                Console.WriteLine("   Estas pidiendo mas cartas de las que hay en la baraja\n");
                 return 0;
             }
             else
             {
                 for (int i = 0; i < cantidad; i++)
                 {
-                    Monton.Add(SiguienteCarta());
+                   SiguienteCarta();
                 }
                 return cantidad;
             }
@@ -68,21 +69,30 @@ namespace ejercicioClase14
         {
             if (Monton.Count == 0)
             {
-                Console.WriteLine("No has sacado ninguna Carta");
+                Console.WriteLine("   No has sacado ninguna Carta");
             }
             else
             {
                 foreach (var carta in Monton)
                 {
-                    Console.Write(carta.Numero + carta.Palo + ", ");
+                    Console.WriteLine($"   {carta.Numero.ToString("00")}  {carta.Palo}  ");
                 }
+
+
+
+
+                //foreach (var carta in Monton)
+                //{
+
+                //    Console.Write($"   {carta.Numero.ToString("00")}  {carta.Palo}  \n");
+                //}
             }
         }
         public void MostrarBaraja()
         {
             foreach (var carta in Naipes)
             {
-                Console.Write(carta.Numero +" " + carta.Palo + ", ");
+                Console.WriteLine($"   {carta.Numero.ToString("00")}  {carta.Palo}  ");
             }
         }
         
