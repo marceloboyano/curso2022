@@ -48,22 +48,21 @@ for (int i = 0; i < 4; i++)
         switch (i)
         {
             case 0:
-                if (j == 8 || j == 9) break;
-               
-                    baraja.Naipes.Add(new Carta(j, "espadas"));
+                if (j == 8 || j == 9) break;               
+                baraja.Naipes.Add(new Carta(j, "espadas"));
                 
                 break;
             case 1:
-                if (j == 8 || j == 9) break;
+                if (j == 8 || j == 9) break;                
                 baraja.Naipes.Add(new Carta(j, "bastos"));               
                 break;
             case 2:
-                if (j == 8 || j == 9) break;
+                if (j == 8 || j == 9) break;              
                 baraja.Naipes.Add(new Carta(j, "oros"));
                 
                 break;
             default:
-                if (j == 8 || j == 9) break;
+                if (j == 8 || j == 9) break;             
                 baraja.Naipes.Add(new Carta(j, "copas"));
                 break;
         }

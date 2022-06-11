@@ -78,14 +78,7 @@ namespace ejercicioClase14
                     Console.WriteLine($"   {carta.Numero.ToString("00")}  {carta.Palo}  ");
                 }
 
-
-
-
-                //foreach (var carta in Monton)
-                //{
-
-                //    Console.Write($"   {carta.Numero.ToString("00")}  {carta.Palo}  \n");
-                //}
+                           
             }
         }
         public void MostrarBaraja()
