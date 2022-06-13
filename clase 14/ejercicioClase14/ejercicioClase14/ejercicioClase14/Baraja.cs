@@ -47,20 +47,22 @@ namespace ejercicioClase14
 
         }
         
-        public int DarCartas(int cantidad)
+        public List<Carta> DarCartas(int cantidad)
         {
             if(Naipes.Count < cantidad )
             {
                 Console.WriteLine("   Estas pidiendo mas cartas de las que hay en la baraja\n");
-                return 0;
+                return null;
             }
-            else
+            else            
             {
+                List<Carta> cartaDevuelta = new List<Carta>();
                 for (int i = 0; i < cantidad; i++)
                 {
-                   SiguienteCarta();
+                    
+                    cartaDevuelta.Add( SiguienteCarta());
                 }
-                return cantidad;
+                return cartaDevuelta;
             }
           
         }

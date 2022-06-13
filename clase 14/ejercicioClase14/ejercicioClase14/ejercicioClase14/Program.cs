@@ -103,7 +103,7 @@ do
             Console.WriteLine("   Las cartas han sido barajadas\n");
             break;
         case 2:
-           baraja.SiguienteCarta();           
+            baraja.SiguienteCarta();          
             break;
         case 3:
            baraja.CartasDisponibles();          
@@ -124,8 +124,12 @@ do
             baraja.MostrarBaraja();
             Console.WriteLine();
             break;
-        default:
+        case 7:
             Console.WriteLine("   Gracias por jugar");
+            break;
+        default:
+            Console.WriteLine("  Opción incorrecta. Ingrese de nuevo");
+            Console.WriteLine();
             break;
     }
 

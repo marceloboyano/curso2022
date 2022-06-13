@@ -23,6 +23,7 @@ app.MapPost("/api/fizzbuzz", ([FromBody] FizzBuzzValue f) =>
 {
 
     Console.WriteLine(f.fizzBuzzValue);
+    
 
     // Implementar llamado a entity
     // Podes devolver un Ok para saber que todo fue bien mientras debuggeas... eso genera un codigo 200
@@ -46,8 +47,18 @@ public class Repository : IRepository
 {
     public IEnumerable<FizzBuzzValue> GetAll()
     {
-        var result = new List<FizzBuzzValue>();
 
+        using (FizzbuzzDbContext db = new FizzbuzzDbContext( ))
+        {
+            var result = new List<FizzBuzzValue>();
+
+
+            //result = db.Find();
+
+            //db.result.Add(FizzBuzzValue);                     
+            //db.savechanges();
+
+        }
         // Conectarse a Entity Framework y obtener todos los valores de Fizzbuzz
 
         return result; 
@@ -68,10 +79,10 @@ public interface IRepository
 
 public class FizzbuzzDbContext : DbContext
 {
-    public FizzbuzzDbContext(DbContextOptions options)
+    public FizzbuzzDbContext(DbContextOptions<FizzbuzzDbContext> options)
         : base(options)
     {
-        
+       
     }
     
     DbSet<FizzBuzzValue> FizzBuzzValues { get; set; }
