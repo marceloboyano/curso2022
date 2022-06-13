@@ -35,8 +35,7 @@ namespace ejercicioClase14
             }
             var cartaDevuelta = Naipes[Naipes.Count - 1];
             Monton.Add(cartaDevuelta);
-            Naipes.Remove(Naipes[Naipes.Count - 1]);
-            Console.WriteLine("   Se ha tomado la siguiente carta de la Baraja: " + cartaDevuelta.Numero.ToString("00") + " de " + cartaDevuelta.Palo);
+            Naipes.Remove(cartaDevuelta);        
             return cartaDevuelta;
         }
 

@@ -103,7 +103,8 @@ do
             Console.WriteLine("   Las cartas han sido barajadas\n");
             break;
         case 2:
-            baraja.SiguienteCarta();          
+            var siguienteCarta = baraja.SiguienteCarta();
+            Console.WriteLine("   Se ha tomado la siguiente carta de la Baraja: " + siguienteCarta.Numero.ToString("00") + " de " + siguienteCarta.Palo);          
             break;
         case 3:
            baraja.CartasDisponibles();          
@@ -112,7 +113,13 @@ do
             Console.Write("   Ingrese la cantidad de cartas que desea dar: ");
             int cantidad = int.Parse(Console.ReadLine());
             Console.WriteLine();
-            baraja.DarCartas(cantidad);            
+           var CartaDeVuelta = baraja.DarCartas(cantidad);
+            Console.WriteLine("   Las Cartas repartidas son: ");
+            foreach (var item in CartaDeVuelta)
+            {
+                Console.WriteLine($"   {item.Numero.ToString("00")} de {item.Palo}");
+            }
+           
             break;
         case 5:
             Console.WriteLine("   Las cartas que ya han salido son: ");
