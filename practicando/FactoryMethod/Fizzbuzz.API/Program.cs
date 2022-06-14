@@ -19,23 +19,12 @@ var app = builder.Build();
 
 // FromServices busca entre los servicios que registramos previamente...
 // Al ir a buscar el Repository nos trae la instancia que definimos
-app.MapPost("/api/fizzbuzz",  ([FromBody] FizzBuzzValue f) =>
+app.MapPost("/api/fizzbuzz",  ([FromServices] IRepository repo, [FromBody] FizzBuzzValue f) =>
 {
     
     Console.WriteLine(f.fizzBuzzValue);
 
-    var hello = new Repository();
-    try
-    {
-        hello.StoreValue(f);
-    }
-    catch (Exception ex)
-    {
-
-       Console.WriteLine("error" + ex);
-    }
-    
-   
+    repo.StoreValue(f);
 
 
     //esto no me salio por el nivel de proteccion de fizzbuzz
@@ -66,7 +55,7 @@ app.MapPost("/api/fizzbuzz",  ([FromBody] FizzBuzzValue f) =>
 
 });
 
-app.MapGet("/api/fizzbuzz", ([FromServices] Repository fizzBuzzRepository) => {
+app.MapGet("/api/fizzbuzz", ([FromServices] IRepository fizzBuzzRepository) => {
 
     // Devolver todos los values almacenados en la base de datos
    var datos= fizzBuzzRepository.GetAll();
@@ -77,62 +66,33 @@ app.MapGet("/api/fizzbuzz", ([FromServices] Repository fizzBuzzRepository) => {
 
 app.Run();
 
-public record FizzBuzzValue(string fizzBuzzValue);
+public record FizzBuzzValue(int id, string fizzBuzzValue);
 
 public class Repository : IRepository
 {
+    private readonly FizzbuzzDbContext _db;
+
+    public Repository(FizzbuzzDbContext db)
+    {
+        _db = db;
+    }
     public IEnumerable<FizzBuzzValue> GetAll()
     {
-
-        
-            var result = new List<FizzBuzzValue>();
-            IConfiguration configuration = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json")
-            .Build();
-
-        var connectionString = configuration.GetConnectionString("local");
-
-        var options = new DbContextOptionsBuilder<FizzbuzzDbContext>()
-                         .UseInMemoryDatabase("FizzBuzzDb")
-                         .Options;
-        using (FizzbuzzDbContext db = new FizzbuzzDbContext(options))
-        {
-            result = db.FizzBuzzValues.ToList();
-            foreach (var item in result)
-            {
-                Console.WriteLine(item.fizzBuzzValue);
-            }       
-
-        }
-        // Conectarse a Entity Framework y obtener todos los valores de Fizzbuzz
-
-        return result; 
+        return _db.FizzBuzzValues; 
     }
 
     public async Task StoreValue(FizzBuzzValue value)
     {
         // Conectarse a Entity Framework y guardar el valor que recibimos;
         // Le agregué Task a la firma porque el método que vas a usar para salvar los datos es asíncrono
-        IConfiguration configuration = new ConfigurationBuilder()
-           .SetBasePath(Directory.GetCurrentDirectory())
-           .AddJsonFile("appsettings.json")
-           .Build();
-        var connectionString = configuration.GetConnectionString("local");
 
-        var options = new DbContextOptionsBuilder<FizzbuzzDbContext>()
-                         .UseInMemoryDatabase("FizzBuzzDb")
-                         .Options;
-        
-        using (FizzbuzzDbContext db = new FizzbuzzDbContext(options))
-        {
+        var rand = new Random();                    
 
-            FizzBuzzValue fizzBuzzValue = new FizzBuzzValue(value.fizzBuzzValue); // aca me da error nivel de proteccion de fizzbuzz
+            FizzBuzzValue fizzBuzzValue = new FizzBuzzValue(rand.Next(),value.fizzBuzzValue); // aca me da error nivel de proteccion de fizzbuzz
 
-            db.FizzBuzzValues.Add(fizzBuzzValue);
-             await db.SaveChangesAsync();
+        _db.FizzBuzzValues.Add(fizzBuzzValue);
+        await _db.SaveChangesAsync();
 
-        }
         return ;// no se que retornar
     }
 }
