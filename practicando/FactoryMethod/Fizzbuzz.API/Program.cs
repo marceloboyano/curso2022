@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
+     
 // Registramos la clase concreta Repository para la interfaz IRepository --> Inyección de dependencia
 builder.Services.AddScoped<IRepository, Repository>();
 
@@ -23,41 +23,17 @@ app.MapPost("/api/fizzbuzz",  ([FromBody] FizzBuzzValue f) =>
 {
     
     Console.WriteLine(f.fizzBuzzValue);
-
-    var hello = new Repository();
-    try
-    {
-        hello.StoreValue(f);
-    }
-    catch (Exception ex)
-    {
-
-       Console.WriteLine("error" + ex);
-    }
-    
-   
-
-
-    //esto no me salio por el nivel de proteccion de fizzbuzz
-    //FizzBuzzValue fizzBuzzValue = new FizzBuzzValue(f);
-    //IConfiguration configuration = new ConfigurationBuilder()
-    //       .SetBasePath(Directory.GetCurrentDirectory())
-    //       .AddJsonFile("appsettings.json")
-    //       .Build();
-    //var connectionString = configuration.GetConnectionString("local");
-
-    //var options = new DbContextOptionsBuilder<FizzbuzzDbContext>()
-    //                 .UseInMemoryDatabase("FizzBuzzDb")
-    //                 .Options;
-   
-
-    //using (FizzbuzzDbContext db = new FizzbuzzDbContext(options))
+    f.fizzBuzzValue.ToList();
+    //var hello = new Repository();
+    //try
+    //{
+    //    hello.StoreValue(f);
+    //}
+    //catch (Exception ex)
     //{
 
-       
-
-    //    db.FizzBuzzValues.Add(fizzBuzzValue);
-    //   db.SaveChangesAsync();
+    //    Console.WriteLine("error" + ex);
+    //}
 
     //}
     // Implementar llamado a entity
@@ -66,13 +42,29 @@ app.MapPost("/api/fizzbuzz",  ([FromBody] FizzBuzzValue f) =>
 
 });
 
-app.MapGet("/api/fizzbuzz", ([FromServices] Repository fizzBuzzRepository) => {
+//app.MapGet("/api/fizzbuzz", async (FizzbuzzDbContext context) =>
 
-    // Devolver todos los values almacenados en la base de datos
-   var datos= fizzBuzzRepository.GetAll();
 
-    return Results.Ok(datos); // agregar los datos devueltos dentro del Ok... eso te genera un json en la respuesta automáticamente
+//    await context.FizzBuzzValues.ToListAsync()
+
+//// // Devolver todos los values almacenados en la base de datos
+////var datos= fizzBuzzRepository.GetAll();
+
+//// return Results.Ok(datos); // agregar los datos devueltos dentro del Ok... eso te genera un json en la respuesta automáticamente
+//); ;
+
+app.MapGet("/api/fizzbuzz", async ([FromServices] FizzbuzzDbContext f) =>
+{
+    // Devolver todos los values almacenados en la base de datos    
+    var result = await f.FizzBuzzValues.FindAsync();
+     return Results.Ok(result); // agregar los datos devueltos dentro del Ok... eso te genera un json en la respuesta automáticamente
 });
+//app.MapGet("/api/fizzbuzz", ([FromServices] Repository fizzBuzzRepository) =>
+//{
+//    // Devolver todos los values almacenados en la base de datos    
+//    var result = fizzBuzzRepository.
+//     return Results.Ok(fizzBuzzRepository.GetAll().ToList()); // agregar los datos devueltos dentro del Ok... eso te genera un json en la respuesta automáticamente
+//});
 
 
 app.Run();
@@ -83,73 +75,38 @@ public class Repository : IRepository
 {
     public IEnumerable<FizzBuzzValue> GetAll()
     {
-
         
-            var result = new List<FizzBuzzValue>();
-            IConfiguration configuration = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json")
-            .Build();
-
-        var connectionString = configuration.GetConnectionString("local");
-
-        var options = new DbContextOptionsBuilder<FizzbuzzDbContext>()
-                         .UseInMemoryDatabase("FizzBuzzDb")
-                         .Options;
-        using (FizzbuzzDbContext db = new FizzbuzzDbContext(options))
+        var result = new List<FizzBuzzValue>();
+        // Conectarse a Entity Framework y obtener todos los valores de Fizzbuzz
+        
+        foreach (var item in result)
         {
-            result = db.FizzBuzzValues.ToList();
-            foreach (var item in result)
-            {
-                Console.WriteLine(item.fizzBuzzValue);
-            }       
 
         }
-        // Conectarse a Entity Framework y obtener todos los valores de Fizzbuzz
 
-        return result; 
+        return result;
     }
 
     public async Task StoreValue(FizzBuzzValue value)
     {
         // Conectarse a Entity Framework y guardar el valor que recibimos;
         // Le agregué Task a la firma porque el método que vas a usar para salvar los datos es asíncrono
-        IConfiguration configuration = new ConfigurationBuilder()
-           .SetBasePath(Directory.GetCurrentDirectory())
-           .AddJsonFile("appsettings.json")
-           .Build();
-        var connectionString = configuration.GetConnectionString("local");
 
-        var options = new DbContextOptionsBuilder<FizzbuzzDbContext>()
-                         .UseInMemoryDatabase("FizzBuzzDb")
-                         .Options;
-        
-        using (FizzbuzzDbContext db = new FizzbuzzDbContext(options))
+    }
+}
+    public interface IRepository
+    {
+        IEnumerable<FizzBuzzValue> GetAll();
+        Task StoreValue(FizzBuzzValue value);
+    }
+
+    public class FizzbuzzDbContext : DbContext
+    {
+        public FizzbuzzDbContext(DbContextOptions<FizzbuzzDbContext> options)
+            : base(options)
         {
 
-            FizzBuzzValue fizzBuzzValue = new FizzBuzzValue(value.fizzBuzzValue); // aca me da error nivel de proteccion de fizzbuzz
-
-            db.FizzBuzzValues.Add(fizzBuzzValue);
-             await db.SaveChangesAsync();
-
         }
-        return ;// no se que retornar
-    }
-}
 
-public interface IRepository
-{
-    IEnumerable<FizzBuzzValue> GetAll();
-    Task StoreValue(FizzBuzzValue value);
-}
-
-public class FizzbuzzDbContext : DbContext
-{
-    public FizzbuzzDbContext(DbContextOptions<FizzbuzzDbContext> options)
-        : base(options)
-    {
-       
+        public DbSet<FizzBuzzValue> FizzBuzzValues { get; set; }
     }
-    
-    public DbSet<FizzBuzzValue> FizzBuzzValues { get; set; }
-}
