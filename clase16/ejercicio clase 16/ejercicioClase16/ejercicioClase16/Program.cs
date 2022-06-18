@@ -15,33 +15,43 @@
 
 
 using ejercicioClase16.Modelos;
-
-Console.WriteLine("Bienvenido!! vamos a calcular el área de una figura cuadrilatera");
-Console.WriteLine("1- CUADRADO");
-Console.WriteLine("2- RECTANGULO");
-Console.WriteLine("3- RECTANGULO");
+Console.WriteLine();
+Console.ForegroundColor = ConsoleColor.Yellow;
+Console.WriteLine("\t╔════════════════════════════════════════════════════════════════════════╗ ");
+Console.WriteLine("\t║   Bienvenido!! vamos a calcular el área de una figura cuadrilatera     ║ ");
+Console.WriteLine("\t║   1- CUADRADO                                                          ║ ");
+Console.WriteLine("\t║   2- RECTANGULO                                                        ║ ");
+Console.WriteLine("\t║   3- TRAPECIO                                                          ║ ");
+Console.WriteLine("\t╚════════════════════════════════════════════════════════════════════════╝ ");
+Console.ForegroundColor = ConsoleColor.Green;
+Console.Write("OPCION: ");
 var opcion = int.Parse(Console.ReadLine());
+Console.WriteLine("══════════════════════════════════════════════════════════════════════════════════");
 Console.WriteLine("Ingrese las cordenadas x,y de cada uno de los vertices de su figura");
-Console.Write("Vertice Nº1 x,y: ");
+Console.Write("Vertice Nº1 x: ");
 var x = int.Parse(Console.ReadLine());
+Console.Write("Vertice Nº1 y: ");
 var y = int.Parse(Console.ReadLine());
 var v1 = new[] { x, y };
 Console.WriteLine();
-Console.Write("Vertice Nº2 x,y: ");
+Console.Write("Vertice Nº2 x: ");
 x = int.Parse(Console.ReadLine());
+Console.Write("Vertice Nº2 y: ");
 y = int.Parse(Console.ReadLine());
 var v2 = new[] { x, y };
 Console.WriteLine();
-Console.Write("Vertice Nº3 x,y: ");
+Console.Write("Vertice Nº3 x: ");
 x = int.Parse(Console.ReadLine());
+Console.Write("Vertice Nº3 y: ");
 y = int.Parse(Console.ReadLine());
 var v3 = new[] { x, y };
 Console.WriteLine();
-Console.Write("Vertice Nº4 x,y: ");
+Console.Write("Vertice Nº4 x: ");
 x = int.Parse(Console.ReadLine());
+Console.Write("Vertice Nº4 y: ");
 y = int.Parse(Console.ReadLine());
 var v4 = new[] { x, y };
-Console.WriteLine();
+Console.WriteLine("══════════════════════════════════════════════════════════════════════════════════");
 switch (opcion)
 {
     case 1:

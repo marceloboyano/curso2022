@@ -14,7 +14,8 @@ namespace ejercicioClase16.Modelos
         }
         public override double CalcularArea()
         {
-            return (Vertice2[0] - Vertice1[0]) * (Vertice3[1] - Vertice1[1]);
+          return (Vertice2[0] - Vertice1[0]) * (Vertice3[1] - Vertice1[1]);
+         
         }
     }
 }

@@ -14,7 +14,8 @@ namespace ejercicioClase16.Modelos
         }
         public override double CalcularArea()
         {
-            return Math.Pow(Vertice2[0] - Vertice1[0], 2);
+          
+             return Math.Pow(Vertice2[0] - Vertice1[0], 2);
         }
     }
 }
