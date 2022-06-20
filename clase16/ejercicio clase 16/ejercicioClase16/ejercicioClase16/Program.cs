@@ -25,6 +25,8 @@ Console.WriteLine("\t║   3- TRAPECIO                                          
 Console.WriteLine("\t╚════════════════════════════════════════════════════════════════════════╝ ");
 Console.ForegroundColor = ConsoleColor.Green;
 Console.Write("OPCION: ");
+//NO CONTROLO SI LA FIGURA INGRESADA CORRESPONDE CON LOS 4 PUNTOS, YA EL PROGRAMA SOLO PIDE QUE CALCULEMOS EL AREA PERO SE PODRIA HACER CALCULANDO 
+//LA DISTANCIA DE SUS LADOS Y SUS PENDIENTES
 var opcion = int.Parse(Console.ReadLine());
 Console.WriteLine("══════════════════════════════════════════════════════════════════════════════════");
 Console.WriteLine("Ingrese las cordenadas x,y de cada uno de los vertices de su figura");

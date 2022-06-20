@@ -14,8 +14,15 @@ namespace ejercicioClase16.Modelos
         }
         public override double CalcularArea()
         {
-          
-             return Math.Pow(Vertice2[0] - Vertice1[0], 2);
+            //una forma de hacer es mediante el teorema de gauss que sirve para calcular el area de cualquier cuadrilatero
+            var area1 = Math.Abs((Vertice1[0] * Vertice4[1] + Vertice4[0] * Vertice3[1] + Vertice3[0] * Vertice2[1] +
+                Vertice2[0] * Vertice1[1] - Vertice1[0] * Vertice2[1] - Vertice2[0] * Vertice3[1] - Vertice3[0] * Vertice4[1] - Vertice4[0] * Vertice1[1]) * 0.5);
+            //otra forma de hacerlo es calculando la distancia de cualquiera de sus lados ya que todos son iguales la formula es lado x lado
+            var diagonalAB = Math.Sqrt(Math.Pow((Vertice1[0] - Vertice2[0]), 2) + Math.Pow((Vertice1[1] - Vertice2[1]), 2));
+            var area2 = diagonalAB * diagonalAB;
+
+            if (area1 != Math.Round(area2)) return 0;
+            return area1;
         }
     }
 }
