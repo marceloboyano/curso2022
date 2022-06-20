@@ -18,16 +18,14 @@ using ejercicioClase16.Modelos;
 Console.WriteLine();
 Console.ForegroundColor = ConsoleColor.Yellow;
 Console.WriteLine("\t╔════════════════════════════════════════════════════════════════════════╗ ");
-Console.WriteLine("\t║   Bienvenido!! vamos a calcular el área de una figura cuadrilatera     ║ ");
-Console.WriteLine("\t║   1- CUADRADO                                                          ║ ");
-Console.WriteLine("\t║   2- RECTANGULO                                                        ║ ");
-Console.WriteLine("\t║   3- TRAPECIO                                                          ║ ");
+Console.WriteLine("\t║   Bienvenido!! Vamos a calcular el área de una figura cuadrilatera     ║ ");
+Console.WriteLine("\t║                   Podran ser estas tres figuras                        ║ ");
+Console.WriteLine("\t║                CUADRADO      RECTANGULO     TRAPECIO                   ║ ");
 Console.WriteLine("\t╚════════════════════════════════════════════════════════════════════════╝ ");
 Console.ForegroundColor = ConsoleColor.Green;
-Console.Write("OPCION: ");
-//NO CONTROLO SI LA FIGURA INGRESADA CORRESPONDE CON LOS 4 PUNTOS, YA EL PROGRAMA SOLO PIDE QUE CALCULEMOS EL AREA PERO SE PODRIA HACER CALCULANDO 
-//LA DISTANCIA DE SUS LADOS Y SUS PENDIENTES
-var opcion = int.Parse(Console.ReadLine());
+
+
+
 Console.WriteLine("══════════════════════════════════════════════════════════════════════════════════");
 Console.WriteLine("Ingrese las cordenadas x,y de cada uno de los vertices de su figura");
 Console.Write("Vertice Nº1 x: ");
@@ -54,21 +52,80 @@ Console.Write("Vertice Nº4 y: ");
 y = int.Parse(Console.ReadLine());
 var v4 = new[] { x, y };
 Console.WriteLine("══════════════════════════════════════════════════════════════════════════════════");
-switch (opcion)
+
+// Determino segun los puntos ingresados si es un cuadrado rectangulo o trapecio
+if (EsCuadrado(v1, v2, v3, v4) == true)
 {
-    case 1:
-        var cuadrado = new Cuadrado(v1, v2, v3, v4);
-        Console.Write("El area de su Cuadrado es: " + cuadrado.CalcularArea());
-        break;
-    case 2:
-        var rectangulo = new Rectangulo(v1, v2, v3, v4);
-        Console.Write("El area de su Rectangulo es: " + rectangulo.CalcularArea());
-        break;
-    case 3:
-        var trapecio = new Trapecio(v1, v2, v3, v4);
-        Console.Write("El area de su Trapecio es: " + trapecio.CalcularArea());
-        break;
-    default:
-        Console.WriteLine("Opcion Incorrecta");
-        break;
+    var cuadrado = new Cuadrado(v1, v2, v3, v4);
+    Console.WriteLine("Los vertices ingresados corresponden con un Cuadrado ");
+    Console.Write("El area de su Cuadrado es: " + cuadrado.CalcularArea());
+}
+else if (EsRectangulo(v1, v2, v3, v4) == true)
+
+{
+    var rectangulo = new Rectangulo(v1, v2, v3, v4);
+    Console.WriteLine("Los vertices ingresados corresponden con un Rectangulo ");
+    Console.Write("El area de su Rectangulo es: " + rectangulo.CalcularArea());
+}
+else
+{
+    //si no es cuadrado ni rectangulo es un trrapecio
+    var trapecio = new Trapecio(v1, v2, v3, v4);
+    Console.WriteLine("Los vertices ingresados corresponden con un Trapecio ");
+    Console.Write("El area de su Trapecio es: " + trapecio.CalcularArea());
+}
+
+
+ bool EsCuadrado(int[] Vertice1, int[] Vertice2, int[] Vertice3, int[] Vertice4)
+{
+    // calculo la distancia entre los puntos si es un cuadrado todas deben ser iguales
+    var diagonalAB = Math.Sqrt(Math.Pow((Vertice1[0] - Vertice2[0]), 2) + Math.Pow((Vertice1[1] - Vertice2[1]), 2));
+    var diagonalBC = Math.Sqrt(Math.Pow((Vertice2[0] - Vertice3[0]), 2) + Math.Pow((Vertice2[1] - Vertice3[1]), 2));
+    var diagonalCD = Math.Sqrt(Math.Pow((Vertice3[0] - Vertice4[0]), 2) + Math.Pow((Vertice3[1] - Vertice4[1]), 2));
+    var diagonalDA = Math.Sqrt(Math.Pow((Vertice4[0] - Vertice1[0]), 2) + Math.Pow((Vertice4[1] - Vertice1[1]), 2));
+    //CALCULO la pendiente de los puntos cuya multiplicacion debe dar -1 para saber si es 90 grados
+    //hago un CAST para que no me convierta el resultado a entero
+    var pendienteAB = (double)(Vertice2[1] - Vertice1[1]) / (double)(Vertice2[0] - Vertice1[0]);
+    var pendienteBC = (double)(Vertice3[1] - Vertice2[1]) / (double)(Vertice3[0] - Vertice2[0]);
+    var pendienteCD = (double)(Vertice4[1] - Vertice3[1]) / (double)(Vertice4[0] - Vertice3[0]);
+    var pendienteDA = (double)(Vertice1[1] - Vertice4[1]) / (double)(Vertice1[0] - Vertice4[0]);
+
+    if (diagonalAB == diagonalBC && diagonalBC == diagonalCD && diagonalCD == diagonalDA && pendienteAB * pendienteBC == -1
+        && pendienteBC * pendienteCD == -1 && pendienteCD * pendienteDA == -1 && pendienteDA * pendienteAB == -1)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+
+}
+bool EsRectangulo(int[] Vertice1, int[] Vertice2, int[] Vertice3, int[] Vertice4)
+{
+
+
+    // calculo la distancia entre los puntos si es un rectangulo no deben ser todas iguales
+    var diagonalAB = Math.Sqrt(Math.Pow((Vertice1[0] - Vertice2[0]), 2) + Math.Pow((Vertice1[1] - Vertice2[1]), 2));
+    var diagonalBC = Math.Sqrt(Math.Pow((Vertice2[0] - Vertice3[0]), 2) + Math.Pow((Vertice2[1] - Vertice3[1]), 2));
+    var diagonalCD = Math.Sqrt(Math.Pow((Vertice3[0] - Vertice4[0]), 2) + Math.Pow((Vertice3[1] - Vertice4[1]), 2));
+    var diagonalDA = Math.Sqrt(Math.Pow((Vertice4[0] - Vertice1[0]), 2) + Math.Pow((Vertice4[1] - Vertice1[1]), 2));
+    //CALCULO la pendiente de los puntos si cumple esto es un rectangulo
+    //AB y BC son porpendiculares
+    //BC y CD son porpendiculares
+    //CD y AD son porpendiculares
+    var pendienteAB = (double)(Vertice2[1] - Vertice1[1]) / (double)(Vertice2[0] - Vertice1[0]);
+    var pendienteBC = (double)(Vertice3[1] - Vertice2[1]) / (double)(Vertice3[0] - Vertice2[0]);
+    var pendienteCD = (double)(Vertice4[1] - Vertice3[1]) / (double)(Vertice4[0] - Vertice3[0]);
+    var pendienteDA = (double)(Vertice1[1] - Vertice4[1]) / (double)(Vertice1[0] - Vertice4[0]);
+
+    if ( pendienteAB * pendienteBC == -1 && pendienteBC * pendienteCD == -1 && pendienteCD * pendienteDA == -1 )
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+
 }
