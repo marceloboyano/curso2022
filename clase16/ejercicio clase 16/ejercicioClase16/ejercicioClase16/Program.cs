@@ -84,14 +84,21 @@ else
     var diagonalCD = Math.Sqrt(Math.Pow((Vertice3[0] - Vertice4[0]), 2) + Math.Pow((Vertice3[1] - Vertice4[1]), 2));
     var diagonalDA = Math.Sqrt(Math.Pow((Vertice4[0] - Vertice1[0]), 2) + Math.Pow((Vertice4[1] - Vertice1[1]), 2));
     //CALCULO la pendiente de los puntos cuya multiplicacion debe dar -1 para saber si es 90 grados
-    //hago un CAST para que no me convierta el resultado a entero
+    //hago un CAST 
     var pendienteAB = (double)(Vertice2[1] - Vertice1[1]) / (double)(Vertice2[0] - Vertice1[0]);
     var pendienteBC = (double)(Vertice3[1] - Vertice2[1]) / (double)(Vertice3[0] - Vertice2[0]);
     var pendienteCD = (double)(Vertice4[1] - Vertice3[1]) / (double)(Vertice4[0] - Vertice3[0]);
     var pendienteDA = (double)(Vertice1[1] - Vertice4[1]) / (double)(Vertice1[0] - Vertice4[0]);
-
-    if (diagonalAB == diagonalBC && diagonalBC == diagonalCD && diagonalCD == diagonalDA && pendienteAB * pendienteBC == -1
-        && pendienteBC * pendienteCD == -1 && pendienteCD * pendienteDA == -1 && pendienteDA * pendienteAB == -1)
+    if (diagonalAB == diagonalBC && diagonalBC == diagonalCD && diagonalCD == diagonalDA)  
+        {
+        //existen algunos casos que la pendiente tiende a infinito pero es un cuadrado o rectangulo ej. 3,1-6,1-6,4-3,4 asi lo soluciono
+            if(pendienteAB  == double.PositiveInfinity || pendienteBC  == double.PositiveInfinity || pendienteCD == double.PositiveInfinity || pendienteDA  == double.PositiveInfinity)
+              {
+            return true;
+              }
+        }
+    if (diagonalAB == diagonalBC && diagonalBC == diagonalCD && diagonalCD == diagonalDA && pendienteAB* pendienteBC == -1
+        && pendienteBC * pendienteCD == -1 && pendienteCD * pendienteDA == -1 && pendienteDA * pendienteAB == -1)        
     {
         return true;
     }
@@ -118,9 +125,39 @@ bool EsRectangulo(int[] Vertice1, int[] Vertice2, int[] Vertice3, int[] Vertice4
     var pendienteBC = (double)(Vertice3[1] - Vertice2[1]) / (double)(Vertice3[0] - Vertice2[0]);
     var pendienteCD = (double)(Vertice4[1] - Vertice3[1]) / (double)(Vertice4[0] - Vertice3[0]);
     var pendienteDA = (double)(Vertice1[1] - Vertice4[1]) / (double)(Vertice1[0] - Vertice4[0]);
+    var rec = false;
 
-    if ( pendienteAB * pendienteBC == -1 && pendienteBC * pendienteCD == -1 && pendienteCD * pendienteDA == -1 )
+    //veo si tiene 2 lados largos iguales y 2 lados cortos iguales //
+    //si llego hasta aca nunca van a ser los 4 lados iguales
+    if (diagonalAB == diagonalBC && diagonalCD == diagonalDA)
     {
+        if (pendienteAB == double.PositiveInfinity || pendienteBC == double.PositiveInfinity || pendienteCD == double.PositiveInfinity || pendienteDA == double.PositiveInfinity)
+        {
+            return true;
+        }
+        rec = true;
+    }else if(diagonalAB == diagonalCD && diagonalBC==diagonalDA)
+    {
+        if (pendienteAB == double.PositiveInfinity || pendienteBC == double.PositiveInfinity || pendienteCD == double.PositiveInfinity || pendienteDA == double.PositiveInfinity)
+        {
+            return true;
+        }
+        rec = true;
+    }else if (diagonalAB == diagonalDA && diagonalBC==diagonalCD)
+    {
+        if (pendienteAB == double.PositiveInfinity || pendienteBC == double.PositiveInfinity || pendienteCD == double.PositiveInfinity || pendienteDA == double.PositiveInfinity)
+        {
+            return true;
+        }
+        rec = true;
+    } 
+
+    if ( pendienteAB * pendienteBC == -1 && pendienteBC * pendienteCD == -1 && pendienteCD * pendienteDA == -1  && rec == true)
+    {
+        if (pendienteAB == double.PositiveInfinity || pendienteBC == double.PositiveInfinity || pendienteCD == double.PositiveInfinity || pendienteDA == double.PositiveInfinity)
+        {
+            return true;
+        }
         return true;
     }
     else
