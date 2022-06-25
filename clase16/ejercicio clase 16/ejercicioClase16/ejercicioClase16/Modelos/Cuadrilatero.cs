@@ -57,10 +57,10 @@ namespace ejercicioClase16.Modelos
         }
         public Cuadrilatero(int[] v1, int[] v2,int[] v3, int[] v4)
         {
-            _vertice1 = v1;
-            _vertice2 = v2;
-            _vertice3 = v3;
-            _vertice4 = v4;
+            Vertice1 = v1;
+            Vertice2 = v2;
+            Vertice3 = v3;
+            Vertice4 = v4;
         }
         public abstract double CalcularArea();
     }

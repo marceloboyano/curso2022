@@ -91,7 +91,7 @@ else
     var pendienteDA = (double)(Vertice1[1] - Vertice4[1]) / (double)(Vertice1[0] - Vertice4[0]);
     if (diagonalAB == diagonalBC && diagonalBC == diagonalCD && diagonalCD == diagonalDA)  
         {
-        //existen algunos casos que la pendiente tiende a infinito pero es un cuadrado o rectangulo ej. 3,1-6,1-6,4-3,4 asi lo soluciono
+        //existen algunos casos que la pendiente tiende a infinito pero es un cuadrado o rectangulo ej. (3,1) (6,1) (6,4) (3,4) asi lo soluciono
             if(pendienteAB  == double.PositiveInfinity || pendienteBC  == double.PositiveInfinity || pendienteCD == double.PositiveInfinity || pendienteDA  == double.PositiveInfinity)
               {
             return true;

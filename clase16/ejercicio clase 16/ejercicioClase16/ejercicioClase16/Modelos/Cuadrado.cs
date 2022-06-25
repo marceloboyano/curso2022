@@ -22,7 +22,7 @@ namespace ejercicioClase16.Modelos
             var area2 = diagonalAB * diagonalAB;
             
           
-            return area2;
+            return Math.Round(area2);
         }
     }
 }
