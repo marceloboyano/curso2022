@@ -11,7 +11,7 @@ namespace ejercicioClase16.Modelos
         private int[] _vertice1 = new int[2];
         private int[] _vertice2 = new int[2];
         private int[] _vertice3 = new int[2];
-        private int[] _vertice4 = new int[2];
+        private int[] _vertice4 = new int[2];        
         public int[] Vertice1 {
             get
             {
@@ -55,9 +55,9 @@ namespace ejercicioClase16.Modelos
                 _vertice4 = value;
             }
         }
-        public Cuadrilatero(int[] v1, int[] v2,int[] v3, int[] v4)
+        public Cuadrilatero(int[] v1, int[] v2, int[] v3, int[] v4)
         {
-            Vertice1 = v1;
+            Vertice1 = v1 ;
             Vertice2 = v2;
             Vertice3 = v3;
             Vertice4 = v4;

@@ -24,33 +24,77 @@ Console.WriteLine("\t║                CUADRADO      RECTANGULO     TRAPECIO   
 Console.WriteLine("\t╚════════════════════════════════════════════════════════════════════════╝ ");
 Console.ForegroundColor = ConsoleColor.Green;
 
-
-
+char opcion;
+do 
+{
+    int x;
+    int y;
 Console.WriteLine("══════════════════════════════════════════════════════════════════════════════════");
 Console.WriteLine("Ingrese las cordenadas x,y de cada uno de los vertices de su figura");
-Console.Write("Vertice Nº1 x: ");
-var x = int.Parse(Console.ReadLine());
-Console.Write("Vertice Nº1 y: ");
-var y = int.Parse(Console.ReadLine());
+    bool resultado1;
+    bool resultado2;
+    do {
+        Console.Write("Vertice Nº1 x: ");
+        resultado1 = int.TryParse(Console.ReadLine(), out x);
+        Console.Write("Vertice Nº1 y: ");
+        resultado2 = int.TryParse(Console.ReadLine(), out y);
+        if(resultado1 == false || resultado2==false)
+        {
+            Console.WriteLine("Los datos Ingresados son incorrectos. \nDeben ser números enteros");
+            Console.WriteLine("Presione cualquier tecla para continuar...");
+            Console.ReadKey();
+            Console.Clear();
+        }
+    } while (resultado1 == false || resultado2 == false);
 var v1 = new[] { x, y };
 Console.WriteLine();
-Console.Write("Vertice Nº2 x: ");
-x = int.Parse(Console.ReadLine());
-Console.Write("Vertice Nº2 y: ");
-y = int.Parse(Console.ReadLine());
-var v2 = new[] { x, y };
+    do
+    {
+        Console.Write("Vertice Nº2 x: ");
+        resultado1 = int.TryParse(Console.ReadLine(), out x);
+        Console.Write("Vertice Nº2 y: ");
+        resultado2 = int.TryParse(Console.ReadLine(), out y);
+        if (resultado1 == false || resultado2 == false)
+        {
+            Console.WriteLine("Los datos Ingresados son incorrectos. \nDeben ser números enteros");
+            Console.WriteLine("Presione cualquier tecla para continuar...");
+            Console.ReadKey();
+            Console.Clear();
+        }
+    } while (resultado1 == false || resultado2 == false);
+    var v2 = new[] { x, y };
 Console.WriteLine();
-Console.Write("Vertice Nº3 x: ");
-x = int.Parse(Console.ReadLine());
-Console.Write("Vertice Nº3 y: ");
-y = int.Parse(Console.ReadLine());
-var v3 = new[] { x, y };
+    do
+    {
+        Console.Write("Vertice Nº3 x: ");
+        resultado1 = int.TryParse(Console.ReadLine(), out x);
+        Console.Write("Vertice Nº3 y: ");
+        resultado2 = int.TryParse(Console.ReadLine(), out y);
+        if (resultado1 == false || resultado2 == false)
+        {
+            Console.WriteLine("Los datos Ingresados son incorrectos. \nDeben ser números enteros");
+            Console.WriteLine("Presione cualquier tecla para continuar...");
+            Console.ReadKey();
+            Console.Clear();
+        }
+    } while (resultado1 == false || resultado2 == false);
+    var v3 = new[] { x, y };
 Console.WriteLine();
-Console.Write("Vertice Nº4 x: ");
-x = int.Parse(Console.ReadLine());
-Console.Write("Vertice Nº4 y: ");
-y = int.Parse(Console.ReadLine());
-var v4 = new[] { x, y };
+    do
+    {
+        Console.Write("Vertice Nº4 x: ");
+        resultado1 = int.TryParse(Console.ReadLine(), out x);
+        Console.Write("Vertice Nº4 y: ");
+        resultado2 = int.TryParse(Console.ReadLine(), out y);
+        if (resultado1 == false || resultado2 == false)
+        {
+            Console.WriteLine("Los datos Ingresados son incorrectos. \nDeben ser números enteros");
+            Console.WriteLine("Presione cualquier tecla para continuar...");
+            Console.ReadKey();
+            Console.Clear();
+        }
+    } while (resultado1 == false || resultado2 == false);
+    var v4 = new[] { x, y };
 Console.WriteLine("══════════════════════════════════════════════════════════════════════════════════");
 
 // Determino segun los puntos ingresados si es un cuadrado rectangulo o trapecio
@@ -74,7 +118,22 @@ else
     Console.WriteLine("Los vertices ingresados corresponden con un Trapecio ");
     Console.Write("El area de su Trapecio es: " + trapecio.CalcularArea());
 }
-
+    bool result;
+    do
+    {
+        Console.WriteLine();
+        Console.Write("Desea ingresar otro figura Cuadrilatera S/N: ");
+            result = char.TryParse(Console.ReadLine().ToUpper(), out opcion);
+        if (opcion != 'S' && opcion != 'N')
+        {
+            Console.WriteLine("Opcion Incorrecta");
+            Console.WriteLine("Presione cualquier tecla para continuar...");
+            Console.ReadKey();
+           
+        }
+        Console.Clear();
+    } while(result == false || (opcion != 'N' && opcion != 'S'));
+}while (opcion == 'S') ;
 
  bool EsCuadrado(int[] Vertice1, int[] Vertice2, int[] Vertice3, int[] Vertice4)
 {
