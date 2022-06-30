@@ -62,6 +62,6 @@ namespace ejercicioClase16.Modelos
             Vertice3 = v3;
             Vertice4 = v4;
         }
-        public abstract double CalcularArea();
+        public abstract decimal CalcularArea();
     }
 }

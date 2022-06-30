@@ -12,17 +12,17 @@ namespace ejercicioClase16.Modelos
         {
 
         }
-        public override double CalcularArea()
+        public override decimal CalcularArea()
         {
             //una forma de hacer es mediante el teorema de gauss que sirve para calcular el area de cualquier cuadrilatero
             //var area1 = Math.Abs((Vertice1[0] * Vertice4[1] + Vertice4[0] * Vertice3[1] + Vertice3[0] * Vertice2[1] +
             //    Vertice2[0] * Vertice1[1] - Vertice1[0] * Vertice2[1] - Vertice2[0] * Vertice3[1] - Vertice3[0] * Vertice4[1] - Vertice4[0] * Vertice1[1]) * 0.5);
             //otra forma de hacerlo es calculando la distancia de sus lados y como tiene 2 lados iguales largos entre si y 2 lados iguales cortos, el area es largo x ancho 
-            var diagonalAB = (double)(Math.Sqrt(Math.Pow((Vertice1[0] - Vertice2[0]), 2) + Math.Pow((Vertice1[1] - Vertice2[1]), 2)));
-            var diagonalBC = (double)(Math.Sqrt(Math.Pow((Vertice2[0] - Vertice3[0]), 2) + Math.Pow((Vertice2[1] - Vertice3[1]), 2)));
-            var diagonalCD = (double)(Math.Sqrt(Math.Pow((Vertice3[0] - Vertice4[0]), 2) + Math.Pow((Vertice3[1] - Vertice4[1]), 2)));
-            var diagonalDA = (double)(Math.Sqrt(Math.Pow((Vertice4[0] - Vertice1[0]), 2) + Math.Pow((Vertice4[1] - Vertice1[1]), 2)));
-            double area2 = 0;
+            var diagonalAB = (decimal)(Math.Sqrt(Math.Pow((Vertice1[0] - Vertice2[0]), 2) + Math.Pow((Vertice1[1] - Vertice2[1]), 2)));
+            var diagonalBC = (decimal)(Math.Sqrt(Math.Pow((Vertice2[0] - Vertice3[0]), 2) + Math.Pow((Vertice2[1] - Vertice3[1]), 2)));
+            var diagonalCD = (decimal)(Math.Sqrt(Math.Pow((Vertice3[0] - Vertice4[0]), 2) + Math.Pow((Vertice3[1] - Vertice4[1]), 2)));
+            var diagonalDA = (decimal)(Math.Sqrt(Math.Pow((Vertice4[0] - Vertice1[0]), 2) + Math.Pow((Vertice4[1] - Vertice1[1]), 2)));
+            decimal area2 = 0;
             if (diagonalAB == diagonalBC)
             {
                 area2 = diagonalAB * diagonalCD;
