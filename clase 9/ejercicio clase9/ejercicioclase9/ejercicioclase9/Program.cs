@@ -24,6 +24,7 @@ do
 
 int[] vector = new int[tamaño];
 
+
 Random elemento = new Random();
 
 //lleno los datos del vector y los muestro
@@ -49,3 +50,5 @@ foreach (var item in vector)
 {
     Console.Write(item + " ");
 }
+Console.WriteLine("************************");
+Console.WriteLine(vector[^1]); 

@@ -23,12 +23,19 @@ var app = builder.Build();
 
 // FromServices busca entre los servicios que registramos previamente...
 // Al ir a buscar el Repository nos trae la instancia que definimos
-app.MapPost("/api/fizzbuzz", ([FromServices] IRepository repo, [FromBody] FizzBuzz f) =>
+app.MapPost("/api/fizzbuzz", async ([FromServices] IRepository repo, [FromBody] FizzBuzz f) =>
     {
 
         Console.WriteLine(f.fizzBuzzValue);
-
-        repo.StoreValue(f);
+        try
+        {
+           await repo.StoreValue(f);
+        }
+        catch(Exception ex) 
+        {
+            Console.WriteLine(ex);
+        }
+       
     });
 
 app.MapGet("/api/fizzbuzz", ([FromServices] IRepository fizzBuzzRepository) => {
@@ -43,7 +50,7 @@ app.MapGet("/api/fizzbuzz", ([FromServices] IRepository fizzBuzzRepository) => {
 
 app.Run();
 
-public record FizzBuzz(long id, string fizzBuzzValue);
+public record FizzBuzz(Guid id,string fizzBuzzValue);
 
 public class Repository : IRepository
 {
@@ -63,13 +70,22 @@ public class Repository : IRepository
         // Conectarse a Entity Framework y guardar el valor que recibimos;
         // Le agregué Task a la firma porque el método que vas a usar para salvar los datos es asíncrono
 
-        var rand = new Random();
-     
-        FizzBuzz fizzBuzzValue = new FizzBuzz(rand.Next(),value.fizzBuzzValue); // aca me da error nivel de proteccion de fizzbuzz
+        try
+        {
+            var  n = new Guid();
+            //var rand = new Random();
+            FizzBuzz fizzBuzzValue = new FizzBuzz(n,value.fizzBuzzValue); // aca me da error nivel de proteccion de fizzbuzz
 
-        _db.FizzBuzzValues.Add(fizzBuzzValue);
-        await _db.SaveChangesAsync();
-     
+            _db.FizzBuzzValues.Add(fizzBuzzValue);
+            await _db.SaveChangesAsync();
+
+        }
+        catch (Exception ex)
+        {
+           
+       
+            Console.WriteLine(ex);
+        }
     }
 }
 
@@ -86,10 +102,7 @@ public  class FizzbuzzDbContext : DbContext
     {
 
     }
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<FizzBuzz>().HasNoKey();
-    }
+  
     public  DbSet<FizzBuzz> FizzBuzzValues { get; set; }
 
 }

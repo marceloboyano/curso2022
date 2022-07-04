@@ -11,9 +11,8 @@ namespace FizzBuzz
     public class FizzBuzz
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long Id { get; set; }
-        public string FizzBuzzValue { get; set; } = null!;
+        public Guid ID { get; set; }
+        public string FizzBuzzValue { get; set; }
        
     }
 }
