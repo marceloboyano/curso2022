@@ -51,6 +51,16 @@
         overflow-y: auto;
         border: 1px solid black;
     }
+
+    button {
+        padding:8px;
+        background-color: #2dc72b;
+        color: white;
+        font-size: 14px;
+        border: none;
+        border-radius: 2%;
+        width:100%;
+    }
 </style>
 <body>
     <header>
@@ -65,6 +75,9 @@
             <div class="row">
                 <label for="inferior">Superior</label>
                 <input type="number" name="superior" id="superior"/>            
+            </div>
+            <div class="row">
+                <button onclick="enviarValoresAlApi()">Enviar</button>
             </div>
         </div>
         <br><br>
