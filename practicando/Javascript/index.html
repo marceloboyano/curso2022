@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fizzbuzz - Client</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+</head>
+<style>
+    * {
+        font-family: 'Open Sans', sans-serif;
+    }
+    body {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        width: 100%;
+        background: #d7d7d7;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .container > .row {
+        margin: 10px;
+        width: 300px;
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .container > .row > input {
+        margin-left: 40px;
+    }
+
+    .container > .row > label {
+        width:100px;
+    }
+
+    .fizzbuzz-list {
+        min-height: 300px;
+        overflow-y: auto;
+        border: 1px solid black;
+    }
+
+    button {
+        padding:8px;
+        background-color: #2dc72b;
+        color: white;
+        font-size: 14px;
+        border: none;
+        border-radius: 2%;
+        width:100%;
+    }
+</style>
+<body>
+    <header>
+        <h2>Fizzbuzz Client</h2>
+    </header>
+    <main>
+        <div class="container">
+            <div class="row">
+                <label for="inferior">Inferior</label>
+                <input type="number" name="inferior" id="inferior"/>            
+            </div>
+            <div class="row">
+                <label for="inferior">Superior</label>
+                <input type="number" name="superior" id="superior"/>            
+            </div>
+            <div class="row">
+                <button onclick="enviarValoresAlApi()">Enviar</button>
+            </div>
+        </div>
+        <br><br>
+        <div class="fizzbuzz-list" id="fizzbuzzList">
+            <!-- Esto se tiene que llenar dinamicamente con un GET a api/fizzbuzz -->
+            <!-- <ul>
+                <li> VALOR 1</li>
+                <li> VALOR 2</li>
+            </ul> -->
+        </div>
+    </main>
+    <script src="index.js"></script>
+</body>
+</html>
