@@ -49,7 +49,7 @@ namespace ejercicio
         {
         }
 
-    public override string ToString() => $"titulo: {Titulo} numero de temporadas: {NumeroTemporadas}  genero: {Genero} creador: {Creador}";
+       
 
 
        public int contador;
