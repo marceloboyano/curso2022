@@ -12,7 +12,14 @@ builder.Services.AddDbContext<FizzbuzzDbContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("FizzBuzzConenection"));   // Creamos una base de datos en la memoria del servidor... Esto despues lo vamos a cambiar por SQL SERVER
 });
 
-
+// Agregamos politica de CORS
+builder.Services.AddCors( opt =>
+{
+    opt.AddDefaultPolicy(o => o
+       .AllowAnyHeader()
+       .AllowAnyOrigin()
+       .AllowAnyMethod());
+});
 
 var app = builder.Build();
 //using (var scope = app.Services.CreateScope())
@@ -23,6 +30,9 @@ var app = builder.Build();
 
 // FromServices busca entre los servicios que registramos previamente...
 // Al ir a buscar el Repository nos trae la instancia que definimos
+
+app.UseCors();
+
 app.MapPost("/api/fizzbuzz", async ([FromServices] IRepository repo, [FromBody] FizzBuzz f) =>
     {
 
