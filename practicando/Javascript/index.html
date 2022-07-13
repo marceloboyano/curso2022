@@ -77,18 +77,24 @@
                 <input type="number" name="superior" id="superior"/>            
             </div>
             <div class="row">
-                <button onclick="enviarValoresAlApi()">Enviar</button>
+                <button onclick="enviarValoresAlApi()">Enviar</button>  
+                <button onclick="getAll()">Obtener Datos</button>        
             </div>
         </div>
         <br><br>
         <div class="fizzbuzz-list" id="fizzbuzzList">
+            
             <!-- Esto se tiene que llenar dinamicamente con un GET a api/fizzbuzz -->
             <!-- <ul>
+                
                 <li> VALOR 1</li>
                 <li> VALOR 2</li>
             </ul> -->
         </div>
+        
     </main>
-    <script src="index.js"></script>
+    <script src="index.js"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/node-uuid/1.4.7/uuid.min.js"></script>    
+    
 </body>
 </html>

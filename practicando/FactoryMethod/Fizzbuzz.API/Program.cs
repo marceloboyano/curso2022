@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Registramos la clase concreta Repository para la interfaz IRepository --> Inyección de dependencia
@@ -50,17 +52,19 @@ app.MapPost("/api/fizzbuzz", async ([FromServices] IRepository repo, [FromBody] 
 
 app.MapGet("/api/fizzbuzz", ([FromServices] IRepository fizzBuzzRepository) => {
 
+    
     // Devolver todos los values almacenados en la base de datos
     var datos = fizzBuzzRepository.GetAll();
-   
-
+    
     return Results.Ok(datos); // agregar los datos devueltos dentro del Ok... eso te genera un json en la respuesta automáticamente
 });
 
 
 app.Run();
 
-public record FizzBuzz(Guid id,string fizzBuzzValue);
+    public record FizzBuzz(Guid id,string fizzBuzzValue);
+    public record FizzBuzzDTO(string fizzBuzzDTO);
+
 
 public class Repository : IRepository
 {
@@ -70,9 +74,14 @@ public class Repository : IRepository
     {
         _db = db;
     }
-    public IEnumerable<FizzBuzz> GetAll()
+    public IEnumerable<FizzBuzzDTO> GetAll()
     {
-        return _db.FizzBuzzValues;
+
+        var datos1 = from b in _db.FizzBuzzValues
+                     select new FizzBuzzDTO(b.fizzBuzzValue);
+               
+        
+        return datos1;
     }
 
     public async Task StoreValue(FizzBuzz value)
@@ -84,7 +93,7 @@ public class Repository : IRepository
         {
             var  n = new Guid();
             //var rand = new Random();
-            FizzBuzz fizzBuzzValue = new FizzBuzz(n,value.fizzBuzzValue); // aca me da error nivel de proteccion de fizzbuzz
+            var fizzBuzzValue = new FizzBuzz(n,value.fizzBuzzValue); // aca me da error nivel de proteccion de fizzbuzz
 
             _db.FizzBuzzValues.Add(fizzBuzzValue);
             await _db.SaveChangesAsync();
@@ -101,7 +110,7 @@ public class Repository : IRepository
 
 public interface IRepository
 {
-    IEnumerable<FizzBuzz> GetAll();
+    IEnumerable<FizzBuzzDTO> GetAll();
     Task StoreValue(FizzBuzz value);
 }
 
@@ -114,5 +123,6 @@ public  class FizzbuzzDbContext : DbContext
     }
   
     public  DbSet<FizzBuzz> FizzBuzzValues { get; set; }
+   // public DbSet<FizzBuzzDTO> fizzBuzzDTOs { get; set; }
 
 }

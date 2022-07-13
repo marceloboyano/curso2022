@@ -22,7 +22,7 @@ namespace FizzBuzz
         {
         }
 
-        public static async void EnviarPorHttp(string text)
+        public static void EnviarPorHttp(string text)
         {
             
             
