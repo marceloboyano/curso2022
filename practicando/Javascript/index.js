@@ -120,7 +120,7 @@ async function getAll()
         });                
           console.log ($fragment);
             $ul.appendChild($fragment);           
-           d.getElementById("fizzbuzzList").appendChild($ul);         
+           d.querySelector(".fizzbuzz-list").insertAdjacentElement("afterbegin", $ul);         
  
        
       } catch (err) {

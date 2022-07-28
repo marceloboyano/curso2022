@@ -13,6 +13,6 @@ namespace FizzBuzz
         [Key]
         public Guid ID { get; set; }
         public string FizzBuzzValue { get; set; }
-       
+
     }
 }

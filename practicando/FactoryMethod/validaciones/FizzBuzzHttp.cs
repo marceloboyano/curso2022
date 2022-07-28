@@ -29,7 +29,7 @@ namespace FizzBuzz
             using (var httpClient = new HttpClient())
             {
                
-                var f = new FizzBuzz { FizzBuzzValue = text };
+                var f = new FizzBuzz{FizzBuzzValue = text };
                 //httpClient.BaseAddress = new Uri("http://localhost:5199/");
                 var url = "http://localhost:5199/api/fizzbuzz";
 
