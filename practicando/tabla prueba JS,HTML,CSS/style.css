@@ -1,0 +1,46 @@
+#tabla {
+     border-collapse: collapse;            
+  }
+  
+  th, td {    
+    padding: 15px 70px;   
+    cursor: pointer;
+    
+  }
+  tr{
+    border: 1px solid gray;
+  }
+
+  .content tbody tr:nth-child(2n){
+    background-color: #eee
+    
+  }
+
+ .row-selected{
+    background: gray !important;
+  }    
+  
+
+  #pintar{    
+    text-align:center;  
+  }
+
+.pepe {
+    width: 80%;    
+   
+}
+
+
+
+.content {
+    display: flex;
+    }
+.otr{
+    border: 1px solid #000;
+   
+    border: 1px solid #000;
+    border-radius: 1px solid #000;   
+    border-spacing: 0px;
+    caption-side: bottom;
+    table-layout: auto;   
+}
