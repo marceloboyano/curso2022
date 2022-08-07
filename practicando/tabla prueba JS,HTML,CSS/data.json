@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "descripcion": "Manteca",
+        "precio": 23,
+        "proveedor": "Sancor"  
+    },
+    {
+        "id": 2,
+        "descripcion": "Leche Descremada",
+        "precio": 23,
+        "proveedor": "Milkaut"  
+    },
+    {
+        "id": 3,
+        "descripcion": "Margarina",
+        "precio": 23,
+        "proveedor": "Danica"  
+    },
+    {
+        "id": 4,
+        "descripcion": "Mermelada",
+        "precio": 23,
+        "proveedor": "Arcor"  
+    },
+    {
+        "id": 5,
+        "descripcion": "Harina",
+        "precio": 23,
+        "proveedor": "Blancaflor"  
+    }
+]
