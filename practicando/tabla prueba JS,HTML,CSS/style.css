@@ -1,15 +1,19 @@
 #tabla {
-     border-collapse: collapse;            
-  }
+     border-collapse: collapse;   
+   
+ }
   
   th, td {    
     padding: 15px 70px;   
     cursor: pointer;
+    border:  thin solid slategray; 
+    border-top: 0px;
+    border-left: 0;
+    border-right: 0;
+   padding-bottom: 0;
     
   }
-  tr{
-    border: 1px solid gray;
-  }
+ 
 
   .content tbody tr:nth-child(2n){
     background-color: #eee
@@ -17,7 +21,7 @@
   }
 
  .row-selected{
-    background: gray !important;
+    background: yellow !important;
   }    
   
 
