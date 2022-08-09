@@ -69,10 +69,12 @@ const cellSelection = () =>{
  
 
 
-  d.addEventListener("DOMContentLoaded", (e) =>{
-    getAll();
+  d.addEventListener("DOMContentLoaded", async (e) =>{
+    await getAll();
     cellSelection();
 
   });
+
+
 
  
