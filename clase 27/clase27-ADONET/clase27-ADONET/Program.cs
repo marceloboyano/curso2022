@@ -17,10 +17,4 @@ using(SqlConnection connection = new SqlConnection(connectionString))
         Console.Write($"{reader["CustomerID"]} | {reader["CompanyName"]}\n");
     }
 
-     command = new SqlCommand("SELECT * FROM  Suppliers", connection);
-    var reader2 = command.ExecuteReader();
-    while (reader.Read())
-    {
-        Console.Write($"{reader["CustomerID"]} | {reader["CompanyName"]}\n");
-    }
 }

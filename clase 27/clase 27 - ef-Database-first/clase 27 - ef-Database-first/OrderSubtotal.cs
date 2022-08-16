@@ -1,0 +1,11 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace clase_27___ef_Database_first
+{
+    public partial class OrderSubtotal
+    {
+        public int OrderId { get; set; }
+        public decimal? Subtotal { get; set; }
+    }
+}
