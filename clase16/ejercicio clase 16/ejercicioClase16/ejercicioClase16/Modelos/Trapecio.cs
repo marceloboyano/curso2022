@@ -14,13 +14,10 @@ namespace ejercicioClase16.Modelos
         }
         public override decimal CalcularArea()
         {
-<<<<<<< HEAD
-            // ACA Aplico el teorema de gauss para que cada metodo de calcular area sea distinto
-             return (double)(Math.Abs((Vertice1[0] * Vertice4[1] + Vertice4[0] * Vertice3[1] + Vertice3[0] * Vertice2[1] + Vertice2[0] * Vertice1[1] - Vertice1[0] * Vertice2[1] - Vertice2[0] * Vertice3[1] - Vertice3[0] * Vertice4[1] - Vertice4[0] * Vertice1[1]) *  0.5));
-=======
+
+
              return (decimal)(Math.Abs((Vertice1[0] * Vertice4[1] + Vertice4[0] * Vertice3[1] + Vertice3[0] * Vertice2[1] + Vertice2[0] * Vertice1[1] - Vertice1[0] * Vertice2[1] - Vertice2[0] * Vertice3[1] - Vertice3[0] * Vertice4[1] - Vertice4[0] * Vertice1[1]) *  0.5));
->>>>>>> clase 19 arriba
-          
+
         }
     }
 }

@@ -1,0 +1,31 @@
+﻿@model introduccionMVC.Data.Entities.Vehiculo
+
+@{
+    ViewData["title"] = "Create new Vehicle";
+}
+
+<h1>Add new Vehicle</h1>
+<hr />
+
+<div class="row">
+    <form asp-action="Create">
+         <div class="mb-3">
+             <label for="exampleInputEmail1" class="form-label">Dominio</label>
+             <input asp-for="Dominio" type="text" class="form-control" id="Dominio" aria-describedby="Dominio">
+          </div>
+          <div class="mb-3">
+             <label for="exampleInputEmail1" class="form-label">NumeroChasis</label>
+             <input asp-for="NumeroChasis" type="text" class="form-control" id="NumeroChasis" aria-describedby="NumeroChasis">
+          </div>
+          <div class="mb-3">
+             <label for="exampleInputEmail1" class="form-label">Propietario</label>
+             <input asp-for="Propietario" type="text" class="form-control" id="Propietario" aria-describedby="Propietario">
+          </div>
+          <div class="mb-3">
+             <label for="exampleInputEmail1" class="form-label">Año de Fabricación</label>
+             <input asp-for="AnioFabricacion" type="text" class="form-control" id="AnioFabricacion" aria-describedby="Anio de Fabricacion">
+          </div>
+
+         <button type="submit" value="Create" class="btn btn-primary">Add</button>
+    </form>
+ </div>
