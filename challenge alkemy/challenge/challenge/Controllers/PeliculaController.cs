@@ -1,6 +1,6 @@
-﻿using DataBase;
+﻿using challenge.DTOs.Peliculas;
+using challenge.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace challenge.Controllers
 {
@@ -8,22 +8,23 @@ namespace challenge.Controllers
     [ApiController]
     public class PeliculaController : Controller
     {
-        private readonly DisneyContext _context;
-        public record PeliculaDTO(string Imagen, string Titulo, DateTime FechaCreacion);
+        private readonly IPeliculaService _peliculaService;
 
-        public PeliculaController(DisneyContext context)
+
+        public PeliculaController(IPeliculaService peliculaService)
         {
-            _context = context;
+            _peliculaService = peliculaService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PeliculaDTO>>> GetPelicula()
+        public async Task<IActionResult> GetPelicula()
         {
-            var peliculas = await _context.Peliculas.ToListAsync();
+            var peliculas = await _peliculaService.GetPeliculas();
 
-            var peliculasDTO = peliculas
-                .Select(p => new PeliculaDTO(p.Imagen, p.Titulo, p.FechaCreacion)).ToList();
-            return peliculasDTO;
+            // ;ejor devolver un IActionResult. Hay una serie de respuestas que implementan
+            // IActionResult como Ok, NotFound, BadRequest, que lo que hacen es 
+            // Envolver tu respuesta en formato json y agregarles un status code (200 en el caso de Ok)
+            return Ok(peliculas);
 
         }
     }
