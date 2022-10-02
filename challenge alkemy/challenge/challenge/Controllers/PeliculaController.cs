@@ -19,6 +19,7 @@ namespace challenge.Controllers
         [HttpGet]
         public async Task<IActionResult> GetPelicula()
         {
+            // Para ir a la implmentacion parate sobre getpeliculas y toca Ctrl + F12
             var peliculas = await _peliculaService.GetPeliculas();
 
             // ;ejor devolver un IActionResult. Hay una serie de respuestas que implementan
