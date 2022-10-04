@@ -14,7 +14,8 @@ namespace DataBase.Repositories
         {
             _context = context;
         }
-        public async Task<IEnumerable<T>> GetAll() => await _context.Set<T>().ToListAsync();
+        public async Task<IEnumerable<T>> GetAll() => await _context.Set<T>().Include();
+       
 
         public async Task<T> GetById(int id) => await _context.Set<T>().FindAsync(id);
 

@@ -10,13 +10,13 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-//builder.Services.AddDbContext<DisneyContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DisneyConnection")));
+builder.Services.AddDbContext<DisneyContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DisneyConnection")));
 
 // Para testear podemos usar un provider de Entity Framework en memoria. Esto sirve para no tener problemas 
 // que tengan que ver con base de datos exclusivamente, y testear sólamente el código y la lógica.
 // Despues de testear se puede vincular a la base de datos y hacer las pruebas de integración
 // https://learn.microsoft.com/en-us/ef/core/providers/in-memory/?tabs=dotnet-core-cli
-builder.Services.AddDbContext<DisneyContext>(options => options.UseInMemoryDatabase("TestDB"));
+//builder.Services.AddDbContext<DisneyContext>(options => options.UseInMemoryDatabase("TestDB"));
 
 // Agrego los repositorios
 builder.Services.AddScoped<IPeliculasRepository, PeliculasRepository>();
@@ -49,12 +49,12 @@ using (var scope = app.Services.CreateScope())
     context.AddRange(
             new Genero()
             {
-                Nombre = "Fantasia",
+                Nombre = "Fantasia",              
            
             },
             new Genero()
             {
-                Nombre = "Accion",
+                Nombre = "Accion",               
                 Peliculas = new[]
                 {
                     new Pelicula()
@@ -76,6 +76,37 @@ using (var scope = app.Services.CreateScope())
                         Edad=43,
                         Historia="robot malo que se vuelve bueno",
                         Nombre="T-1000",
+                        Imagen = "test",
+                        Peso=70.0M
+                    }
+                }
+            }
+                }
+            },
+            new Genero()
+            {
+                Nombre = "comedia",                
+                Peliculas = new[]
+                {
+                    new Pelicula()
+            {
+                Titulo="ROMPEBODAS",
+                Imagen = "test",
+                Personajes = new[]
+                {
+                    new Personaje()
+                    {
+                        Edad=40,
+                        Historia="SE COLAN EN LAS BODAS",
+                        Imagen = "test",
+                        Nombre="OWEN WILSON",
+                        Peso=80.0M
+                    },
+                    new Personaje()
+                    {
+                        Edad=43,
+                        Historia="LOCO MALO",
+                        Nombre="WILL FERREL",
                         Imagen = "test",
                         Peso=70.0M
                     }

@@ -26,8 +26,7 @@ namespace DataBase
         public int Calificacion { get; set; }
         public virtual ICollection<Genero> Generos { get; set; }
 
-        // Yo no haria required la imagen, ya que podría cargarse después
-        [Required(ErrorMessage = "La imagen es un campo obligatorio.")]
+        // Yo no haria required la imagen, ya que podría cargarse después   
         [StringLength(255, MinimumLength = 1)]
         public string Imagen { get; set; }
         //public byte[] Imagen { get; set; }                  

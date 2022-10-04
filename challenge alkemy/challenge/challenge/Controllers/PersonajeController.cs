@@ -5,7 +5,7 @@ using static challenge.Controllers.PersonajeController;
 
 namespace challenge.Controllers
 {
-    [Route("/character")]
+    [Route("GET/character")]
     [ApiController]
     public class PersonajeController : Controller
     {

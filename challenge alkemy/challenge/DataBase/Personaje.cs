@@ -26,8 +26,7 @@ namespace DataBase
         [StringLength(255, MinimumLength = 1)]
         public string Historia { get; set; }
 
-        // Yo no haria required la imagen, ya que podría cargarse después
-        [Required(ErrorMessage = "La imagen es un campo obligatorio.")]
+        // Yo no haria required la imagen, ya que podría cargarse después       
         [StringLength(255, MinimumLength = 1)]
         public string Imagen { get; set; }
         //public byte[] Imagen { get; set; }
