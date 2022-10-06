@@ -14,10 +14,10 @@ namespace DataBase.Repositories
         {
             _context = context;
         }
-        public async Task<IEnumerable<T>> GetAll() => await _context.Set<T>().Include();
+        public async Task<IEnumerable<T>> GetAll() => await _context.Set<T>().ToListAsync();
        
 
-        public async Task<T> GetById(int id) => await _context.Set<T>().FindAsync(id);
+        //public async Task<T> GetById(int id) => await _context.Set<T>().FindAsync(id);
 
         public async Task Create(T entity)
         {
@@ -25,16 +25,36 @@ namespace DataBase.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task Delete(T entity)
+        public async Task<bool> Delete(int id)
         {
-            _context.Set<T>().Remove(entity);
-            await _context.SaveChangesAsync();
+            var currentEntity = await _context.Set<T>().FindAsync(id);
+            if (currentEntity != null)
+            {
+                _context.Set<T>().Remove(currentEntity);
+                int rows = await _context.SaveChangesAsync();
+                return rows > 0;
+            }
+            return false;
+
         }
- 
-        public async Task Update(T entity)
+
+        public async Task<bool> Update(T entity)
         {
-            _context.Set<T>().Update(entity);
-            await _context.SaveChangesAsync();
+        
+            var currentEntity = await _context.Set<T>().FindAsync(entity.Id);
+            if (currentEntity != null)
+            {
+                _context.Set<T>().Update(entity);
+
+                //currentPersonaje.Nombre = personaje.Nombre;
+                //currentPersonaje.Edad = personaje.Edad;
+                //currentPersonaje.Peso = personaje.Peso;
+                //currentPersonaje.Imagen = personaje.Imagen;
+                int rows = await _context.SaveChangesAsync();
+                return rows > 0;
+            }
+            return false;
+
         }
     }
 }

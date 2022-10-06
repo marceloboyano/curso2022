@@ -6,8 +6,10 @@ namespace challenge.Services
 {
     public interface IPeliculaService
     {
-        //Task<IEnumerable<PeliculaForShowDTO>> GetPeliculas();
         Task<IEnumerable<Pelicula>> GetPeliculas(PeliculasQueryFilters filters);
-        Task<IEnumerable<PeliculaForShowDTO>> GetPeliculas();
+        Task<IEnumerable<Pelicula>> GetPeliculas();
+        Task InsertPeliculas(Pelicula pelicula);
+        Task<bool> UpdatePeliculas(Pelicula pelicula);
+        Task<bool> DeletePeliculas(int id);
     }
 }

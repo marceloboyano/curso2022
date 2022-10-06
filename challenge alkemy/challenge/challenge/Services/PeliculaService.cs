@@ -17,17 +17,15 @@ namespace challenge.Services
           
         }
 
-        public async Task<IEnumerable<PeliculaForShowDTO>> GetPeliculas()
+        public async Task<IEnumerable<Pelicula>> GetPeliculas()
         {
             // Traigo la entidad
             var peliculasEntity = await _repo.GetAll();
 
             // Es responsabilidad del servicio procesar la entidad y mapearla
-            // Para el mapeo podés investigar una libreria llamada AutoMapper, aunque hacerla manualmente para pocos atributos no está mal
-            var peliculasDTO = peliculasEntity
-                .Select(p => new PeliculaForShowDTO(p.Imagen, p.Titulo, p.FechaCreacion));
+            // Para el mapeo podés investigar una libreria llamada AutoMapper, aunque hacerla manualmente para pocos atributos no está mal            
 
-            return peliculasDTO;
+            return peliculasEntity;
         }
         public async Task<IEnumerable<Pelicula>> GetPeliculas(PeliculasQueryFilters filters)
         {
@@ -36,6 +34,7 @@ namespace challenge.Services
 
             var peliculas = await _repo.GetAll();
            
+
 
             if(filters.Titulo != null)
             {
@@ -47,21 +46,48 @@ namespace challenge.Services
 
                 peliculas = peliculas.Where(x => x.Generos.Any(g => g.GeneroID == filters.GeneroID));
             }
-
-            if (filters.Orden.ToLower() == "asc")
+            if (filters.Orden != null)
             {
+                if (filters.Orden.ToLower() == "asc")
+                {
 
-                peliculas = peliculas.OrderBy(x => x.Titulo);
+                    peliculas = peliculas.OrderBy(x => x.Titulo);
+                }
             }
-
-            if (filters.Orden.ToLower() == "desc")
+            if (filters.Orden != null)
             {
+                if (filters.Orden.ToLower() == "desc")
+                {
 
-                peliculas = peliculas.OrderByDescending(x => x.Titulo);
+                    peliculas = peliculas.OrderByDescending(x => x.Titulo);
+                }
             }
-
             return peliculas;
         }
+        public async Task InsertPeliculas(Pelicula pelicula)
+        {
+
+            await _repo.Create(pelicula);
+
+
+        }
+
+        public async Task<bool> UpdatePeliculas(Pelicula pelicula)
+        {
+
+            return await _repo.Update(pelicula);
+
+        }
+
+
+        public async Task<bool> DeletePeliculas(int id)
+        {
+
+            return await _repo.Delete(id);
+
+        }
+
     }
-     
 }
+     
+
