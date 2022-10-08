@@ -1,4 +1,6 @@
-﻿namespace DataBase.Repositories
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace DataBase.Repositories
 {
     public class PeliculasRepository : BaseRepository<Pelicula>, IPeliculasRepository
     {
@@ -7,5 +9,11 @@
         {
 
         }
+
+        public IEnumerable<Pelicula> GetPeliculaConDetalles() => _context.Peliculas
+                .Include(p => p.Generos)
+                .Include(p => p.Personajes)
+                .AsEnumerable();
+            
     }
 }

@@ -1,16 +1,15 @@
 ﻿using AutoMapper;
-using challenge.DTOs.Peliculas;
 using challenge.QueryFilters;
 using challenge.Response;
 using challenge.Services;
 using DataBase;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static challenge.DTOs.Peliculas.PeliculaDTO;
-using static challenge.DTOs.Personajes.PersonajeDto;
 
 namespace challenge.Controllers
 {
-    [Route("GET/movies")]
+    [Route("api/movies")]
     [ApiController]
     public class PeliculaController : Controller
     {
@@ -22,79 +21,57 @@ namespace challenge.Controllers
             _peliculaService = peliculaService;
             _mapper = mapper;
         }
-        
-        
+
+
+        /// <summary>
+        /// No indicar filtros si quiere traer todas las películas.
+        /// </summary>
+        /// <param name="filters.Detalles">Indicar true para traer todos los datos de la pelicula incluido personajes y genero</param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetPelicula([FromQuery] PeliculasQueryFilters filters)
         {
-            // Para ir a la implmentacion parate sobre getpeliculas y toca Ctrl + F12
             var peliculas = await _peliculaService.GetPeliculas(filters);
 
-          
-            var response = new ApiResponse<IEnumerable<Pelicula>>(peliculas);
-            return Ok(response);
+            if (!filters.Detalles)
+            {
+                var peliculaDTO = _mapper.Map<IEnumerable<PeliculaForShowDTO>>(peliculas);
+                var response = new ApiResponse<IEnumerable<PeliculaForShowDTO>>(peliculaDTO);
+                return Ok(response);
+            }
 
-            // ;ejor devolver un IActionResult. Hay una serie de respuestas que implementan
-            // IActionResult como Ok, NotFound, BadRequest, que lo que hacen es 
-            // Envolver tu respuesta en formato json y agregarles un status code (200 en el caso de Ok)
-            
-
-        }
-        [HttpGet]
-        [Route("GET/movies/GETALL")]
-        public async Task<IActionResult> GetPelicula()
-        {
-            //Para ir a la implmentacion parate sobre getpeliculas y toca Ctrl + F12
-            var peliculas = await _peliculaService.GetPeliculas();
-          
-            var peliculaDTO = _mapper.Map<IEnumerable<PeliculaForShowDTO>>(peliculas);
-            var response = new ApiResponse<IEnumerable<PeliculaForShowDTO>>(peliculaDTO);
-            return Ok(response);
-
-            //; ejor devolver un IActionResult. Hay una serie de respuestas que implementan
-            //IActionResult como Ok, NotFound, BadRequest, que lo que hacen es
-            //Envolver tu respuesta en formato json y agregarles un status code(200 en el caso de Ok)
-           
-
+            return Ok(new ApiResponse<IEnumerable<Pelicula>>(peliculas));
         }
 
-
+        [Authorize]
         [HttpPost]
-        public async Task<ActionResult> PostPelicula(PeliculaForUpateDTO peliculaDTO)
+        public async Task<ActionResult> PostPelicula(PeliculaForCreationDTO peliculaDTO)
         {
-            var pelicula = _mapper.Map<Pelicula>(peliculaDTO);
+            await _peliculaService.InsertPeliculas(peliculaDTO);
 
-            await _peliculaService.InsertPeliculas(pelicula);
-            peliculaDTO = _mapper.Map<PeliculaForUpateDTO>(pelicula);
-            var response = new ApiResponse<PeliculaForUpateDTO>(peliculaDTO);
-            return Ok(response);
-
-            //context.Personajes.Add(personaje);
-            //await _context.SaveChangesAsync();
-            //return CreatedAtRoute("/character", new { personaje.PersonajeID }, personaje);
+            return Ok();
         }
 
-        [HttpPut]
-        public async Task<ActionResult> PutPelicula(int id, PeliculaForUpateDTO peliculaDTO)
+        [HttpPut("{id}")]
+        public async Task<ActionResult> PutPelicula(int id, PeliculaForUpdateDTO peliculaDTO)
         {
-            var pelicula = _mapper.Map<Pelicula>(peliculaDTO);
-            pelicula.PeliculaID = id;
+            var result = await _peliculaService.UpdatePeliculas(id, peliculaDTO);
 
-            var result = await _peliculaService.UpdatePeliculas(pelicula);
-            var response = new ApiResponse<bool>(result);
-            return Ok(response);
+            if (!result)
+                return NotFound("Pelicula No Encontrada");
 
+            return NoContent();
         }
-
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeletePelicula(int id)
         {
-
             var result = await _peliculaService.DeletePeliculas(id);
-            var response = new ApiResponse<bool>(result);
-            return Ok(response);
 
+            if (!result)
+                return BadRequest();
+
+            return Ok();
         }
 
     }

@@ -1,22 +1,73 @@
+using challenge.Controllers;
 using challenge.Services;
 using DataBase;
 using DataBase.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+    });
+
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+   .AddJwtBearer(opt =>
+   {
+       opt.TokenValidationParameters = new TokenValidationParameters
+       {
+           ValidIssuer = builder.Configuration["Jwt:Issuer"],
+           ValidAudience = builder.Configuration["Jwt:Audience"],
+           ValidAlgorithms = new[] { SecurityAlgorithms.HmacSha256 },
+           IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+           ValidateIssuer = true,
+           ValidateAudience = true,
+           ValidateLifetime = false,
+           ValidateIssuerSigningKey = true
+       };
+   });
+
+builder.Services.AddAuthorization();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<DisneyContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DisneyConnection")));
+builder.Services.AddSwaggerGen(setupAction =>
+{
+    setupAction.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
+                      Enter 'Bearer' [space] and then your token in the text input below.
+                      \r\n\r\nExample: 'Bearer 12345abcdef'",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+
+    var xmlSummary = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlFile = Path.Combine(AppContext.BaseDirectory, xmlSummary);
+
+    setupAction.IncludeXmlComments(xmlFile);
+});
+//builder.Services.AddDbContext<DisneyContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DisneyConnection")));
 
 // Para testear podemos usar un provider de Entity Framework en memoria. Esto sirve para no tener problemas 
 // que tengan que ver con base de datos exclusivamente, y testear sólamente el código y la lógica.
 // Despues de testear se puede vincular a la base de datos y hacer las pruebas de integración
 // https://learn.microsoft.com/en-us/ef/core/providers/in-memory/?tabs=dotnet-core-cli
-//builder.Services.AddDbContext<DisneyContext>(options => options.UseInMemoryDatabase("TestDB"));
+builder.Services.AddDbContext<DisneyContext>(options => options.UseInMemoryDatabase("TestDB"));
 
 // Agrego los repositorios
 builder.Services.AddScoped<IPeliculasRepository, PeliculasRepository>();
@@ -26,6 +77,7 @@ builder.Services.AddScoped<IGeneroRepository, GeneroRepository>();
 // Agrego los servicios
 builder.Services.AddScoped<IPeliculaService, PeliculaService>();
 builder.Services.AddScoped<IPersonajeService, PersonajeService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 //MAPPER
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -39,6 +91,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

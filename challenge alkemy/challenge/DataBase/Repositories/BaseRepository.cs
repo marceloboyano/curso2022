@@ -8,16 +8,16 @@ namespace DataBase.Repositories
     /// <typeparam name="T"></typeparam>
     public class BaseRepository<T> : IGenericRepository<T> where T : BusinessEntity
     {
-        private readonly DisneyContext _context;
+        protected readonly DisneyContext _context;
 
         public BaseRepository(DisneyContext context)
         {
             _context = context;
         }
         public async Task<IEnumerable<T>> GetAll() => await _context.Set<T>().ToListAsync();
-       
 
-        //public async Task<T> GetById(int id) => await _context.Set<T>().FindAsync(id);
+
+        public async Task<T> GetById(int id) => await _context.Set<T>().FirstOrDefaultAsync( e => e.Id == id);
 
         public async Task Create(T entity)
         {
@@ -40,20 +40,9 @@ namespace DataBase.Repositories
 
         public async Task<bool> Update(T entity)
         {
-        
-            var currentEntity = await _context.Set<T>().FindAsync(entity.Id);
-            if (currentEntity != null)
-            {
-                _context.Set<T>().Update(entity);
-
-                //currentPersonaje.Nombre = personaje.Nombre;
-                //currentPersonaje.Edad = personaje.Edad;
-                //currentPersonaje.Peso = personaje.Peso;
-                //currentPersonaje.Imagen = personaje.Imagen;
-                int rows = await _context.SaveChangesAsync();
-                return rows > 0;
-            }
-            return false;
+            _context.Update(entity);
+            var rowsAffected = await _context.SaveChangesAsync();
+            return rowsAffected > 0;
 
         }
     }

@@ -15,6 +15,8 @@ namespace DataBase
         public DbSet<Pelicula> Peliculas { get; set; }
         public DbSet<Personaje> Personajes { get; set; }
 
+        public DbSet<User> Users { get; set; }
+
     }
 
 }
