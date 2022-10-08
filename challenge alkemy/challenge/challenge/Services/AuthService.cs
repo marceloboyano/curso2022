@@ -1,6 +1,4 @@
-﻿using challenge.Controllers;
-using DataBase;
-using Microsoft.EntityFrameworkCore;
+﻿using DataBase;
 
 namespace challenge.Services
 {
@@ -17,7 +15,7 @@ namespace challenge.Services
         {
             //var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
 
-            if(username == "marcelo" && password == "12345")
+            if (username == "marcelo" && password == "12345")
             {
             }
 

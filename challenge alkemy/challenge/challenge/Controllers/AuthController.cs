@@ -1,4 +1,5 @@
 ﻿
+using challenge.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -32,7 +33,7 @@ namespace challenge.Controllers
         public async Task<IActionResult> Login(string username, string password)
         {
             // Validar si usuario y contraseña son correctos
-            var user = _authService.GetUserByPassword(username, password);
+            var user = await _authService.GetUserByPassword(username, password);
 
             if(user is null)
             {

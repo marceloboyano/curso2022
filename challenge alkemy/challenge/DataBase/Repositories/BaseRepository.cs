@@ -17,7 +17,13 @@ namespace DataBase.Repositories
         public async Task<IEnumerable<T>> GetAll() => await _context.Set<T>().ToListAsync();
 
 
-        public async Task<T> GetById(int id) => await _context.Set<T>().FirstOrDefaultAsync( e => e.Id == id);
+        public async Task<T> GetById(int id) => await _context.Set<T>().FindAsync(id);
+
+        //await _context.Set<T>().FirstOrDefaultAsync(e => e.Id == id);      
+
+
+
+
 
         public async Task Create(T entity)
         {
@@ -31,8 +37,8 @@ namespace DataBase.Repositories
             if (currentEntity != null)
             {
                 _context.Set<T>().Remove(currentEntity);
-                int rows = await _context.SaveChangesAsync();
-                return rows > 0;
+                int rowsAffected = await _context.SaveChangesAsync();
+                return rowsAffected > 0;
             }
             return false;
 

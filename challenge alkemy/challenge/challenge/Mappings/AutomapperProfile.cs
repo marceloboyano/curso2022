@@ -13,15 +13,11 @@ namespace DataBase.Mappings
     {
         public AutomapperProfile()
         {
-            CreateMap<Personaje, PersonajeForUpdateDTO>();
-            CreateMap<PersonajeForUpdateDTO, Personaje>();
-            CreateMap<PersonajeForShowDTO, Personaje>();
-            CreateMap<Personaje, PersonajeForShowDTO>();
-            CreateMap<Pelicula, PeliculaForUpdateDTO>();
+            CreateMap<Personaje, PersonajeForUpdateDTO>().ReverseMap();
+            CreateMap<Personaje, PersonajeForShowDTO>().ReverseMap();
+            CreateMap<Pelicula, PeliculaForUpdateDTO>().ReverseMap();
             CreateMap<Pelicula, PeliculaForCreationDTO>().ReverseMap();
-            CreateMap<PeliculaForUpdateDTO, Pelicula>();
-            CreateMap<PeliculaForShowDTO, Pelicula>();
-            CreateMap<Pelicula, PeliculaForShowDTO>();
+            CreateMap<Pelicula, PeliculaForShowDTO>().ReverseMap();
         }
     }
 }

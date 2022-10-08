@@ -23,15 +23,15 @@ namespace challenge.Controllers
         }
 
 
-        /// <summary>
-        /// No indicar filtros si quiere traer todas las películas.
-        /// </summary>
-        /// <param name="filters.Detalles">Indicar true para traer todos los datos de la pelicula incluido personajes y genero</param>
-        /// <returns></returns>
+       
         [HttpGet]
         public async Task<IActionResult> GetPelicula([FromQuery] PeliculasQueryFilters filters)
         {
             var peliculas = await _peliculaService.GetPeliculas(filters);
+            if (peliculas.Count() == 0)
+            {
+               return BadRequest("Los filtros no coinciden con ninguna pelicula"); 
+            }
 
             if (!filters.Detalles)
             {
@@ -43,35 +43,36 @@ namespace challenge.Controllers
             return Ok(new ApiResponse<IEnumerable<Pelicula>>(peliculas));
         }
 
-        [Authorize]
+  
         [HttpPost]
         public async Task<ActionResult> PostPelicula(PeliculaForCreationDTO peliculaDTO)
         {
             await _peliculaService.InsertPeliculas(peliculaDTO);
 
-            return Ok();
+            return Ok("Se creado la pelicula exitosamente");
         }
 
+        
         [HttpPut("{id}")]
         public async Task<ActionResult> PutPelicula(int id, PeliculaForUpdateDTO peliculaDTO)
         {
             var result = await _peliculaService.UpdatePeliculas(id, peliculaDTO);
 
-            if (!result)
-                return NotFound("Pelicula No Encontrada");
+            if (!result)   return NotFound("Pelicula No Encontrada");
 
-            return NoContent();
+            return Ok("pelicula Modificada con exito");
         }
 
+ 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeletePelicula(int id)
         {
             var result = await _peliculaService.DeletePeliculas(id);
 
             if (!result)
-                return BadRequest();
+                return BadRequest("no se encontro la pelicula");
 
-            return Ok();
+            return Ok("la pelicula ha sido eliminada");
         }
 
     }

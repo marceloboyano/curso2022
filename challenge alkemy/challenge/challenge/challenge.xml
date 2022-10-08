@@ -4,13 +4,6 @@
         <name>challenge</name>
     </assembly>
     <members>
-        <member name="M:challenge.Controllers.PeliculaController.GetPelicula(challenge.QueryFilters.PeliculasQueryFilters)">
-            <summary>
-            No indicar filtros si quiere traer todas las películas.
-            </summary>
-            <param name="filters.Detalles.Detalles">Indicar true para traer todos los datos de la pelicula incluido personajes y genero</param>
-            <returns></returns>
-        </member>
         <member name="P:challenge.QueryFilters.PeliculasQueryFilters.Detalles">
             <summary>
             Indicar true para traer todos los campos

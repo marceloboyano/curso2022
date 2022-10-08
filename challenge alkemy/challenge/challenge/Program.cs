@@ -1,4 +1,3 @@
-using challenge.Controllers;
 using challenge.Services;
 using DataBase;
 using DataBase.Repositories;
@@ -47,10 +46,8 @@ builder.Services.AddSwaggerGen(setupAction =>
 {
     setupAction.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
-                      Enter 'Bearer' [space] and then your token in the text input below.
-                      \r\n\r\nExample: 'Bearer 12345abcdef'",
-        Name = "Authorization",
+        Description = @"JWT Se ha logeado correctamente",
+        Name = "Admin",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.ApiKey,
         Scheme = "Bearer"

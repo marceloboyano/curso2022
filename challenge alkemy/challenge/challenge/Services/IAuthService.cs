@@ -1,6 +1,6 @@
 ﻿using DataBase;
 
-namespace challenge.Controllers
+namespace challenge.Services
 {
     public interface IAuthService
     {

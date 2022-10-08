@@ -19,21 +19,21 @@ namespace challenge.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<Pelicula>> GetPeliculas()
-        {
-            // Traigo la entidad
-            var peliculasEntity = await _repo.GetAll();
+        //public async Task<IEnumerable<Pelicula>> GetPeliculas()
+        //{
+        //    // Traigo la entidad
+        //    var peliculasEntity = await _repo.GetAll();
 
-            // Es responsabilidad del servicio procesar la entidad y mapearla
-            // Para el mapeo podés investigar una libreria llamada AutoMapper, aunque hacerla manualmente para pocos atributos no está mal            
+        //    // Es responsabilidad del servicio procesar la entidad y mapearla
+        //    // Para el mapeo podés investigar una libreria llamada AutoMapper, aunque hacerla manualmente para pocos atributos no está mal            
 
-            return peliculasEntity;
-        }
+        //    return peliculasEntity;
+        //}
         public async Task<IEnumerable<Pelicula>> GetPeliculas(PeliculasQueryFilters filters)
         {
-            IEnumerable<Pelicula> peliculas;
+            //IEnumerable<Pelicula> peliculas;
 
-            peliculas = _repo.GetPeliculaConDetalles();
+            var peliculas = _repo.GetPeliculaConDetalles();
            
             if(filters.Titulo != null)
             {

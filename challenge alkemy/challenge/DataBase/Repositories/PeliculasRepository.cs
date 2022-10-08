@@ -10,7 +10,7 @@ namespace DataBase.Repositories
 
         }
 
-        public IEnumerable<Pelicula> GetPeliculaConDetalles() => _context.Peliculas
+        public  IEnumerable<Pelicula> GetPeliculaConDetalles() =>  _context.Peliculas
                 .Include(p => p.Generos)
                 .Include(p => p.Personajes)
                 .AsEnumerable();
