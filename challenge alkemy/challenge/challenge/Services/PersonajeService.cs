@@ -1,4 +1,5 @@
 ﻿
+using AutoMapper;
 using challenge.QueryFilters;
 using DataBase;
 using DataBase.Repositories;
@@ -10,36 +11,29 @@ namespace challenge.Services
     {
 
             private readonly IPersonajesRepository _repo;
+            private readonly IMapper _mapper;
 
 
-            public PersonajeService(IPersonajesRepository repo)
+        public PersonajeService(IPersonajesRepository repo, IMapper mapper)
             {
                 _repo = repo;
+                _mapper = mapper;
 
             }
 
-            public async Task<IEnumerable<Personaje>> GetPersonajes()
-            {
-                // Traigo la entidad
-                var personajesEntity = await _repo.GetAll();
-
-                // Es responsabilidad del servicio procesar la entidad y mapearla
-                // Para el mapeo podés investigar una libreria llamada AutoMapper, aunque hacerla manualmente para pocos atributos no está mal            
-
-                return personajesEntity;
-            }
-            public async Task<IEnumerable<Personaje>> GetPersonajes(PersonajeQueryFilter filters)
+      
+        public async Task<IEnumerable<Personaje>> GetPersonajes(PersonajeQueryFilter filters)
             {
 
 
 
-                var personaje = await _repo.GetAll();
+                var personaje = _repo.GetPersonajeConDetalles();
 
 
 
-                if (filters.Nombre != null)
+            if (filters.Nombre != null)
                 {
-                    personaje = personaje.Where(x => x.Nombre == filters.Nombre);
+                    personaje = personaje.Where(x => x.Nombre.ToLower().Contains(filters.Nombre.ToLower()));
                 }
 
                 if (filters.PeliculaID != null)
@@ -55,20 +49,45 @@ namespace challenge.Services
                 }
               
             return personaje;
+
             }
 
-        public async Task InsertPersonajes(Personaje personaje)
+        public async Task InsertPersonajes(PersonajeForCreationDTO personajeDTO)
         {
-            
-             await _repo.Create(personaje);    
+            var personaje = _mapper.Map<Personaje>(personajeDTO);
+            await _repo.Create(personaje);    
             
           
-        }
-
-        public async Task<bool> UpdatePersonajes(Personaje personaje)
+        }          
+      
+        public async Task<bool> UpdatePersonajes(int id, PersonajeForUpdateDTO personajeDTO)
         {
+            var personajeEntity = await _repo.GetById(id);
 
-            return await _repo.Update(personaje);
+            if (personajeEntity is null) return false;
+
+            if(personajeDTO.Nombre is not null)
+            {
+                personajeEntity.Nombre = personajeDTO.Nombre;
+            }
+
+            if (personajeDTO.Peso is not null)
+            {
+                personajeEntity.Peso = personajeDTO.Peso.Value;
+            }
+
+            if (personajeDTO.Historia is not null)
+            {
+                personajeEntity.Historia = personajeDTO.Historia;
+            }
+
+            if (personajeDTO.Imagen is not null)
+            {
+                personajeEntity.Imagen = personajeDTO.Imagen;
+            }
+
+
+            return await _repo.Update(personajeEntity);
 
         }
 
@@ -79,7 +98,8 @@ namespace challenge.Services
            return  await _repo.Delete(id);
 
         }
-       
+      
+
     }
 }
 

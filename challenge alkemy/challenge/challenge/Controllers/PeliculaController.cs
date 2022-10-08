@@ -15,20 +15,14 @@ namespace challenge.Controllers
     public class PeliculaController : ControllerBase
     {
         private readonly IPeliculaService _peliculaService;
-        private readonly IMapper _mapper;
-        private readonly IAuthService _authService;
+        private readonly IMapper _mapper;       
 
-        public PeliculaController(IPeliculaService peliculaService, 
-                IMapper mapper,
-                IAuthService authService
-            )
+        public PeliculaController(IPeliculaService peliculaService, IMapper mapper)
         {
             _peliculaService = peliculaService;
             _mapper = mapper;
-            _authService = authService;
+           
         }
-
-
        
         [HttpGet]
         public async Task<IActionResult> GetPelicula([FromQuery] PeliculasQueryFilters filters)
@@ -44,6 +38,7 @@ namespace challenge.Controllers
                 var peliculaDTO = _mapper.Map<IEnumerable<PeliculaForShowDTO>>(peliculas);
                 var response = new ApiResponse<IEnumerable<PeliculaForShowDTO>>(peliculaDTO);
                 return Ok(response);
+
             }
 
             return Ok(new ApiResponse<IEnumerable<Pelicula>>(peliculas));
@@ -56,10 +51,10 @@ namespace challenge.Controllers
             
             await _peliculaService.InsertPeliculas(peliculaDTO);
 
-            return Ok("Se creado la pelicula exitosamente");
+            return Ok("Se ha creado la pelicula exitosamente");
         }
 
-        
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult> PutPelicula(int id, PeliculaForUpdateDTO peliculaDTO)
         {
@@ -70,7 +65,7 @@ namespace challenge.Controllers
             return Ok("pelicula Modificada con exito");
         }
 
- 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeletePelicula(int id)
         {

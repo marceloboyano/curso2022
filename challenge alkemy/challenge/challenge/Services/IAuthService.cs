@@ -6,5 +6,6 @@ namespace challenge.Services
     {
         public Task<User> GetUserByPassword(string user, string password);
         public Task<User> GetUserById(int id);
+        public string CreateToken(User user);
     }
 }

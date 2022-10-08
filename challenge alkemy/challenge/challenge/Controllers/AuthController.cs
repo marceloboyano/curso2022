@@ -13,13 +13,12 @@ namespace challenge.Controllers
     [Route("api/auth")]
     public class AuthController : ControllerBase
     {
-        private readonly IConfiguration _config;
+        
         private readonly IAuthService _authService;
 
-        public AuthController(IConfiguration config, 
-            IAuthService authService)
+        public AuthController(IAuthService authService)
         {
-            _config = config;
+           
             _authService = authService;
         }
 
@@ -27,7 +26,7 @@ namespace challenge.Controllers
         public async Task<IActionResult> Register(string username, string password)
         {
 
-            return Ok();
+            return Ok("Registro Exitoso");
         }
         
         [HttpPost("login")]
@@ -42,38 +41,11 @@ namespace challenge.Controllers
             }
 
             // Crear token
-            var token = CreateToken(user);
+            var token =  _authService.CreateToken(user);
 
-            return Ok(token);
+            return Ok("Bearer "+token);
         }
 
-        private string CreateToken(User user)
-        {
-            var issuer = _config["Jwt:Issuer"];
-            var audience = _config["Jwt:Audience"];
-            var key = Encoding.ASCII.GetBytes(_config["Jwt:Key"]);
-
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new[]
-                {
-                    new Claim("sub", user.Id.ToString()),
-                    new Claim("name", user.Username)
-                }),
-                Expires = DateTime.UtcNow.AddMinutes(5),
-                Issuer = issuer,
-                Audience = audience,
-                SigningCredentials = new SigningCredentials
-                (new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256)
-            };
-
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var jwtToken = tokenHandler.WriteToken(token);
-            var stringToken = tokenHandler.WriteToken(token);
-
-            return stringToken;
-        }
+        
     }
 }

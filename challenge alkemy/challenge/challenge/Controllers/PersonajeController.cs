@@ -1,19 +1,17 @@
 ﻿using AutoMapper;
-using challenge.DTOs.Personajes;
 using challenge.QueryFilters;
 using challenge.Response;
 using challenge.Services;
 using DataBase;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using static challenge.Controllers.PersonajeController;
 using static challenge.DTOs.Personajes.PersonajeDto;
 
 namespace challenge.Controllers
 {
     [Route("GET/character")]
     [ApiController]
-    public class PersonajeController : Controller
+    public class PersonajeController : ControllerBase
     {
         private readonly IPersonajeService _personajeService;
         private readonly IMapper _mapper;
@@ -25,62 +23,64 @@ namespace challenge.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetPelicula([FromQuery] PersonajeQueryFilter filters)       
-        {
+        //[HttpGet]
+        //public async Task<IActionResult> GetPelicula([FromQuery] PersonajeQueryFilter filters)       
+        //{
           
-            var personajes = await _personajeService.GetPersonajes(filters);            ;
-            var response = new ApiResponse<IEnumerable<Personaje>>(personajes);
-            return Ok(response);
+        //    var personajes = await _personajeService.GetPersonajes(filters);            ;
+        //    var response = new ApiResponse<IEnumerable<Personaje>>(personajes);
+        //    return Ok(response);
 
-        }
+        //}
+
         [HttpGet]
-        [Route("GET/Character/GETALL")]
-        public async Task<IActionResult> GetPersonaje()
+        public async Task<IActionResult> GetPelicula([FromQuery] PersonajeQueryFilter filters)
         {
-        
-            var personajes= await _personajeService.GetPersonajes();
-            var personajeDTO = _mapper.Map <IEnumerable<PersonajeForShowDTO>>(personajes);
-            var response = new ApiResponse<IEnumerable<PersonajeForShowDTO>>(personajeDTO);
-            return Ok(response);
+            var personaje = await _personajeService.GetPersonajes(filters);
+            if (personaje.Count() == 0)
+            {
+                return BadRequest("Los filtros no coinciden con ningun Personaje");
+            }
 
+            if (!filters.Detalles)
+            {
+                var personajeDTO = _mapper.Map<IEnumerable<PersonajeForShowDTO>>(personaje);
+                var response = new ApiResponse<IEnumerable<PersonajeForShowDTO>>(personajeDTO);
+                return Ok(response);
+
+            }
+
+            return Ok(new ApiResponse<IEnumerable<Personaje>>(personaje));
         }
 
+        [Authorize]
         [HttpPost]
-        public async Task<ActionResult> PostPersonaje(PersonajeForUpdateDTO personajeDTO)
+        public async Task<ActionResult> PostPersonaje(PersonajeForCreationDTO personajeDTO)
         {
-            var personaje = _mapper.Map<Personaje> (personajeDTO);
-           
-            await _personajeService.InsertPersonajes(personaje);
-            personajeDTO = _mapper.Map<PersonajeForUpdateDTO>(personaje);
-            var response = new ApiResponse<PersonajeForUpdateDTO>(personajeDTO);
-            return Ok(response);
-
-            //context.Personajes.Add(personaje);
-            //await _context.SaveChangesAsync();
-            //return CreatedAtRoute("/character", new { personaje.PersonajeID }, personaje);
+                     
+            await _personajeService.InsertPersonajes(personajeDTO);
+            return Ok("Se ha creado el Personaje exitosamente");           
+       
         }
 
-        [HttpPut]
+        [Authorize]
+        [HttpPut("{id}")]
         public async Task<ActionResult> PutPersonaje(int id, PersonajeForUpdateDTO personajeDTO)
-        {
-            var personaje = _mapper.Map<Personaje>(personajeDTO);
-            personaje.PersonajeID = id;
+        {          
+            var result = await _personajeService.UpdatePersonajes(id, personajeDTO);
+            if (!result) return NotFound("Personaje No Encontrado");
+            return Ok("Personaje Modificado con exito");
 
-            var result = await _personajeService.UpdatePersonajes(personaje);
-            var response = new ApiResponse<bool>(result);
-            return Ok(response);
-           
         }
 
-
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeletePersonaje(int id)
         {
             
            var result = await _personajeService.DeletePersonajes(id);
-            var response = new ApiResponse<bool>(result);
-            return Ok(response);
+            if (!result) return BadRequest("no se encontro el Personaje");           
+            return Ok("El personaje ha sido eliminado");
            
         }
 
