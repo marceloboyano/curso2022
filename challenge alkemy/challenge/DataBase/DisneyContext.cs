@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+// Remover using innecesarios tocando Ctrl K + E
 
 namespace DataBase
 {
@@ -14,9 +11,11 @@ namespace DataBase
         {
 
         }
-    public DbSet<Genero> Generos { get; set; }
-    public DbSet<Pelicula> Peliculas { get; set; }
-    public DbSet<Personaje> Personajes { get; set; }
+        public DbSet<Genero> Generos { get; set; }
+        public DbSet<Pelicula> Peliculas { get; set; }
+        public DbSet<Personaje> Personajes { get; set; }
+
+        public DbSet<User> Users { get; set; }
 
     }
 
