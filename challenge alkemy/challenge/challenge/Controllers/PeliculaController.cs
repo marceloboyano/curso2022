@@ -28,6 +28,7 @@ namespace challenge.Controllers
         public async Task<IActionResult> GetPelicula([FromQuery] PeliculasQueryFilters filters)
         {
             var peliculas = await _peliculaService.GetPeliculas(filters);
+            
             if (peliculas.Count() == 0)
             {
                return BadRequest("Los filtros no coinciden con ninguna pelicula"); 
@@ -38,7 +39,6 @@ namespace challenge.Controllers
                 var peliculaDTO = _mapper.Map<IEnumerable<PeliculaForShowDTO>>(peliculas);
                 var response = new ApiResponse<IEnumerable<PeliculaForShowDTO>>(peliculaDTO);
                 return Ok(response);
-
             }
 
             return Ok(new ApiResponse<IEnumerable<Pelicula>>(peliculas));
@@ -48,7 +48,6 @@ namespace challenge.Controllers
         [HttpPost]
         public async Task<ActionResult> PostPelicula(PeliculaForCreationDTO peliculaDTO)
         {
-            
             await _peliculaService.InsertPeliculas(peliculaDTO);
 
             return Ok("Se ha creado la pelicula exitosamente");

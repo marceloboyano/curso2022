@@ -20,7 +20,7 @@ namespace challenge.Services
         }
 
        
-        public async Task<IEnumerable<Pelicula>> GetPeliculas(PeliculasQueryFilters filters)
+        public Task<IEnumerable<Pelicula>> GetPeliculas(PeliculasQueryFilters filters)
         {
            
 
@@ -50,10 +50,9 @@ namespace challenge.Services
                 {
                     peliculas = peliculas.OrderByDescending(x => x.Titulo);
                 }
-            }          
+            }
 
-
-            return peliculas;
+            return Task.FromResult(peliculas);
         }
         public async Task InsertPeliculas(PeliculaForCreationDTO peliculaDTO)
         {

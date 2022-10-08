@@ -60,5 +60,27 @@ namespace challenge.Services
 
             return stringToken;
         }
+
+        public async Task<(bool Success, string Message)> RegisterUser(string username, string password)
+        {
+            // Valido que el username no llegue vacio
+            if (string.IsNullOrEmpty(username))
+                return (false, "el username no puede estar vacio");
+
+            // Valido que el username sea único
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username.ToLower() == username.ToLower());
+
+            if (user is not null)
+                return (false, "ya existe un usuario registrado con ese nombre");
+
+            var userEntity = new User
+            {
+                Username = username,
+                Password = password,
+            };
+
+            var result = _context.Users.Add(userEntity);
+            return (await _context.SaveChangesAsync() > 0, null);
+        }
     }
 }
