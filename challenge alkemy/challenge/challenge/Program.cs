@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using System.Text;
 
@@ -47,10 +48,24 @@ builder.Services.AddSwaggerGen(setupAction =>
     setupAction.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = @"JWT Se ha logeado correctamente",
-        Name = "Admin",
+        Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.ApiKey,
         Scheme = "Bearer"
+    });
+    setupAction.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {   
+                Reference = new OpenApiReference
+                {
+                    Type=ReferenceType.SecurityScheme,
+                    Id="Bearer"
+                }
+            },
+            new string[]{}
+        }
     });
 
     var xmlSummary = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -92,6 +107,40 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+//app.Use(async (context, next) =>
+//{
+//    var headerAuth = context.Request.Headers["Authorization"].ToString();
+
+//    if(string.IsNullOrEmpty(headerAuth))
+//    {
+//        await next.Invoke();
+//        return;
+//    }
+
+//    var token = headerAuth.Split(" ")[1];
+
+
+//    var handler = new JwtSecurityTokenHandler();
+//    var tokenString = handler.ReadToken(token) as JwtSecurityToken;
+
+//    var id = tokenString.Claims.FirstOrDefault(c => c.Type == "sub")?.Value;
+
+//    using var scope = context.RequestServices.CreateScope();
+//    var authService = scope.ServiceProvider.GetService<IAuthService>();
+
+//    var user = await authService.GetUserById(Convert.ToInt32(id));
+
+//    context.User.Claims.Append(new System.Security.Claims.Claim("personalizado", user.Password));
+
+//    if (user is null)
+//    {
+//        context.Response.StatusCode = 401;
+//        return;
+//    }
+
+//    await next.Invoke();
+//});
 
 app.MapControllers();
 
@@ -169,6 +218,12 @@ using (var scope = app.Services.CreateScope())
                 }
             }
         );
+
+    context.Users.Add(new()
+    {
+        Password = "123456",
+        Username = "marcelo"
+    });
 
     context.SaveChanges();
 }

@@ -1,4 +1,5 @@
 ﻿using DataBase;
+using Microsoft.EntityFrameworkCore;
 
 namespace challenge.Services
 {
@@ -11,19 +12,18 @@ namespace challenge.Services
             _context = context;
         }
 
+        public async Task<User> GetUserById(int id)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Id == id);
+
+            return user;
+        }
+
         public async Task<User> GetUserByPassword(string username, string password)
         {
-            //var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
 
-            if (username == "marcelo" && password == "12345")
-            {
-            }
-
-            return new User()
-            {
-                Username = "marcelo",
-                Password = "123456"
-            };
+            return user;
         }
     }
 }

@@ -5,21 +5,27 @@ using challenge.Services;
 using DataBase;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
 using static challenge.DTOs.Peliculas.PeliculaDTO;
 
 namespace challenge.Controllers
 {
     [Route("api/movies")]
     [ApiController]
-    public class PeliculaController : Controller
+    public class PeliculaController : ControllerBase
     {
         private readonly IPeliculaService _peliculaService;
         private readonly IMapper _mapper;
+        private readonly IAuthService _authService;
 
-        public PeliculaController(IPeliculaService peliculaService, IMapper mapper)
+        public PeliculaController(IPeliculaService peliculaService, 
+                IMapper mapper,
+                IAuthService authService
+            )
         {
             _peliculaService = peliculaService;
             _mapper = mapper;
+            _authService = authService;
         }
 
 
@@ -43,10 +49,11 @@ namespace challenge.Controllers
             return Ok(new ApiResponse<IEnumerable<Pelicula>>(peliculas));
         }
 
-  
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult> PostPelicula(PeliculaForCreationDTO peliculaDTO)
         {
+            
             await _peliculaService.InsertPeliculas(peliculaDTO);
 
             return Ok("Se creado la pelicula exitosamente");

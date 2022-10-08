@@ -1,5 +1,6 @@
 ﻿
 using challenge.Services;
+using DataBase;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -41,12 +42,12 @@ namespace challenge.Controllers
             }
 
             // Crear token
-            var token = CreateToken(username);
+            var token = CreateToken(user);
 
             return Ok(token);
         }
 
-        private string CreateToken(string username)
+        private string CreateToken(User user)
         {
             var issuer = _config["Jwt:Issuer"];
             var audience = _config["Jwt:Audience"];
@@ -56,8 +57,8 @@ namespace challenge.Controllers
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim("sub", username),
-                    new Claim("name", "John Doe")
+                    new Claim("sub", user.Id.ToString()),
+                    new Claim("name", user.Username)
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(5),
                 Issuer = issuer,
