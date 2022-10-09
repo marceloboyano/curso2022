@@ -219,13 +219,13 @@ using (var scope = app.Services.CreateScope())
             }
         );
 
-    context.Users.Add(new()
-    {
-        Password = "123456",
-        Username = "marcelo"
-    });
+    //context.Users.Add(new()
+    //{
+    //    Password = "123456",
+    //    Username = "marcelo"
+    //});
 
-    context.SaveChanges();
+    //context.SaveChanges();
 }
 
 app.Run();

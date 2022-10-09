@@ -7,6 +7,7 @@ namespace challenge.Services
         public Task<User> GetUserByPassword(string user, string password);
         public Task<User> GetUserById(int id);
         public string CreateToken(User user);
-        public Task<(bool Success,string Message)> RegisterUser(string username, string password);
+        public Task<(bool Success,string Message)> RegisterUser(string username, string password, string email);
+        public Task SendEmail(string email, string username);
     }
 }

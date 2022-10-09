@@ -27,7 +27,7 @@ namespace challenge.Controllers
         [HttpGet]
         public async Task<IActionResult> GetPelicula([FromQuery] PeliculasQueryFilters filters)
         {
-            var peliculas = await _peliculaService.GetPeliculas(filters);
+            var peliculas = await _peliculaService.GetPeliculas(filters);           
             
             if (peliculas.Count() == 0)
             {
@@ -36,12 +36,13 @@ namespace challenge.Controllers
 
             if (!filters.Detalles)
             {
-                var peliculaDTO = _mapper.Map<IEnumerable<PeliculaForShowDTO>>(peliculas);
-                var response = new ApiResponse<IEnumerable<PeliculaForShowDTO>>(peliculaDTO);
+                var peliculaDtoForShow = _mapper.Map<IEnumerable<PeliculaForShowDTO>>(peliculas);
+                var response = new ApiResponse<IEnumerable<PeliculaForShowDTO>>(peliculaDtoForShow);
                 return Ok(response);
             }
 
-            return Ok(new ApiResponse<IEnumerable<Pelicula>>(peliculas));
+            var peliculaDtoForShowWithDetails = _mapper.Map<IEnumerable<PeliculaForShowWithDetailsDTO>>(peliculas);
+            return Ok(new ApiResponse<IEnumerable<PeliculaForShowWithDetailsDTO>>(peliculaDtoForShowWithDetails));
         }
 
         [Authorize]

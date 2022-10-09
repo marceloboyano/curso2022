@@ -44,13 +44,13 @@ namespace challenge.Controllers
 
             if (!filters.Detalles)
             {
-                var personajeDTO = _mapper.Map<IEnumerable<PersonajeForShowDTO>>(personaje);
-                var response = new ApiResponse<IEnumerable<PersonajeForShowDTO>>(personajeDTO);
+                var personajeDtoForShow = _mapper.Map<IEnumerable<PersonajeForShowDTO>>(personaje);
+                var response = new ApiResponse<IEnumerable<PersonajeForShowDTO>>(personajeDtoForShow);
                 return Ok(response);
-
             }
 
-            return Ok(new ApiResponse<IEnumerable<Personaje>>(personaje));
+            var personajeDtoForShowWithDetails = _mapper.Map<IEnumerable<PersonajeForShowWithDetailsDTO>>(personaje);
+            return Ok(new ApiResponse<IEnumerable<PersonajeForShowWithDetailsDTO>>(personajeDtoForShowWithDetails));
         }
 
         [Authorize]

@@ -1,10 +1,13 @@
-﻿namespace challenge.DTOs.Peliculas
+﻿using DataBase;
+
+namespace challenge.DTOs.Peliculas
 {
     public class PeliculaDTO
     {
         public record PeliculaForShowDTO(string Imagen, string Titulo, DateTime FechaCreacion);
         public record PeliculaForUpdateDTO(string? Titulo, DateTime? FechaCreacion, int? Calificacion, string? Imagen);
         public record PeliculaForCreationDTO(string Titulo, DateTime FechaCreacion, int Calificacion, string Imagen);
+        public record PeliculaForShowWithDetailsDTO(string Titulo, DateTime FechaCreacion, int Calificacion, string Imagen, ICollection<Personaje> Personajes, ICollection<Genero> Generos);
         // public record PeliculaForCreation
         // public record PeliculaForUpdate
         // .. Es conveniente ir creando un dto por separado para cada caso particular, asi cada modificación no afecta a todas las operaciones

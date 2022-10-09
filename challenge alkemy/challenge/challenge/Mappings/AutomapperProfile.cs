@@ -16,9 +16,11 @@ namespace DataBase.Mappings
             CreateMap<Personaje, PersonajeForUpdateDTO>().ReverseMap();
             CreateMap<Personaje, PersonajeForShowDTO>().ReverseMap();
             CreateMap<Personaje, PersonajeForCreationDTO>().ReverseMap();
+            CreateMap<Personaje, PersonajeForShowWithDetailsDTO>().ReverseMap();
             CreateMap<Pelicula, PeliculaForUpdateDTO>().ReverseMap();
             CreateMap<Pelicula, PeliculaForCreationDTO>().ReverseMap();
             CreateMap<Pelicula, PeliculaForShowDTO>().ReverseMap();
+            CreateMap<Pelicula, PeliculaForShowWithDetailsDTO>().ReverseMap();
         }
     }
 }

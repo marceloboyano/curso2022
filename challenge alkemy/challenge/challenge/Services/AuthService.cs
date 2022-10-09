@@ -1,9 +1,12 @@
 ﻿using DataBase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace challenge.Services
 {
@@ -61,26 +64,62 @@ namespace challenge.Services
             return stringToken;
         }
 
-        public async Task<(bool Success, string Message)> RegisterUser(string username, string password)
+        public async Task<(bool Success, string Message)> RegisterUser(string userName, string password, string email)
         {
-            // Valido que el username no llegue vacio
-            if (string.IsNullOrEmpty(username))
-                return (false, "el username no puede estar vacio");
+           
+            // Validaciones de usuario
 
-            // Valido que el username sea único
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username.ToLower() == username.ToLower());
+            if (string.IsNullOrEmpty(userName)) return (false, "El username no puede estar vacio.");
 
-            if (user is not null)
-                return (false, "ya existe un usuario registrado con ese nombre");
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username.ToLower() == userName.ToLower());
+
+            if (user is not null) return (false, "Ya existe un usuario registrado con ese nombre.");
+
+            Regex regex = new Regex("^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\\s]+$");
+            if (!regex.IsMatch(userName)) return (false, "El Nombre sólo acepta letras y espacios en blanco.");
+
+            //validaciones de email
+
+            if (string.IsNullOrEmpty(email)) return (false, "El email no puede estar vacio.");
+            
+            var mail = await _context.Users.FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower());
+
+            if (mail is not null) return (false, "Ya existe un usuario registrado con ese email."); 
+
+            regex = new Regex("^[_a-z0-9A-Z]+(\\.[_a-z0-9A-Z]+)*@[a-zA-Z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-zA-Z]{2,15})$");
+            if (!regex.IsMatch(email)) return (false, "No es un correo valido.");
+
+         
+        
+
 
             var userEntity = new User
             {
-                Username = username,
+                Username = userName,
                 Password = password,
+                Email = email,
             };
 
             var result = _context.Users.Add(userEntity);
             return (await _context.SaveChangesAsync() > 0, null);
+        }
+
+        public async Task SendEmail(string email, string userName)
+        {                 
+
+
+           // var apiKey  = Environment.GetEnvironmentVariable("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");
+            var client = new SendGridClient("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");
+            var from = new EmailAddress(email, userName);
+            var subject = "Registro exitoso!!";
+            var to = new EmailAddress(email, userName);
+            var plainTextContent = "Bienvenido!! Gracias por registrate";
+            var htmlContent = "<strong>Hola, Gracias por Registrarte!!!</strong> ";
+
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+
+            await client.SendEmailAsync(msg);    
+
         }
     }
 }

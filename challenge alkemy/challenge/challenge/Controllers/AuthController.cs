@@ -18,15 +18,15 @@ namespace challenge.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(string username, string password)
+        public async Task<IActionResult> Register(string username, string password, string email)
         {
-            var registerResponse = await _authService.RegisterUser(username, password);
+            var registerResponse = await _authService.RegisterUser(username, password, email);
 
             if (!registerResponse.Success)
             {
                 return BadRequest(registerResponse.Message);
             }
-
+            await _authService.SendEmail(email, username);
             return Ok("Registro Exitoso");
         }
 
