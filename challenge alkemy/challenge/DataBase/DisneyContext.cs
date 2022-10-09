@@ -11,9 +11,9 @@ namespace DataBase
         {
 
         }
-        public DbSet<Genero> Generos { get; set; }
-        public DbSet<Pelicula> Peliculas { get; set; }
-        public DbSet<Personaje> Personajes { get; set; }
+        public DbSet<Gender> Genders { get; set; }
+        public DbSet<Movie> Movies { get; set; }
+        public DbSet<Character> Characters { get; set; }
 
         public DbSet<User> Users { get; set; }
 

@@ -64,7 +64,8 @@ builder.Services.AddSwaggerGen(setupAction =>
                     Id="Bearer"
                 }
             },
-            new string[]{}
+
+            Array.Empty<string>()
         }
     });
 
@@ -73,22 +74,18 @@ builder.Services.AddSwaggerGen(setupAction =>
 
     setupAction.IncludeXmlComments(xmlFile);
 });
+
+builder.Services.AddDbContext<DisneyContext>(options => options.UseInMemoryDatabase("TestDB"));
 //builder.Services.AddDbContext<DisneyContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DisneyConnection")));
 
-// Para testear podemos usar un provider de Entity Framework en memoria. Esto sirve para no tener problemas 
-// que tengan que ver con base de datos exclusivamente, y testear sólamente el código y la lógica.
-// Despues de testear se puede vincular a la base de datos y hacer las pruebas de integración
-// https://learn.microsoft.com/en-us/ef/core/providers/in-memory/?tabs=dotnet-core-cli
-builder.Services.AddDbContext<DisneyContext>(options => options.UseInMemoryDatabase("TestDB"));
-
 // Agrego los repositorios
-builder.Services.AddScoped<IPeliculasRepository, PeliculasRepository>();
-builder.Services.AddScoped<IPersonajesRepository, PersonajesRepository>();
-builder.Services.AddScoped<IGeneroRepository, GeneroRepository>();
+builder.Services.AddScoped<IMoviesRepository, MoviesRepository>();
+builder.Services.AddScoped<ICharactersRepository, CharactersRepository>();
+builder.Services.AddScoped<IGenderRepository, GenderRepository>();
 
 // Agrego los servicios
-builder.Services.AddScoped<IPeliculaService, PeliculaService>();
-builder.Services.AddScoped<IPersonajeService, PersonajeService>();
+builder.Services.AddScoped<IMovieService, MovieService>();
+builder.Services.AddScoped<ICharacterService, CharacterService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
 //MAPPER
@@ -150,68 +147,68 @@ using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<DisneyContext>();
     context.AddRange(
-            new Genero()
+            new Gender()
             {
-                Nombre = "Fantasia",              
+                Name = "Fantasia",              
            
             },
-            new Genero()
+            new Gender()
             {
-                Nombre = "Accion",               
-                Peliculas = new[]
+                Name = "Accion",               
+                Movies = new[]
                 {
-                    new Pelicula()
+                    new Movie()
             {
-                Titulo="Terminator",
-                Imagen = "test",
-                Personajes = new[]
+                Title="Terminator",
+                Image = "test",
+                Characters = new[]
                 {
-                    new Personaje()
+                    new Character()
                     {
-                        Edad=40,
-                        Historia="robot malo que se vuelve bueno",
-                        Imagen = "test",
-                        Nombre="T-800",
-                        Peso=80.0M
+                        Age=40,
+                        History="robot malo que se vuelve bueno",
+                        Image = "test",
+                        Name="T-800",
+                        Weight=80.0M
                     },
-                    new Personaje()
+                    new Character()
                     {
-                        Edad=43,
-                        Historia="robot malo que se vuelve bueno",
-                        Nombre="T-1000",
-                        Imagen = "test",
-                        Peso=70.0M
+                        Age=43,
+                        History="robot malo que se vuelve bueno",
+                        Name="T-1000",
+                        Image = "test",
+                        Weight=70.0M
                     }
                 }
             }
                 }
             },
-            new Genero()
+            new Gender()
             {
-                Nombre = "comedia",                
-                Peliculas = new[]
+                Name = "comedia",                
+                Movies = new[]
                 {
-                    new Pelicula()
+                    new Movie()
             {
-                Titulo="ROMPEBODAS",
-                Imagen = "test",
-                Personajes = new[]
+                Title="ROMPEBODAS",
+                Image = "test",
+                Characters = new[]
                 {
-                    new Personaje()
+                    new Character()
                     {
-                        Edad=40,
-                        Historia="SE COLAN EN LAS BODAS",
-                        Imagen = "test",
-                        Nombre="OWEN WILSON",
-                        Peso=80.0M
+                        Age=40,
+                        History="SE COLAN EN LAS BODAS",
+                        Image = "test",
+                        Name="OWEN WILSON",
+                        Weight=80.0M
                     },
-                    new Personaje()
+                    new Character()
                     {
-                        Edad=43,
-                        Historia="LOCO MALO",
-                        Nombre="WILL FERREL",
-                        Imagen = "test",
-                        Peso=70.0M
+                        Age=43,
+                        History="LOCO MALO",
+                        Name="WILL FERREL",
+                        Image = "test",
+                        Weight=70.0M
                     }
                 }
             }

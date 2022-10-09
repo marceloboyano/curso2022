@@ -25,7 +25,7 @@ namespace challenge.Services
         {
             var user = _context.Users.FirstOrDefault(u => u.Id == id);
 
-            return user;
+            return await Task.FromResult(user);
         }
 
         public async Task<User> GetUserByPassword(string username, string password)
@@ -75,8 +75,8 @@ namespace challenge.Services
 
             if (user is not null) return (false, "Ya existe un usuario registrado con ese nombre.");
 
-            Regex regex = new Regex("^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\\s]+$");
-            if (!regex.IsMatch(userName)) return (false, "El Nombre sólo acepta letras y espacios en blanco.");
+            Regex regex = new("^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\\s]+$");
+            if (!regex.IsMatch(userName)) return (false, "El Name sólo acepta letras y espacios en blanco.");
 
             //validaciones de email
 
@@ -86,7 +86,7 @@ namespace challenge.Services
 
             if (mail is not null) return (false, "Ya existe un usuario registrado con ese email."); 
 
-            regex = new Regex("^[_a-z0-9A-Z]+(\\.[_a-z0-9A-Z]+)*@[a-zA-Z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-zA-Z]{2,15})$");
+            regex = new("^[_a-z0-9A-Z]+(\\.[_a-z0-9A-Z]+)*@[a-zA-Z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-zA-Z]{2,15})$");
             if (!regex.IsMatch(email)) return (false, "No es un correo valido.");
 
          
@@ -101,7 +101,7 @@ namespace challenge.Services
             };
 
             var result = _context.Users.Add(userEntity);
-            return (await _context.SaveChangesAsync() > 0, null);
+            return (await _context.SaveChangesAsync() > 0, "");
         }
 
         public async Task SendEmail(string email, string userName)

@@ -4,33 +4,33 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataBase
 {
-    public class Pelicula : BusinessEntity
+    public class Movie : BusinessEntity
     {
-        public override int Id { get => PeliculaID; }
+        public override int Id { get => MoviesID; }
 
-        public Pelicula()
+        public Movie()
         {
-            Personajes = new HashSet<Personaje>();
+            Characters = new HashSet<Character>();
         }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int PeliculaID { get; set; }
+        public int MoviesID { get; set; }
         [Required(ErrorMessage = "El titulo de la pelicula es un campo obligatorio.")]
         [StringLength(255, MinimumLength = 1)]
-        public string Titulo { get; set; }
+        public string Title { get; set; }
         [Required(ErrorMessage = "La Fecha es un campo obligatorio.")]
-        public DateTime FechaCreacion { get; set; }
+        public DateTime CreationDate { get; set; }
         [Required(ErrorMessage = "La calificacion es un campo obligatorio.")]
         [StringLength(5, MinimumLength = 1)]
-        public int Calificacion { get; set; }
-        public virtual ICollection<Genero> Generos { get; set; }
+        public int Qualification { get; set; }
+        public virtual ICollection<Gender> Genders { get; set; }
 
         // Yo no haria required la imagen, ya que podría cargarse después   
         [StringLength(255, MinimumLength = 1)]
-        public string Imagen { get; set; }
+        public string Image { get; set; }
         //public byte[] Imagen { get; set; }                  
       
-        public virtual ICollection<Personaje> Personajes { get; set; }
+        public virtual ICollection<Character> Characters { get; set; }
     }
 }

@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace TestChallenge
 {
-    public class PersonajeTesting
+    public class CharacterTesting
     {
 
-        private readonly IPersonajeService _personajeService;
-        private readonly IPersonajesRepository _repo;
+        private readonly ICharacterService _personajeService;
+        private readonly ICharactersRepository _repo;
 
-        public PersonajeTesting(IPersonajeService personajeService, IPersonajesRepository repo)
+        public CharacterTesting(ICharacterService personajeService, ICharactersRepository repo)
         {
             _personajeService = personajeService;
             _repo = repo;

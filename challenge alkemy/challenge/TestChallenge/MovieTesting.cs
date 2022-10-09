@@ -1,19 +1,18 @@
 using challenge.QueryFilters;
 using challenge.Services;
-using DataBase;
+
 using DataBase.Repositories;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
+
 
 namespace TestChallenge
 {
-    public class PeliculaTesting
+    public class MovieTesting
     {
 
-        private readonly IPeliculaService _controller;
-        private readonly IPeliculasRepository _repo;
+        private readonly IMovieService _controller;
+        private readonly IMoviesRepository _repo;
 
-        public PeliculaTesting(IPeliculaService controller, IPeliculasRepository repo)
+        public MovieTesting(IMovieService controller, IMoviesRepository repo)
         {
             _controller = controller;
             _repo = repo;

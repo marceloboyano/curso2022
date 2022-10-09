@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static challenge.DTOs.Peliculas.PeliculaDTO;
-using static challenge.DTOs.Personajes.PersonajeDto;
+using static challenge.DTOs.Peliculas.MoviesDto;
+using static challenge.DTOs.Personajes.CharacterDto;
 
 namespace DataBase.Mappings
 {
@@ -13,14 +13,14 @@ namespace DataBase.Mappings
     {
         public AutomapperProfile()
         {
-            CreateMap<Personaje, PersonajeForUpdateDTO>().ReverseMap();
-            CreateMap<Personaje, PersonajeForShowDTO>().ReverseMap();
-            CreateMap<Personaje, PersonajeForCreationDTO>().ReverseMap();
-            CreateMap<Personaje, PersonajeForShowWithDetailsDTO>().ReverseMap();
-            CreateMap<Pelicula, PeliculaForUpdateDTO>().ReverseMap();
-            CreateMap<Pelicula, PeliculaForCreationDTO>().ReverseMap();
-            CreateMap<Pelicula, PeliculaForShowDTO>().ReverseMap();
-            CreateMap<Pelicula, PeliculaForShowWithDetailsDTO>().ReverseMap();
+            CreateMap<Character, CharacterForUpdateDTO>().ReverseMap();
+            CreateMap<Character, CharacterForShowDTO>().ReverseMap();
+            CreateMap<Character, CharacterForCreationDTO>().ReverseMap();
+            CreateMap<Character, CharacterForShowWithDetailsDTO>().ReverseMap();
+            CreateMap<Movie, MoviesForUpdateDTO>().ReverseMap();
+            CreateMap<Movie, MoviesForCreationDTO>().ReverseMap();
+            CreateMap<Movie, MoviesForShowDTO>().ReverseMap();
+            CreateMap<Movie, MoviesForShowWithDetailsDTO>().ReverseMap();
         }
     }
 }

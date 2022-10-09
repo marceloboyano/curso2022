@@ -4,42 +4,42 @@
         <name>challenge</name>
     </assembly>
     <members>
-        <member name="P:challenge.QueryFilters.PeliculasQueryFilters.Titulo">
-            <summary>
-            Buscar por por Titulo 
-            </summary>
-        </member>
-        <member name="P:challenge.QueryFilters.PeliculasQueryFilters.GeneroID">
-            <summary>
-            Buscar por Genero
-            </summary>
-        </member>
-        <member name="P:challenge.QueryFilters.PeliculasQueryFilters.Orden">
-            <summary>
-            Deberá indicar ASC o DESC para buscar en orden ascendente o descendente
-            </summary>
-        </member>
-        <member name="P:challenge.QueryFilters.PeliculasQueryFilters.Detalles">
-            <summary>
-            Indicar true para traer todos los campos
-            </summary>
-        </member>
-        <member name="P:challenge.QueryFilters.PersonajeQueryFilter.Nombre">
+        <member name="P:challenge.QueryFilters.CharacterQueryFilter.Name">
             <summary>
             Buscar por por Nombre 
             </summary>
         </member>
-        <member name="P:challenge.QueryFilters.PersonajeQueryFilter.Edad">
+        <member name="P:challenge.QueryFilters.CharacterQueryFilter.Age">
             <summary>
             Buscar por por Edad 
             </summary>
         </member>
-        <member name="P:challenge.QueryFilters.PersonajeQueryFilter.PeliculaID">
+        <member name="P:challenge.QueryFilters.CharacterQueryFilter.MovieID">
             <summary>
             Buscar por por Pelicula 
             </summary>
         </member>
-        <member name="P:challenge.QueryFilters.PersonajeQueryFilter.Detalles">
+        <member name="P:challenge.QueryFilters.CharacterQueryFilter.Details">
+            <summary>
+            Indicar true para traer todos los campos
+            </summary>
+        </member>
+        <member name="P:challenge.QueryFilters.MovieQueryFilters.Title">
+            <summary>
+            Buscar por por Titulo 
+            </summary>
+        </member>
+        <member name="P:challenge.QueryFilters.MovieQueryFilters.GenderID">
+            <summary>
+            Buscar por Genero
+            </summary>
+        </member>
+        <member name="P:challenge.QueryFilters.MovieQueryFilters.Order">
+            <summary>
+            Deberá indicar ASC o DESC para buscar en orden ascendente o descendente
+            </summary>
+        </member>
+        <member name="P:challenge.QueryFilters.MovieQueryFilters.Details">
             <summary>
             Indicar true para traer todos los campos
             </summary>
