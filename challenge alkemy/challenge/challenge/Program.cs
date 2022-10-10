@@ -222,7 +222,7 @@ using (var scope = app.Services.CreateScope())
     //    Username = "marcelo"
     //});
 
-    //context.SaveChanges();
+    context.SaveChanges();
 }
 
 app.Run();

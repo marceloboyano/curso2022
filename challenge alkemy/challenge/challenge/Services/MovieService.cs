@@ -101,6 +101,14 @@ namespace challenge.Services
 
         }
 
+        public async Task<MoviesForShowWithDetailsDTO> GetMovieById(int id)
+        {
+            var movie = await _repo.GetByIdWithDetail(id);
+
+            var movieForShowWithDetails = _mapper.Map<MoviesForShowWithDetailsDTO>(movie);
+
+            return movieForShowWithDetails;
+        }
     }
 }
      

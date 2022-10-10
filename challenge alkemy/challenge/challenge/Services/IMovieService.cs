@@ -11,5 +11,6 @@ namespace challenge.Services
         Task InsertMovies(MoviesForCreationDTO movie);
         Task<bool> UpdateMovies(int id, MoviesForUpdateDTO movie);
         Task<bool> DeleteMovies(int id);
+        Task<MoviesForShowWithDetailsDTO> GetMovieById(int id);
     }
 }

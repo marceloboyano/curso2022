@@ -17,11 +17,25 @@ namespace challenge.Controllers
         private readonly IMovieService _movieService;
         private readonly IMapper _mapper;       
 
-        public MovieController(IMovieService peliculaService, IMapper mapper)
+        public MovieController(IMovieService movieService, IMapper mapper)
         {
-            _movieService = peliculaService;
+            _movieService = movieService;
             _mapper = mapper;
            
+        }
+
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetMovieById(int id)
+        {
+            var movie = await _movieService.GetMovieById(id);
+
+            if (movie is null)
+            {
+                return NotFound("No existe pelicula para el id especificado");
+            }
+
+            return Ok(new ApiResponse<MoviesForShowWithDetailsDTO>(movie));
         }
        
         [HttpGet]
@@ -31,7 +45,7 @@ namespace challenge.Controllers
             
             if (!movies.Any())
             {
-               return BadRequest("Los filtros no coinciden con ninguna pelicula"); 
+               return NotFound("Los filtros no coinciden con ninguna pelicula"); 
             }
 
             if (!filters.Details)

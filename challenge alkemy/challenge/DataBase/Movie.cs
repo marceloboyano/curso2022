@@ -22,11 +22,10 @@ namespace DataBase
         [Required(ErrorMessage = "La Fecha es un campo obligatorio.")]
         public DateTime CreationDate { get; set; }
         [Required(ErrorMessage = "La calificacion es un campo obligatorio.")]
-        [StringLength(5, MinimumLength = 1)]
+        [Range(1, 5)]
         public int Qualification { get; set; }
         public virtual ICollection<Gender> Genders { get; set; }
 
-        // Yo no haria required la imagen, ya que podría cargarse después   
         [StringLength(255, MinimumLength = 1)]
         public string Image { get; set; }
         //public byte[] Imagen { get; set; }                  

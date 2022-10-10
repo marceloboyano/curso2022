@@ -27,7 +27,7 @@ namespace challenge.Controllers
                 return BadRequest(registerResponse.Message);
             }
             await _authService.SendEmail(email, username);
-            return Ok("Registro Exitoso");
+            return Ok(registerResponse.Message);
         }
 
         [HttpPost("login")]
