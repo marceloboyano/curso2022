@@ -13,7 +13,7 @@ namespace TestChallenge
                 Title = null,
                 CreationDate = DateTime.Today,
                 Image = "test",
-                Qualification = 1
+                Rating = 1
             };
 
             var validationResult = ValidateModel(modelInvalid);
@@ -33,14 +33,14 @@ namespace TestChallenge
                 Title = "test",
                 CreationDate = DateTime.Today,
                 Image = "test",
-                Qualification = rating
+                Rating = rating
             };
 
             var validationResult = ValidateModel(modelInvalid);
 
             if(rating == 0)
             {
-                Assert.True(validationResult?.Any(vr => vr.MemberNames.Contains("Qualification")));
+                Assert.True(validationResult?.Any(vr => vr.MemberNames.Contains("Rating")));
             }
 
             if (rating == 5)

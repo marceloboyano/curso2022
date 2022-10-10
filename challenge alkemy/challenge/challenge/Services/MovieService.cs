@@ -81,7 +81,7 @@ namespace challenge.Services
 
             if (movieDto.Qualification is not null)
             {
-                movieEntity.Qualification = movieDto.Qualification.Value;
+                movieEntity.Rating = movieDto.Qualification.Value;
             }
 
             if (movieDto.CreationDate is not null)

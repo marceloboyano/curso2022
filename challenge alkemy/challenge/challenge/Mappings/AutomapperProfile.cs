@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.DataProtection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,10 @@ namespace DataBase.Mappings
 {
     public class AutomapperProfile: Profile
     {
+
         public AutomapperProfile()
         {
+
             CreateMap<Character, CharacterForUpdateDTO>().ReverseMap();
             CreateMap<Character, CharacterForShowDTO>().ReverseMap();
             CreateMap<Character, CharacterForCreationDTO>().ReverseMap();
@@ -20,7 +23,8 @@ namespace DataBase.Mappings
             CreateMap<Movie, MoviesForUpdateDTO>().ReverseMap();
             CreateMap<Movie, MoviesForCreationDTO>().ReverseMap();
             CreateMap<Movie, MoviesForShowDTO>().ReverseMap();
-            CreateMap<Movie, MoviesForShowWithDetailsDTO>().ReverseMap();
+            CreateMap<Movie, MoviesForShowWithDetailsDTO>().ReverseMap();          
+          
         }
     }
 }

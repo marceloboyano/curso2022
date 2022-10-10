@@ -23,12 +23,11 @@ namespace DataBase
         public DateTime CreationDate { get; set; }
         [Required(ErrorMessage = "La calificacion es un campo obligatorio.")]
         [Range(1, 5)]
-        public int Qualification { get; set; }
+        public int Rating { get; set; }
         public virtual ICollection<Gender> Genders { get; set; }
 
         [StringLength(255, MinimumLength = 1)]
-        public string Image { get; set; }
-        //public byte[] Imagen { get; set; }                  
+        public string Image { get; set; }                         
       
         public virtual ICollection<Character> Characters { get; set; }
     }

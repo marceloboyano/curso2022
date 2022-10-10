@@ -107,7 +107,7 @@ namespace DataBase.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int>("Qualification")
+                    b.Property<int>("Rating")
                         .HasMaxLength(5)
                         .HasColumnType("int");
 

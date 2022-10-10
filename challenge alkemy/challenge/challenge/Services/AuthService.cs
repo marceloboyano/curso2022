@@ -12,6 +12,8 @@ using MailKit;
 using System.Security.Claims;
 using System.Text;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.DataProtection;
+using AutoMapper;
 
 namespace challenge.Services
 {
@@ -19,11 +21,15 @@ namespace challenge.Services
     {
         private readonly DisneyContext _context;
         private readonly IConfiguration _config;
+        private readonly IDataProtector _dp;
+        private readonly IMapper _mapper;
 
-        public AuthService(IConfiguration config, DisneyContext context)
+        public AuthService(IConfiguration config, DisneyContext context, IDataProtectionProvider dpp)
         {
             _context = context;
             _config = config;
+            _dp = dpp.CreateProtector(nameof(AuthService));
+           
         }
 
         public async Task<User> GetUserById(int id)
@@ -35,7 +41,9 @@ namespace challenge.Services
 
         public async Task<User> GetUserByPassword(string username, string password)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
+            
+
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username && u.Password == _dp.Unprotect(password));
 
             return user;
         }
@@ -71,34 +79,17 @@ namespace challenge.Services
 
         public async Task<(bool Success, string Message)> RegisterUser(string userName, string password, string email)
         {
-           
-            // Validaciones de usuario
-            if (string.IsNullOrEmpty(userName)) 
-                return (false, "El username no puede estar vacio.");
+                      
+            var isValidUser = await IsUserValid(userName);
+            if (!isValidUser.Success) return (isValidUser.Success, isValidUser.Message);
 
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username.ToLower() == userName.ToLower());
 
-            if (user is not null) 
-                return (false, "Ya existe un usuario registrado con ese nombre.");
+            var isValidEmail = await IsEmailValid(email);
 
-            Regex regex = new("^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\\s]+$");
+            if (!isValidEmail.Success) return (isValidEmail.Success, isValidEmail.Message);
 
-            if (!regex.IsMatch(userName)) 
-                return (false, "El Name sólo acepta letras y espacios en blanco.");
+            password = _dp.Protect(password);             
 
-            //validaciones de mail
-
-            if (string.IsNullOrEmpty(email)) 
-                return (false, "El mail no puede estar vacio.");
-            
-            var mail = await _context.Users.FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower());
-
-            if (mail is not null) 
-                return (false, "Ya existe un usuario registrado con ese mail."); 
-
-            regex = new("^[_a-z0-9A-Z]+(\\.[_a-z0-9A-Z]+)*@[a-zA-Z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-zA-Z]{2,15})$");
-            if (!regex.IsMatch(email)) return (false, "No es un correo valido.");
-         
             var userEntity = new User
             {
                 Username = userName,
@@ -110,6 +101,47 @@ namespace challenge.Services
             return (await _context.SaveChangesAsync() > 0, "Registro Exitoso");
         }
 
+
+        public async Task<(bool Success, string Message)> IsUserValid(string userName)
+        {
+            // Validaciones de usuario
+            if (string.IsNullOrEmpty(userName))
+                return (false, "El username no puede estar vacio.");
+
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username.ToLower() == userName.ToLower());
+
+            if (user is not null)
+                return (false, "Ya existe un usuario registrado con ese nombre.");
+
+            Regex regex = new("^[A-Za-z0-9ÑñÁáÉéÍíÓóÚúÜü\\s]+$");
+
+            if (!regex.IsMatch(userName))
+                return (false, "El Name sólo acepta letras y espacios en blanco.");
+
+            return (true, "Registro Exitoso");
+
+        }
+
+
+
+        public async Task<(bool Success, string Message)> IsEmailValid(string email)
+        {
+            //validaciones de mail
+
+            if (string.IsNullOrEmpty(email))
+                return (false, "El mail no puede estar vacio.");
+
+            var mail = await _context.Users.FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower());
+
+            if (mail is not null)
+                return (false, "Ya existe un usuario registrado con ese mail.");
+
+            Regex regex = new("^[_a-z0-9A-Z]+(\\.[_a-z0-9A-Z]+)*@[a-zA-Z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-zA-Z]{2,15})$");
+            if (!regex.IsMatch(email)) return (false, "No es un correo valido.");
+
+            return (true, "Registro Exitoso");
+
+        }
         public async Task SendEmail(string email, string userName)
         {
             //docker run --name = papercut - p 25:25 - p 37408:37408 jijiechen / papercut:latest
@@ -124,16 +156,6 @@ namespace challenge.Services
             var response = await smtp.SendAsync(mail);
             
             smtp.Disconnect(true);
-
-            //// var apiKey  = Environment.GetEnvironmentVariable("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");
-            //var client = new SendGridClient("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");
-            //var from = new EmailAddress(mail, userName);
-            //var subject = "Registro exitoso!!";
-            //var to = new EmailAddress(mail, userName);
-            //var plainTextContent = "Bienvenido!! Gracias por registrate";
-            //var htmlContent = "<strong>Hola, Gracias por Registrarte!!!</strong> ";
-
-            //var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
 
         }
     }

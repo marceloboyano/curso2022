@@ -9,8 +9,7 @@ namespace DataBase
         public override int Id { get => CharacterID; }
         public Character()
         {
-            // Es buena practica inicilizar la colección de forma que no pueda haber Null reference execption en tiempo de ejecución
-            Movies = new HashSet<Movie>();
+          Movies = new HashSet<Movie>();
         }
 
         [Key]
@@ -20,16 +19,15 @@ namespace DataBase
         [StringLength(255, MinimumLength = 1)]
         public string Name { get; set; }
         [Required(ErrorMessage = "La edad es un campo obligatorio.")]
+        [Range(0, 999)]
         public int Age { get; set; }
         public decimal Weight { get; set; }
         [Required(ErrorMessage = "La Historia es un campo obligatorio.")]
         [StringLength(255, MinimumLength = 1)]
         public string History { get; set; }
-
-        // Yo no haria required la imagen, ya que podría cargarse después       
+         
         [StringLength(255, MinimumLength = 1)]
-        public string Image { get; set; }
-        //public byte[] Imagen { get; set; }
+        public string Image { get; set; }        
         public virtual ICollection<Movie> Movies { get; set; }
     }
 }

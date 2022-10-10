@@ -3,6 +3,7 @@ using DataBase;
 using DataBase.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.IdentityModel.Tokens.Jwt;
@@ -41,6 +42,7 @@ builder.Services.AddAuthentication(options =>
    });
 
 builder.Services.AddAuthorization();
+builder.Services.AddDataProtection();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(setupAction =>
@@ -216,13 +218,14 @@ using (var scope = app.Services.CreateScope())
             }
         );
 
-    //context.Users.Add(new()
-    //{
-    //    Password = "123456",
-    //    Username = "marcelo"
-    //});
+    context.Users.Add(new()
+    {
+        Password = "123456",
+       Username = "marcelo",
+       Email = "marcelo@gmail.com"
+    });
 
-    context.SaveChanges();
+   context.SaveChanges();
 }
 
 app.Run();
