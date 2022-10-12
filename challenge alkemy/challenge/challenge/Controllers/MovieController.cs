@@ -2,16 +2,14 @@
 using challenge.QueryFilters;
 using challenge.Response;
 using challenge.Services;
-using DataBase;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.IdentityModel.Tokens.Jwt;
 using static challenge.DTOs.Peliculas.MoviesDto;
 
 namespace challenge.Controllers
 {
-    [Route("api/movies")]
     [ApiController]
+    [Route("api/movies")]
     public class MovieController : ControllerBase
     {
         private readonly IMovieService _movieService;
@@ -24,7 +22,11 @@ namespace challenge.Controllers
            
         }
 
-
+        /// <summary>
+        /// Busca peliculas por Id con el Detalle completo
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetMovieById(int id)
         {
@@ -38,6 +40,11 @@ namespace challenge.Controllers
             return Ok(new ApiResponse<MoviesForShowWithDetailsDTO>(movie));
         }
        
+        /// <summary>
+        /// Busca Peliculas aplicando distintos filtros. Se puede Elegir con Detalle o sin el.
+        /// </summary>
+        /// <param name="filters"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetMovie([FromQuery] MovieQueryFilters filters)
         {
@@ -58,7 +65,11 @@ namespace challenge.Controllers
             var movieForShowWithDetails = _mapper.Map<IEnumerable<MoviesForShowWithDetailsDTO>>(movies);
             return Ok(new ApiResponse<IEnumerable<MoviesForShowWithDetailsDTO>>(movieForShowWithDetails));
         }
-
+        /// <summary>
+        /// Agregar Peliculas.Debe estar previamente registrado, logeado y autorizado con el token. 
+        /// </summary>
+        /// <param name="movieDTO"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPost]
         public async Task<ActionResult> PostMovie(MoviesForCreationDTO movieDTO)
@@ -68,6 +79,12 @@ namespace challenge.Controllers
             return Ok("Se ha creado la pelicula exitosamente");
         }
 
+        /// <summary>
+        /// Modificar Peliculas, se pueden modificar algunos campos o todos.Debe estar previamente registrado, logeado y autorizado con el token. 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="movieDTO"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult> PutMovie(int id, MoviesForUpdateDTO movieDTO)
@@ -79,6 +96,11 @@ namespace challenge.Controllers
             return Ok("pelicula Modificada con exito");
         }
 
+        /// <summary>
+        /// Eliminar Peliculas.Debe estar previamente registrado, logeado y autorizado con el token. 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteMovie(int id)

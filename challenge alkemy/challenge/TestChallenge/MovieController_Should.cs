@@ -26,7 +26,15 @@ namespace TestChallenge
                 );
 
             mockMovieService.Setup(ms => ms.GetMovieById(1))
-                .ReturnsAsync(new MoviesForShowWithDetailsDTO("test", DateTime.Now, 1, "test", new List<Character>(), new List<Gender>()));
+                .ReturnsAsync(new MoviesForShowWithDetailsDTO() 
+                { 
+                    Title="test",
+                    CreationDate = DateTime.Now, 
+                    Rating= 1, 
+                    Image = "test", 
+                    Characters = new List<Character>(),
+                    Genders = new List<Gender>() 
+                });
             
             var response = await movieController.GetMovieById(id); 
 

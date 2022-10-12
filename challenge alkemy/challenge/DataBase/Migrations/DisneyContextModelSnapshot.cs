@@ -106,7 +106,6 @@ namespace DataBase.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<int>("Rating")
-                        .HasMaxLength(5)
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -134,8 +133,8 @@ namespace DataBase.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Username")
                         .IsRequired()

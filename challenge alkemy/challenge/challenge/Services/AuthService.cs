@@ -1,34 +1,27 @@
 ﻿using DataBase;
-using MailKit.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using MimeKit;
-using MimeKit.Text;
-using SendGrid;
-using SendGrid.Helpers.Mail;
 using System.IdentityModel.Tokens.Jwt;
-using MailKit.Net.Smtp;
-using MailKit;
 using System.Security.Claims;
 using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.DataProtection;
 using AutoMapper;
 
+
 namespace challenge.Services
 {
     public class AuthService : IAuthService
     {
         private readonly DisneyContext _context;
-        private readonly IConfiguration _config;
-        private readonly IDataProtector _dp;
-        private readonly IMapper _mapper;
+        private readonly IConfiguration _config;      
+       
 
-        public AuthService(IConfiguration config, DisneyContext context, IDataProtectionProvider dpp)
+        public AuthService(IConfiguration config, DisneyContext context)
         {
             _context = context;
             _config = config;
-            _dp = dpp.CreateProtector(nameof(AuthService));
+          
            
         }
 
@@ -38,12 +31,15 @@ namespace challenge.Services
 
             return await Task.FromResult(user);
         }
-
-        public async Task<User> GetUserByPassword(string username, string password)
+       
+        public async Task<User?> GetUserByPassword(string username, string password)
         {
-            
 
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username && u.Password == _dp.Unprotect(password));
+
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            //traemos el user  y comparamos los passwords
+            if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.Password))
+                return null;
 
             return user;
         }
@@ -88,7 +84,9 @@ namespace challenge.Services
 
             if (!isValidEmail.Success) return (isValidEmail.Success, isValidEmail.Message);
 
-            password = _dp.Protect(password);             
+
+            // encryptamos el password antes de mandarlo a la base de datos
+             password = BCrypt.Net.BCrypt.HashPassword(password);
 
             var userEntity = new User
             {
@@ -98,7 +96,8 @@ namespace challenge.Services
             };
 
             var result = _context.Users.Add(userEntity);
-            return (await _context.SaveChangesAsync() > 0, "Registro Exitoso");
+            var response = await _context.SaveChangesAsync() > 0;
+            return (response, "Registro Exitoso");
         }
 
 
@@ -113,10 +112,10 @@ namespace challenge.Services
             if (user is not null)
                 return (false, "Ya existe un usuario registrado con ese nombre.");
 
-            Regex regex = new("^[A-Za-z0-9ÑñÁáÉéÍíÓóÚúÜü\\s]+$");
+            Regex regex = new("^[A-Za-z0-9ÑñÁáÉéÍíÓóÚúÜü\\s]{6,16}$");
 
             if (!regex.IsMatch(userName))
-                return (false, "El Name sólo acepta letras y espacios en blanco.");
+                return (false, "El Nombre de usuario puede contener solo letras y numeros entre 5-50 caracteres.");
 
             return (true, "Registro Exitoso");
 
@@ -142,21 +141,6 @@ namespace challenge.Services
             return (true, "Registro Exitoso");
 
         }
-        public async Task SendEmail(string email, string userName)
-        {
-            //docker run --name = papercut - p 25:25 - p 37408:37408 jijiechen / papercut:latest
-            var mail = new MimeMessage();
-            mail.From.Add(MailboxAddress.Parse("challenge@papercut.com"));
-            mail.To.Add(MailboxAddress.Parse(email));
-            mail.Subject = "Test Email Subject";
-            mail.Body = new TextPart(TextFormat.Html) { Text = "<strong>Hola, Gracias por Registrarte!!!</strong>" };
-
-            using var smtp = new SmtpClient();
-            smtp.Connect("localhost", 25);
-            var response = await smtp.SendAsync(mail);
-            
-            smtp.Disconnect(true);
-
-        }
+       
     }
 }

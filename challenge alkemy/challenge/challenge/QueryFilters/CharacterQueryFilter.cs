@@ -1,10 +1,12 @@
-﻿namespace challenge.QueryFilters
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace challenge.QueryFilters
 {
     public class CharacterQueryFilter
     {
         /// <summary>
         /// Buscar por por Nombre 
-        /// </summary>
+        /// </summary>        
         public string? Name { get; set; }
         /// <summary>
         /// Buscar por por Edad 

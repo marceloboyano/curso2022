@@ -100,7 +100,16 @@ namespace challenge.Services
            return  await _repo.Delete(id);
 
         }
-      
+
+        public async Task<CharacterForShowWithDetailsDTO> GetCharacterById(int id)
+        {
+            var character = await _repo.GetByIdWithDetail(id);
+
+            var movieForShowWithDetails = _mapper.Map<CharacterForShowWithDetailsDTO>(character);
+
+            return movieForShowWithDetails;
+        }
+
 
     }
 }

@@ -1,12 +1,11 @@
+using challenge.Config;
 using challenge.Services;
 using DataBase;
 using DataBase.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using System.Text;
 
@@ -42,14 +41,16 @@ builder.Services.AddAuthentication(options =>
    });
 
 builder.Services.AddAuthorization();
-builder.Services.AddDataProtection();
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(setupAction =>
 {
+    
     setupAction.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Description = @"JWT Se ha logeado correctamente",
+        
+        Description = @"JWT",
         Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.ApiKey,
@@ -77,8 +78,8 @@ builder.Services.AddSwaggerGen(setupAction =>
     setupAction.IncludeXmlComments(xmlFile);
 });
 
-builder.Services.AddDbContext<DisneyContext>(options => options.UseInMemoryDatabase("TestDB"));
-//builder.Services.AddDbContext<DisneyContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DisneyConnection")));
+//builder.Services.AddDbContext<DisneyContext>(options => options.UseInMemoryDatabase("TestDB"));
+builder.Services.AddDbContext<DisneyContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DisneyConnection")));
 
 // Agrego los repositorios
 builder.Services.AddScoped<IMoviesRepository, MoviesRepository>();
@@ -89,6 +90,7 @@ builder.Services.AddScoped<IGenderRepository, GenderRepository>();
 builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<ICharacterService, CharacterService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 //MAPPER
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -106,6 +108,8 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 //app.Use(async (context, next) =>
 //{
@@ -225,7 +229,7 @@ using (var scope = app.Services.CreateScope())
        Email = "marcelo@gmail.com"
     });
 
-   context.SaveChanges();
+   //context.SaveChanges();
 }
 
 app.Run();

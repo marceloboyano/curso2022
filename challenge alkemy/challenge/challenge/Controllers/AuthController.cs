@@ -10,13 +10,21 @@ namespace challenge.Controllers
     {
 
         private readonly IAuthService _authService;
+        private readonly IEmailService _emailService;
 
-        public AuthController(IAuthService authService)
+        public AuthController(IAuthService authService, IEmailService emailService)
         {
 
             _authService = authService;
+            _emailService = emailService;
         }
-
+        /// <summary>
+        /// Crear cuenta Nueva
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <param name="email"></param>
+        /// <returns></returns>
         [HttpPost("register")]
         public async Task<IActionResult> Register(string username, string password, string email)
         {
@@ -26,10 +34,16 @@ namespace challenge.Controllers
             {
                 return BadRequest(registerResponse.Message);
             }
-            await _authService.SendEmail(email, username);
+            await _emailService.SendEmail(email, username);
             return Ok(registerResponse.Message);
         }
 
+        /// <summary>
+        /// Entrar
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         [HttpPost("login")]
         public async Task<IActionResult> Login(string username, string password)
         {

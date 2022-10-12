@@ -9,8 +9,8 @@ using static challenge.DTOs.Personajes.CharacterDto;
 
 namespace challenge.Controllers
 {
-    [Route("api/characters")]
     [ApiController]
+    [Route("api/characters")]
     public class CharacterController : ControllerBase
     {
         private readonly ICharacterService _characterService;
@@ -23,7 +23,11 @@ namespace challenge.Controllers
             _mapper = mapper;
         }
 
-       
+        /// <summary>
+        /// Busca Personajes aplicando distintos filtros. Se puede Elegir con Detalle o sin el.
+        /// </summary>
+        /// <param name="filters"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetCharacter([FromQuery] CharacterQueryFilter filters)
         {
@@ -44,6 +48,30 @@ namespace challenge.Controllers
             return Ok(new ApiResponse<IEnumerable<CharacterForShowWithDetailsDTO>>(characterDtoForShowWithDetails));
         }
 
+        
+        /// <summary>
+        /// Busca Personajes por Id con el Detalle completo.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetCharacterById(int id)
+        {
+            var character = await _characterService.GetCharacterById(id);
+
+            if (character is null)
+            {
+                return NotFound("No existe personaje para ese id especificado");
+            }
+
+            return Ok(new ApiResponse<CharacterForShowWithDetailsDTO>(character));
+        }
+
+        /// <summary>
+        /// Agregar Personajes.Debe estar previamente registrado, logeado y autorizado con el token. 
+        /// </summary>
+        /// <param name="characterDTO"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPost]
         public async Task<ActionResult> PostPersonaje(CharacterForCreationDTO characterDTO)
@@ -53,7 +81,12 @@ namespace challenge.Controllers
             return Ok("Se ha creado el Personaje exitosamente");           
        
         }
-
+        /// <summary>
+        /// Modificar Personajes, se pueden modificar algunos campos o todos.Debe estar previamente registrado, logeado y autorizado con el token. 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="characterDTO"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult> PutPersonaje(int id, CharacterForUpdateDTO characterDTO)
@@ -63,7 +96,11 @@ namespace challenge.Controllers
             return Ok("Personaje Modificado con exito");
 
         }
-
+        /// <summary>
+        /// Eliminar Personajes.Debe estar previamente registrado, logeado y autorizado con el token.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteCharacter(int id)

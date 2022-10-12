@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-// Remover using innecesarios tocando Ctrl K + E
-
 namespace DataBase
 {
     public class DisneyContext : DbContext

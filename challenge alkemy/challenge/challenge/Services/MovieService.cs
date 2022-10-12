@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using challenge.DTOs.Peliculas;
 using challenge.QueryFilters;
 using DataBase;
 using DataBase.Repositories;
-using System.Linq;
 using static challenge.DTOs.Peliculas.MoviesDto;
 
 namespace challenge.Services

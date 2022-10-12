@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataBase.Migrations
 {
     [DbContext(typeof(DisneyContext))]
-    [Migration("20221009214320_pr")]
-    partial class pr
+    [Migration("20221012085110_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -108,7 +108,6 @@ namespace DataBase.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<int>("Rating")
-                        .HasMaxLength(5)
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -136,8 +135,8 @@ namespace DataBase.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Username")
                         .IsRequired()

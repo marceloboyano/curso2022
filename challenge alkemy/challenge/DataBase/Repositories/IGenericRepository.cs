@@ -5,8 +5,7 @@
         public abstract int Id { get; }
     }
 
-    // Con el where T es BusinessEntity forzamos al compilador a reconocer la propiedad Id, esto nos va a servir para implementar un repositorio Base con los métodos de Entity Framework
-    public interface IGenericRepository<T> where T : BusinessEntity   
+     public interface IGenericRepository<T> where T : BusinessEntity   
     {
         Task<IEnumerable<T>> GetAll();
         Task<T> GetById(int id);

@@ -10,7 +10,7 @@ namespace DataBase.Repositories
 
         }
 
-        public async Task<Movie> GetByIdWithDetail(int id) => await _context.Movies
+        public async Task<Movie?> GetByIdWithDetail(int id) => await _context.Movies
                 .Include(p => p.Genders)
                 .Include(p => p.Characters)
                 .FirstOrDefaultAsync(m  => m.MoviesID == id);
