@@ -43,6 +43,9 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 
 
+
+
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(setupAction =>
 {
@@ -95,7 +98,19 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 //MAPPER
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+// Agregamos politica de CORS
+builder.Services.AddCors(opt =>
+{
+    opt.AddDefaultPolicy(o => o
+       .AllowAnyHeader()
+       .AllowAnyOrigin()
+       .AllowAnyMethod());
+});
+
+
 var app = builder.Build();
+
+app.UseCors();
 
 if (app.Environment.IsDevelopment())
 {
