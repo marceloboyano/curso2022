@@ -17,6 +17,54 @@ var movieRepository = (function () {
   }());
 
 
+
+  function login(username, password)
+  {
+    var url = `https://localhost:7078/api/auth/login?username=${username}&password=${password}`;
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+          },
+          body: ""
+    }).then( data => {
+
+        return data.json()
+        
+    }).then( token => {
+        console.log(token)
+    }), err => console.log(err)
+
+  };
+
+
+  function register(username, password, email)
+  {
+    var url = `https://localhost:7078/api/auth/register?username=${username}&password=${password}&email=${email}`
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+          },
+          body: ""
+    }).then( data => {
+
+        console.log(data);
+        login(username, password);
+
+    }, err => console.log(err))
+  }
+
+
+  
+  
+  register("marcelotest10", "123456", "bl10@gmail.com");
+  
+  
+
+
   var init = function init() {
     
     var movieContainer = document.getElementById("movieContainer");
