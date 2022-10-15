@@ -11,7 +11,7 @@ namespace challenge.Services
 
         public async Task<string> StoreImage(IFormFile imageFile, ImageType imageType)
         {
-            var regex = new Regex(".*\\.jpg|.*\\.png|.*\\.pdf");
+            var regex = new Regex(".*\\.jpg|.*\\.png");
 
             if (!regex.IsMatch(imageFile.FileName))
                 throw new Exception("El formato de imagen no es admitido");
