@@ -74,7 +74,7 @@ namespace challenge.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult> PostPersonaje(CharacterForCreationDTO characterDTO)
+        public async Task<ActionResult> PostPersonaje([FromForm] CharacterForCreationDTO characterDTO)
         {
                      
             await _characterService.InsertCharacters(characterDTO);
@@ -89,7 +89,7 @@ namespace challenge.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpPut("{id}")]
-        public async Task<ActionResult> PutPersonaje(int id, CharacterForUpdateDTO characterDTO)
+        public async Task<ActionResult> PutPersonaje(int id, [FromForm] CharacterForUpdateDTO characterDTO)
         {          
             var result = await _characterService.UpdateCharacters(id, characterDTO);
             if (!result) return NotFound("Personaje No Encontrado");

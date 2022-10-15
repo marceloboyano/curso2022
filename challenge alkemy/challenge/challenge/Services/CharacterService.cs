@@ -4,21 +4,22 @@ using challenge.QueryFilters;
 using DataBase;
 using DataBase.Repositories;
 using static challenge.DTOs.Personajes.CharacterDto;
+using static challenge.Services.ImageService;
 
 namespace challenge.Services
 {
     public class CharacterService : ICharacterService
     {
 
-            private readonly ICharactersRepository _repo;
-            private readonly IMapper _mapper;
+        private readonly ICharactersRepository _repo;
+        private readonly IMapper _mapper;
+        private readonly IImageService _imageService;
 
-
-        public CharacterService(ICharactersRepository repo, IMapper mapper)
+        public CharacterService(ICharactersRepository repo, IMapper mapper, IImageService imageService)
             {
                 _repo = repo;
                 _mapper = mapper;
-
+                _imageService = imageService;
             }
 
       
@@ -51,10 +52,15 @@ namespace challenge.Services
 
         public async Task InsertCharacters(CharacterForCreationDTO characterDTO)
         {
+            string path = "";
+
+            if (characterDTO.ImageFile is not null)
+                path = await _imageService.StoreImage(characterDTO.ImageFile, ImageType.Character);
+
             var character = _mapper.Map<Character>(characterDTO);
+            character.Image = path;
+
             await _repo.Create(character);    
-            
-          
         }          
       
         public async Task<bool> UpdateCharacters(int id, CharacterForUpdateDTO characterDTO)
@@ -83,9 +89,11 @@ namespace challenge.Services
                 characterEntity.History = characterDTO.History;
             }
 
-            if (characterDTO.Image is not null)
+            if (characterDTO.ImageFile is not null)
             {
-                characterEntity.Image = characterDTO.Image;
+                var path = await _imageService.StoreImage(characterDTO.ImageFile, ImageType.Character);
+
+                characterEntity.Image = path;
             }
 
 

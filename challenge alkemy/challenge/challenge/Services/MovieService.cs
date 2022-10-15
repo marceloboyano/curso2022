@@ -2,7 +2,10 @@
 using challenge.QueryFilters;
 using DataBase;
 using DataBase.Repositories;
+using System.Reflection;
+using System.Text.RegularExpressions;
 using static challenge.DTOs.Peliculas.MoviesDto;
+using static challenge.Services.ImageService;
 
 namespace challenge.Services
 {
@@ -10,11 +13,13 @@ namespace challenge.Services
     {
         private readonly IMoviesRepository _repo;
         private readonly IMapper _mapper;
+        private readonly IImageService _imageService;
 
-        public MovieService(IMoviesRepository repo, IMapper mapper)
+        public MovieService(IMoviesRepository repo, IMapper mapper, IImageService imageService)
         {
             _repo = repo;
             _mapper = mapper;
+            _imageService = imageService;
         }
 
        
@@ -55,7 +60,14 @@ namespace challenge.Services
         }
         public async Task InsertMovies(MoviesForCreationDTO movieDTO)
         {
+            string path = "";
+
+            if(movieDTO.ImageFile is not null)
+               path = await _imageService.StoreImage(movieDTO.ImageFile, ImageType.Movie);
+
+
             var movie = _mapper.Map<Movie>(movieDTO);
+            movie.Image = path;
 
             await _repo.Create(movie);
         }
@@ -72,9 +84,11 @@ namespace challenge.Services
                 movieEntity.Title = movieDto.Title;
             }
 
-            if (movieDto.Image is not null)
+            if (movieDto.ImageFile is not null)
             {
-                movieEntity.Image = movieDto.Image;
+                var path = await _imageService.StoreImage(movieDto.ImageFile, ImageType.Movie);
+
+                movieEntity.Image = path;
             }
 
             if (movieDto.Qualification is not null)

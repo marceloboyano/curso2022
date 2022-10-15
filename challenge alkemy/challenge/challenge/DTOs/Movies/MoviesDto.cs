@@ -5,7 +5,7 @@ namespace challenge.DTOs.Peliculas
 {
     public class MoviesDto
     {
-        public record MoviesForUpdateDTO(string? Title, DateTime? CreationDate, int? Qualification, string? Image);
+        public record MoviesForUpdateDTO(string? Title, DateTime? CreationDate, int? Qualification, IFormFile? ImageFile);
         public class MoviesForShowDTO 
         {
 
@@ -33,12 +33,12 @@ namespace challenge.DTOs.Peliculas
             [Range(1, 5)]
             public int Rating {get;set;}
 
-            [StringLength(255, MinimumLength = 1)]
-            public string Image { get; set; }
+            public IFormFile ImageFile { get; set; }
         
         }
         public class MoviesForShowWithDetailsDTO
         {
+            public int MoviesId { get; set; }
             [Required(ErrorMessage = "El titulo de la pelicula es un campo obligatorio.")]
             [StringLength(255, MinimumLength = 1)]
             public string Title { get; set; }

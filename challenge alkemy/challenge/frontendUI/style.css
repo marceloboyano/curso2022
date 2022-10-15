@@ -1,0 +1,21 @@
+
+
+.list-group-item.active
+{
+    background-color: rgba(19, 17, 17, 0.842);
+}
+
+.primary-card {
+    height: 200px;
+}
+
+.primary-card > img {
+    max-width: 300px;
+    background-size: cover;
+}
+
+.li-card-container{
+    padding: 0;
+    overflow: hidden;
+    max-height: 200px;
+}

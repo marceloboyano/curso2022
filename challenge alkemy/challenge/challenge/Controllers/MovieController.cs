@@ -72,7 +72,7 @@ namespace challenge.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult> PostMovie(MoviesForCreationDTO movieDTO)
+        public async Task<ActionResult> PostMovie([FromForm] MoviesForCreationDTO movieDTO)
         {
             await _movieService.InsertMovies(movieDTO);
 
@@ -87,7 +87,7 @@ namespace challenge.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpPut("{id}")]
-        public async Task<ActionResult> PutMovie(int id, MoviesForUpdateDTO movieDTO)
+        public async Task<ActionResult> PutMovie(int id, [FromForm] MoviesForUpdateDTO movieDTO)
         {
             var result = await _movieService.UpdateMovies(id, movieDTO);
 
